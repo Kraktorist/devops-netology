@@ -1,10 +1,10 @@
 ## Задание №1 - Подготовка рабочей среды
 
-- Terraform: ![Терраформ](images/terraform.png)
-- Bash: ![bash](images/shell.png)
-- Markdown: ![markdown](images/markdown.png)
-- Yaml: ![Yaml](images/yaml.png)
-- Jsonnet: ![Jsonnet](images/jsonnet.png)
+- Terraform: ![Терраформ](img/terraform.png)
+- Bash: ![bash](img/shell.png)
+- Markdown: ![markdown](img/markdown.png)
+- Yaml: ![Yaml](img/yaml.png)
+- Jsonnet: ![Jsonnet](img/jsonnet.png)
 
 
 ## Задание №2 - Описание жизненного цикла задачи (разработки нового функционала)
