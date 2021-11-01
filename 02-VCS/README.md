@@ -1,4 +1,4 @@
-File ```.gitignore``` will do the following:
+## ```.gitignore``` explanation:
 
 ```
 # excluding .terraform directories
@@ -28,6 +28,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 ```
+
+## Commit history
 
 ```
 PS C:\Users\user\repos\do> git log -q
