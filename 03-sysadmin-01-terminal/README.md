@@ -81,10 +81,10 @@ man bash | grep -m 1 -n "Brace Expansion"
 ```
 
 ```
- man bash | grep -m 1 -n "Parameter Expansion"
+man bash | grep -m 1 -n "Parameter Expansion"
 ```
 
-1.  С учётом ответа на предыдущий вопрос, как создать однократным вызовом `touch` 100000 файлов? Получится ли аналогичным образом создать 300000? Если нет, то почему?
+10.  С учётом ответа на предыдущий вопрос, как создать однократным вызовом `touch` 100000 файлов? Получится ли аналогичным образом создать 300000? Если нет, то почему?
 
 ```
 touch {1..100000}.txt
@@ -94,6 +94,8 @@ touch {1..100000}.txt
 vagrant@vagrant:~$ touch {1..300000}.txt
 -bash: /usr/bin/touch: Argument list too long
 ```
+>>> bash expands the list into a long string. This string is limited by the length specified in `getconf ARG_MAX`
+
 
 11. В man bash поищите по `/\[\[`. Что делает конструкция `[[ -d /tmp ]]`
 
@@ -108,7 +110,7 @@ CONDITIONAL EXPRESSIONS
 
 ```
 
->>> This command tests if the folder `/tmp` exists
+> This command tests if the folder `/tmp` exists
 ```
 [[ -d /tmp ]] && echo "It's a directory"
 ```
@@ -135,9 +137,11 @@ sudo chmod +x /usr/local/bin/bash
 
 13. Чем отличается планирование команд с помощью `batch` и `at`?
 
+> actually batch is an alias for `at -b`
+ 
 ```
-batch is actually an alias for at -b 
 vagrant@vagrant:~$ cat /usr/bin/batch
+
 #! /bin/sh -e
 if [ "$#" -gt 0 ]; then
         echo batch accepts no parameters
@@ -148,7 +152,7 @@ exec_prefix=${prefix}
 exec ${exec_prefix}/bin/at -qb now
 ```
 ```
-batch executes commands when system load levels permit; in other words,when the load average drops below 1.5, or the value specified in theinvocation of atd.
+batch executes commands when system load levels permit; in other words,when the load average drops below 1.5, or the value specified in the invocation of atd.
 ```
 
 
