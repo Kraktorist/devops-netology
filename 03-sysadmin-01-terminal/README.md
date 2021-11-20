@@ -94,7 +94,7 @@ touch {1..100000}.txt
 vagrant@vagrant:~$ touch {1..300000}.txt
 -bash: /usr/bin/touch: Argument list too long
 ```
->>> bash expands the list into a long string. This string is limited by the length specified in `getconf ARG_MAX`
+> bash expands the list into a long string. This string is limited by the length specified in `getconf ARG_MAX`
 
 
 11. В man bash поищите по `/\[\[`. Что делает конструкция `[[ -d /tmp ]]`
