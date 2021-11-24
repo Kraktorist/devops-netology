@@ -89,8 +89,28 @@
     root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
     /usr/sbin/opensnoop-bpfcc
     ```
-    На какие файлы вы увидели вызовы группы `open` за первую секунду работы утилиты? Воспользуйтесь пакетом `bpfcc-tools` для Ubuntu 20.04. Дополнительные [сведения по установке](https://github.com/iovisor/bcc/blob/master/INSTALL.md).
-2. Какой системный вызов использует `uname -a`? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в `/proc`, где можно узнать версию ядра и релиз ОС.
+    На какие файлы вы увидели вызовы группы `open` за первую секунду работы утилиты? Воспользуйтесь пакетом `bpfcc-tools` для Ubuntu 20.04. Дополнительные [сведения по установке](https://github.com/iovisor/bcc/blob/master/INSTALL.md).  
+    **Answer**
+
+        vagrant@vagrant:~$ sudo strace -t -e trace=openat /usr/sbin/opensnoop-bpfcc
+        17:20:07 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+        17:20:07 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+        17:20:07 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+        17:20:07 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+        ...
+
+
+2. Какой системный вызов использует `uname -a`? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в `/proc`, где можно узнать версию ядра и релиз ОС.  
+**Answer**
+
+        vagrant@vagrant:~$ sudo apt install manpages-dev
+        vagrant@vagrant:~$ strace -e trace=uname uname -r
+        uname({sysname="Linux", nodename="vagrant", ...}) = 0
+        5.4.0-80-generic
+        +++ exited with 0 +++
+        vagrant@vagrant:~$ man 2 uname | grep proc
+            Part of the utsname information is also accessible via /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
+
 3. Чем отличается последовательность команд через `;` и через `&&` в bash? Например:
     ```bash
     root@netology1:~# test -d /tmp/some_dir; echo Hi
@@ -98,6 +118,29 @@
     root@netology1:~# test -d /tmp/some_dir && echo Hi
     root@netology1:~#
     ```
-    Есть ли смысл использовать в bash `&&`, если применить `set -e`?
-4. Из каких опций состоит режим bash `set -euxo pipefail` и почему его хорошо было бы использовать в сценариях?
-5.  Используя `-o stat` для `ps`, определите, какой наиболее часто встречающийся статус у процессов в системе. В `man ps` ознакомьтесь (`/PROCESS STATE CODES`) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
+    Есть ли смысл использовать в bash `&&`, если применить `set -e`?  
+**Answer**
+
+        The first example is just an uncoditional sequience of two commands separated by semicolon. The second one is conditional AND where the second command will be run only when the first command returns 0 exit code (i.e. when tmp/some_dir exists).
+
+        (man page) The shell does not exit if the command that fails is part of any command executed in a && or || list except the command following the final && or ||, any command in a pipeline but the last, or if the command’s return status is being inverted with !.
+
+
+4. Из каких опций состоит режим bash `set -euxo pipefail` и почему его хорошо было бы использовать в сценариях?  
+**Answer**
+
+        This combination of flags sets strict and debug mode for bash. It will cause the script to print all commands and immediately stop if any error.
+
+        -e flag will stop if any command return non-zero code except some tests.
+        -u flag will stop if any undeclared variable will be referenced
+        -x flag will print any executed command to terminal for debugging
+        -o pipefail will return the exit code of any failed command in pipeline as the return code of the whole pipeline 
+
+
+1.  Используя `-o stat` для `ps`, определите, какой наиболее часто встречающийся статус у процессов в системе. В `man ps` ознакомьтесь (`/PROCESS STATE CODES`) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).  
+**Answer**
+
+        vagrant@vagrant:~$ ps hax -o stat | cut -c 1-1 | sort | uniq -c
+            48 I
+            1 R
+            51 S
