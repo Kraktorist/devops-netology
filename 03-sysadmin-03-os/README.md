@@ -135,7 +135,8 @@
 4. Из каких опций состоит режим bash `set -euxo pipefail` и почему его хорошо было бы использовать в сценариях?  
 **Answer**
 
-        This combination of flags sets strict and debug mode for bash. It will cause the script to print every executed commands and immediately stop if any error.
+        This combination of flags sets strict and debug mode for bash. 
+        It will cause the script to print every executed commands and immediately stop if any error.
 
         -e flag will stop if any command return non-zero code except some tests.
         -u flag will stop if any undeclared variable will be referenced
