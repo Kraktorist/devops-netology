@@ -127,7 +127,8 @@
     Есть ли смысл использовать в bash `&&`, если применить `set -e`?  
 **Answer**
 
-        The first example is just an uncoditional sequience of two commands separated by semicolon. The second one is logical AND where the second command will be run only when the first command returns 0 exit code (i.e. when tmp/some_dir exists).
+        The first example is just an uncoditional sequience of two commands separated by semicolon. 
+        The second one is logical AND where the second command will be run only when the first command returns 0 exit code (i.e. when tmp/some_dir exists).
 
         (man page) The shell does not exit if the command that fails is part of any command executed in a && or || list except the command following the final && or ||, any command in a pipeline but the last, or if the command’s return status is being inverted with !.
 
