@@ -3,6 +3,8 @@
 1. Какой системный вызов делает команда `cd`? В прошлом ДЗ мы выяснили, что `cd` не является самостоятельной  программой, это `shell builtin`, поэтому запустить `strace` непосредственно на `cd` не получится. Тем не менее, вы можете запустить `strace` на `/bin/bash -c 'cd /tmp'`. В этом случае вы увидите полный список системных вызовов, которые делает сам `bash` при старте. Вам нужно найти тот единственный, который относится именно к `cd`. Обратите внимание, что `strace` выдаёт результат своей работы в поток stderr, а не в stdout.  
 **Answer** 
 
+        # chdir()
+
         vagrant@vagrant:~$ strace /bin/bash -c 'cd /tmp' 2>&1 | grep tmp
         execve("/bin/bash", ["/bin/bash", "-c", "cd /tmp"], 0x7ffc8cfcfb10 /* 24 vars */) = 0
         stat("/tmp", {st_mode=S_IFDIR|S_ISVTX|0777, st_size=4096, ...}) = 0
@@ -42,7 +44,7 @@
         # /etc/magic
         # /usr/share/misc/magic.mgc
 
-1. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
+1. Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).  
 **Answer**
 
         root@vagrant:~# ping -D 127.0.0.1>>/tmp/result &
@@ -69,7 +71,9 @@
 1. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?  
 **Answer**  
 
-        The only resource they occupy is the process table entry. Zombie process is a process which has completed execution but still exists because it has child processes.
+        # The only resource they occupy is the process table entry. 
+        # Zombie process is a process which has completed execution but still exists
+        # because it has child processes.
 
         vagrant@vagrant:~$ (echo $$ & exec /bin/sleep 3600)
         12795
@@ -103,6 +107,8 @@
 2. Какой системный вызов использует `uname -a`? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в `/proc`, где можно узнать версию ядра и релиз ОС.  
 **Answer**
 
+        # uname()
+        
         vagrant@vagrant:~$ sudo apt install manpages-dev
         vagrant@vagrant:~$ strace -e trace=uname uname -r
         uname({sysname="Linux", nodename="vagrant", ...}) = 0
@@ -121,7 +127,7 @@
     Есть ли смысл использовать в bash `&&`, если применить `set -e`?  
 **Answer**
 
-        The first example is just an uncoditional sequience of two commands separated by semicolon. The second one is conditional AND where the second command will be run only when the first command returns 0 exit code (i.e. when tmp/some_dir exists).
+        The first example is just an uncoditional sequience of two commands separated by semicolon. The second one is logical AND where the second command will be run only when the first command returns 0 exit code (i.e. when tmp/some_dir exists).
 
         (man page) The shell does not exit if the command that fails is part of any command executed in a && or || list except the command following the final && or ||, any command in a pipeline but the last, or if the command’s return status is being inverted with !.
 
@@ -129,7 +135,7 @@
 4. Из каких опций состоит режим bash `set -euxo pipefail` и почему его хорошо было бы использовать в сценариях?  
 **Answer**
 
-        This combination of flags sets strict and debug mode for bash. It will cause the script to print all commands and immediately stop if any error.
+        This combination of flags sets strict and debug mode for bash. It will cause the script to print every executed commands and immediately stop if any error.
 
         -e flag will stop if any command return non-zero code except some tests.
         -u flag will stop if any undeclared variable will be referenced
