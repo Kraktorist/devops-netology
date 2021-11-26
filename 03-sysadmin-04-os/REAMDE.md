@@ -5,7 +5,7 @@
     * поместите его в автозагрузку,
     * предусмотрите возможность добавления опций к запускаемому процессу через внешний файл (посмотрите, например, на `systemctl cat cron`),
     * удостоверьтесь, что с помощью systemctl процесс корректно стартует, завершается, а после перезагрузки автоматически поднимается.  
-  
+
 **Answer**  
   
         root@vagrant:/etc/systemd/system# systemctl cat node_exporter.service
@@ -19,6 +19,7 @@
 
         [Install]
         WantedBy=multi-user.target
+
         root@vagrant:/etc/systemd/system# systemctl status node_exporter
         ● node_exporter.service - node_exporter daemon
             Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
@@ -31,9 +32,8 @@
 
         Nov 25 17:54:37 vagrant node_exporter[1390]: ts=2021-11-25T17:54:37.791Z caller=node_exporter.go:115 level=info collector=thermal_zone
         Nov 25 17:54:37 vagrant node_exporter[1390]: ts=2021-11-25T17:54:37.791Z caller=node_exporter.go:115 level=info collector=time
-        Nov 25 17:54:37 vagrant node_exporter[1390]: ts=2021-11-25T17:54:37.791Z caller=node_exporter.go:115 level=info collector=timex
-        Nov 25 17:54:37 vagrant node_exporter[1390]: ts=2021-11-25T17:54:37.791Z caller=node_exporter.go:115 level=info collector=udp_queues
         .......
+
         root@vagrant:/etc/systemd/system# curl http://localhost:9100/metrics
         # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
         # TYPE go_gc_duration_seconds summary
@@ -66,7 +66,8 @@
     config.vm.network "forwarded_port", guest: 19999, host: 19999
     ```
 
-    После успешной перезагрузки в браузере *на своем ПК* (не в виртуальной машине) вы должны суметь зайти на `localhost:19999`. Ознакомьтесь с метриками, которые по умолчанию собираются Netdata и с комментариями, которые даны к этим метрикам.
+    После успешной перезагрузки в браузере *на своем ПК* (не в виртуальной машине) вы должны суметь зайти на `localhost:19999`. Ознакомьтесь с метриками, которые по умолчанию собираются Netdata и с комментариями, которые даны к этим метрикам.  
+**Answer**
 
 4. Можно ли по выводу `dmesg` понять, осознает ли ОС, что загружена не на настоящем оборудовании, а на системе виртуализации?  
 **Answer**  
@@ -84,7 +85,7 @@
         vagrant@vagrant:~$ sysctl fs.nr_open
         fs.nr_open = 1048576
 
-
+        # from man
         # nr_open:
         # 
         # This denotes the maximum number of file-handles a process can
@@ -98,38 +99,56 @@
         Limit                     Soft Limit           Hard Limit           Units
         Max open files            1024                 1048576              files
 
+6. Запустите любой долгоживущий процесс (не `ls`, который отработает мгновенно, а, например, `sleep 1h`) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через `nsenter`. Для простоты работайте в данном задании под root (`sudo -i`). Под обычным пользователем требуются дополнительные опции (`--map-root-user`) и т.д.  
+**Answer**
 
+        root@vagrant:~# unshare --pid --fork --mount-proc sleep 30m &
+        [1] 6906
+        root@vagrant:~# nsenter -a -t 6906
+        root@vagrant:/# cat /proc/1/cmdline
+        sleep30mroot@vagrant:/#
 
-6. Запустите любой долгоживущий процесс (не `ls`, который отработает мгновенно, а, например, `sleep 1h`) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через `nsenter`. Для простоты работайте в данном задании под root (`sudo -i`). Под обычным пользователем требуются дополнительные опции (`--map-root-user`) и т.д.
+        # the process with pid #1 has 'sleep 30m' cmdline
 
+        # similar example from man unshare
+        root@vagrant:~#  unshare --fork --pid --mount-proc readlink /proc/self
+        1
 
+7. Найдите информацию о том, что такое `:(){ :|:& };:`. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (**это важно, поведение в других ОС не проверялось**). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов `dmesg` расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?  
+**Answer**
 
-7. Найдите информацию о том, что такое `:(){ :|:& };:`. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (**это важно, поведение в других ОС не проверялось**). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов `dmesg` расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?
+        # It's a function which forks itself twice on every iteration (fork bomb).
+        # Prettier example: 
+        vagrant@vagrant:~$ func(){ func |func& };func
+        
+        # We can run it and count processes
+        vagrant@vagrant:~$ func(){ ps | wc -l; func |func& };func
+        4
+        [1] 80461
+        7
+        14
+        25
+        53
+        118
+        278
+        663
+        1727
+        3627
+        ....
 
- 
- ---
+        vagrant@vagrant:~$ dmesg | grep fork
+        [  102.457632] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-3.scope
 
-## Как сдавать задания
+        # This is a systemd slice mechanism which limits pid creation by 33% of overall tasks in the system
 
-Обязательными к выполнению являются задачи без указания звездочки. Их выполнение необходимо для получения зачета и диплома о профессиональной переподготовке.
+        vagrant@vagrant:~$ systemctl cat user-1000.slice | grep TasksMax=
+        TasksMax=33%
 
-Задачи со звездочкой (*) являются дополнительными задачами и/или задачами повышенной сложности. Они не являются обязательными к выполнению, но помогут вам глубже понять тему.
-
-Домашнее задание выполните в файле readme.md в github репозитории. В личном кабинете отправьте на проверку ссылку на .md-файл в вашем репозитории.
-
-Также вы можете выполнить задание в [Google Docs](https://docs.google.com/document/u/0/?tgif=d) и отправить в личном кабинете на проверку ссылку на ваш документ.
-Название файла Google Docs должно содержать номер лекции и фамилию студента. Пример названия: "1.1. Введение в DevOps — Сусанна Алиева".
-
-Если необходимо прикрепить дополнительные ссылки, просто добавьте их в свой Google Docs.
-
-Перед тем как выслать ссылку, убедитесь, что ее содержимое не является приватным (открыто на комментирование всем, у кого есть ссылка), иначе преподаватель не сможет проверить работу. Чтобы это проверить, откройте ссылку в браузере в режиме инкогнито.
-
-[Как предоставить доступ к файлам и папкам на Google Диске](https://support.google.com/docs/answer/2494822?hl=ru&co=GENIE.Platform%3DDesktop)
-
-[Как запустить chrome в режиме инкогнито ](https://support.google.com/chrome/answer/95464?co=GENIE.Platform%3DDesktop&hl=ru)
-
-[Как запустить  Safari в режиме инкогнито ](https://support.apple.com/ru-ru/guide/safari/ibrw1069/mac)
-
-Любые вопросы по решению задач задавайте в чате Slack.
-
----
+        vagrant@vagrant:~$ systemctl status user-1000.slice
+        ● user-1000.slice - User Slice of UID 1000
+            Loaded: loaded
+            Drop-In: /usr/lib/systemd/system/user-.slice.d
+                    └─10-defaults.conf
+            Active: active since Fri 2021-11-26 17:58:26 UTC; 9min ago
+            Docs: man:user@.service(5)
+            Tasks: 7 (limit: 10158)
