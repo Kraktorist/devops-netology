@@ -8,7 +8,7 @@
 
     **Answer**  
   
-        root@vagrant:/etc/systemd/system# systemctl cat node_exporter.service
+        root@vagrant:/# systemctl cat node_exporter.service
         # /etc/systemd/system/node_exporter.service
         [Unit]
         Description=node_exporter daemon
@@ -20,7 +20,7 @@
         [Install]
         WantedBy=multi-user.target
 
-        root@vagrant:/etc/systemd/system# systemctl status node_exporter
+        root@vagrant:/# systemctl status node_exporter
         ● node_exporter.service - node_exporter daemon
             Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: enabled)
             Active: active (running) since Thu 2021-11-25 17:54:37 UTC; 4min 5s ago
@@ -34,7 +34,7 @@
         Nov 25 17:54:37 vagrant node_exporter[1390]: ts=2021-11-25T17:54:37.791Z caller=node_exporter.go:115 level=info collector=time
         .......
 
-        root@vagrant:/etc/systemd/system# curl http://localhost:9100/metrics
+        root@vagrant:/# curl http://localhost:9100/metrics
         # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
         # TYPE go_gc_duration_seconds summary
         go_gc_duration_seconds{quantile="0"} 0
@@ -46,7 +46,7 @@
 1. Ознакомьтесь с опциями node_exporter и выводом `/metrics` по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.  
 **Answer**
 
-        root@vagrant:/etc/systemd/system# cat /etc/default/node_exporter
+        root@vagrant:/# cat /etc/default/node_exporter
         EXTRA_OPTS="--collector.disable-defaults \
                     --collector.cpu \
                     --collector.diskstats \
