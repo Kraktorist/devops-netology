@@ -8,3 +8,4 @@
 1. [ Terminal #2](./03-sysadmin-02-terminal)
 1. [ OS #1](./03-sysadmin-03-os)
 1. [ OS #2](./03-sysadmin-04-os)
+1. [ FileSystem](./03-sysadmin-05-fs)
