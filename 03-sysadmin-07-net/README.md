@@ -66,7 +66,8 @@
 5. Задача: вас попросили организовать стык между 2-мя организациями. Диапазоны 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 уже заняты. Из какой подсети допустимо взять частные IP адреса? Маску выберите из расчета максимум 40-50 хостов внутри подсети.  
 **Answer**  
 
-        There is a special subnet 100.64.0.0/10 described in RFC6890 and RFC6598 as a shared address space. So we can take a range 100.64.0.0/26 from it.
+        There is a special subnet 100.64.0.0/10 described in RFC6890 and RFC6598 as a shared address space.
+        So we can take a range 100.64.0.0/26 from it.
 
 6. Как проверить ARP таблицу в Linux, Windows? Как очистить ARP кеш полностью? Как из ARP таблицы удалить только один нужный IP?
 
