@@ -113,13 +113,59 @@
 
     **Answer**  
 
-    ...
+        root@vagrant:~# cat <<EOT > /etc/ssh_config.d/example.conf
+        Host test
+        HostName 192.168.0.14
+        User kraktorist
+        IdentityFile ~/id_rsa_new
+        EOT
 
-7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
+        vagrant@vagrant:~$ mv ~/.ssh/id_rsa ~/id_rsa_new
 
- ---
-## Задание для самостоятельной отработки (необязательно к выполнению)
+        vagrant@vagrant:~$ ssh -v test
+        OpenSSH_8.2p1 Ubuntu-4ubuntu0.2, OpenSSL 1.1.1f  31 Mar 2020
+        debug1: Reading configuration data /etc/ssh/ssh_config
+        debug1: Reading configuration data /etc/ssh/ssh_config.d/example.conf
+        debug1: /etc/ssh/ssh_config.d/example.conf line 1: Applying options for test
+        debug1: /etc/ssh/ssh_config line 21: Applying options for *
+        debug1: Connecting to 192.168.0.14 [192.168.0.14] port 22.
+        debug1: Connection established.
+        debug1: identity file /home/vagrant/id_rsa_new type -1
+        debug1: identity file /home/vagrant/id_rsa_new-cert type -1
+        ...
+        debug1: Authenticating to 192.168.0.14:22 as 'kraktorist'
+        ...
+        debug1: Next authentication method: publickey
+        debug1: Trying private key: /home/vagrant/id_rsa_new
+        debug1: Authentication succeeded (publickey).
+        ...
+        Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+        ...
 
-8*. Просканируйте хост scanme.nmap.org. Какие сервисы запущены?
 
-9*. Установите и настройте фаервол ufw на web-сервер из задания 3. Откройте доступ снаружи только к портам 22,80,443
+7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.  
+
+    **Answer**
+
+        vagrant@vagrant:~$ sudo t^Cdump --interface any -c 100 -w 100.pcap
+        vagrant@vagrant:~$ tshark -r 100.pcap -T tabs
+            1	  0.000000	   10.0.2.15	→	10.0.2.2    	SSH	124	Server: Encrypted packet (len=68)
+            2	  0.000276	    10.0.2.2	→	10.0.2.15   	TCP	62	51108 → 22 [ACK] Seq=1 Ack=69 Win=65535 Len=0
+            3	  6.666119	192.168.0.14	→	192.168.0.37	TCP	76	49668 → 443 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM=1 TSval=1842455698 TSecr=0 WS=128
+            4	  6.666141	192.168.0.37	→	192.168.0.14	TCP	76	443 → 49668 [SYN, ACK] Seq=0 Ack=1 Win=65160 Len=0 MSS=1460 SACK_PERM=1 TSval=4045874961 TSecr=1842455698 WS=128
+            5	  6.666252	192.168.0.14	→	192.168.0.37	TCP	68	49668 → 443 [ACK] Seq=1 Ack=1 Win=64256 Len=0 TSval=1842455698 TSecr=4045874961
+            6	  6.670860	192.168.0.14	→	192.168.0.37	TLSv1	585	Client Hello
+            7	  6.670884	192.168.0.37	→	192.168.0.14	TCP	68	443 → 49668 [ACK] Seq=1 Ack=518 Win=64768 Len=0 TSval=4045874966 TSecr=1842455702
+            8	  6.671908	192.168.0.37	→	192.168.0.14	TLSv1.3	1614	Server Hello, Change Cipher Spec, Application Data, Application Data, Application Data, Application Data
+            9	  6.671975	192.168.0.14	→	192.168.0.37	TCP	68	49668 → 443 [ACK] Seq=518 Ack=1547 Win=64128 Len=0 TSval=1842455704 TSecr=4045874967
+        10	  6.672317	192.168.0.14	→	192.168.0.37	TLSv1.3	148	Change Cipher Spec, Application Data
+        11	  6.672318	192.168.0.14	→	192.168.0.37	TLSv1.3	166	Application Data
+        12	  6.672324	192.168.0.37	→	192.168.0.14	TCP	68	443 → 49668 [ACK] Seq=1547 Ack=598 Win=64768 Len=0 TSval=4045874967 TSecr=1842455704
+        13	  6.672338	192.168.0.37	→	192.168.0.14	TCP	68	443 → 49668 [ACK] Seq=1547 Ack=696 Win=64768 Len=0 TSval=4045874967 TSecr=1842455704
+        14	  6.672448	192.168.0.37	→	192.168.0.14	TLSv1.3	339	Application Data
+        15	  6.672506	192.168.0.14	→	192.168.0.37	TCP	68	49668 → 443 [ACK] Seq=696 Ack=1818 Win=64128 Len=0 TSval=1842455704 TSecr=4045874967
+        16	  6.672527	192.168.0.37	→	192.168.0.14	TLSv1.3	339	Application Data
+        17	  6.672582	192.168.0.14	→	192.168.0.37	TCP	68	49668 → 443 [ACK] Seq=696 Ack=2089 Win=64128 Len=0 TSval=1842455704 TSecr=4045874967
+        18	  6.672656	192.168.0.37	→	192.168.0.14	TLSv1.3	416	Application Data
+        19	  6.672717	192.168.0.14	→	192.168.0.37	TCP	68	49668 → 443 [ACK] Seq=696 Ack=2437 Win=64128 Len=0 TSval=1842455704 TSecr=4045874967
+   
