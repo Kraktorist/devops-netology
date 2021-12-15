@@ -14,3 +14,4 @@
 1. [ Network #3](./03-sysadmin-08-net)
 1. [ Security](./03-sysadmin-09-security)
 1. [ Bash](./04-script-01-bash)
+1. [ Python](./04-script-02-py)

@@ -58,6 +58,8 @@ for result in result_os.split('\n')[1:]:
         subpath = output[-1]
         status = output[-2]
         print(f'{status} {base_dir}/{subpath}')
+        # or
+        # print(f'{base_dir}/{subpath}')
 ```
 
 ### Вывод скрипта при запуске при тестировании:
@@ -73,12 +75,35 @@ AM /home/vagrant/netology/04-script-02-py/README.md
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import argparse
+import os
+
+parser = argparse.ArgumentParser(description='git status')
+parser.add_argument('--repo', default=os.getcwd(), help='repo path')
+args = parser.parse_args()
+
+bash_command = [f"cd {args.repo}", "pwd", "git status -s"]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+base_dir = result_os.split('\n')[0]
+for result in result_os.split('\n')[1:]:
+    output = result.split(' ')
+    if len(output) > 1:
+        subpath = output[-1]
+        status = output[-2]
+        print(f'{status} {base_dir}/{subpath}')
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+vagrant@vagrant:~$ ./git.py --repo /home/vagrant/netology
+M /home/vagrant/netology/04-script-02-py/README.md
+vagrant@vagrant:~$ ./git.py --repo /home/vagrant/not_exist
+/bin/sh: 1: cd: can't cd to /home/vagrant/not_exist
+vagrant@vagrant:~$ ./git.py --repo /home/vagrant/
+fatal: not a git repository (or any of the parent directories): .git
 ```
 
 ## Обязательная задача 4
@@ -86,24 +111,71 @@ AM /home/vagrant/netology/04-script-02-py/README.md
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import json
+import os
+import socket
+
+services = [
+    'drive.google.com', 
+    'mail.google.com', 
+    'google.com'
+]
+
+'''
+loading cached values from file
+'''
+cache_file = '.ping_cache'
+cached_data = dict()
+if os.path.exists(cache_file):
+    with open(cache_file) as cache:
+        try:
+            cached_data = json.load(cache)
+        except:
+            print("Can't load cache as json")
+
+
+'''
+pinging
+'''
+for service in services:
+    try:
+        ip = socket.gethostbyname(service)
+    except:
+        print(f'An error happened during name resolution for service {service}')
+    if cached_data.get(service) in (None, ip):
+        print(f'{service} - {ip}')
+    else:
+        print(f'[ERROR] {service} IP mismatch: {cached_data.get(service)} {ip}')
+    cached_data[service] = ip
+
+
+'''
+saving results to cache file
+'''
+with open(cache_file, 'w') as cache:
+    json.dump(cached_data, cache)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
-```
-
-## Дополнительное задание (со звездочкой*) - необязательно к выполнению
-
-Так получилось, что мы очень часто вносим правки в конфигурацию своей системы прямо на сервере. Но так как вся наша команда разработки держит файлы конфигурации в github и пользуется gitflow, то нам приходится каждый раз переносить архив с нашими изменениями с сервера на наш локальный компьютер, формировать новую ветку, коммитить в неё изменения, создавать pull request (PR) и только после выполнения Merge мы наконец можем официально подтвердить, что новая конфигурация применена. Мы хотим максимально автоматизировать всю цепочку действий. Для этого нам нужно написать скрипт, который будет в директории с локальным репозиторием обращаться по API к github, создавать PR для вливания текущей выбранной ветки в master с сообщением, которое мы вписываем в первый параметр при обращении к py-файлу (сообщение не может быть пустым). При желании, можно добавить к указанному функционалу создание новой ветки, commit и push в неё изменений конфигурации. С директорией локального репозитория можно делать всё, что угодно. Также, принимаем во внимание, что Merge Conflict у нас отсутствуют и их точно не будет при push, как в свою ветку, так и при слиянии в master. Важно получить конечный результат с созданным PR, в котором применяются наши изменения. 
-
-### Ваш скрипт:
-```python
-???
-```
-
-### Вывод скрипта при запуске при тестировании:
-```
-???
+vagrant@vagrant:~$ rm -rf .ping_cache 
+vagrant@vagrant:~$ ./ping.py 
+drive.google.com - 142.251.1.194
+mail.google.com - 209.85.233.19
+google.com - 209.85.233.100
+vagrant@vagrant:~$ ./ping.py 
+drive.google.com - 142.251.1.194
+mail.google.com - 209.85.233.19
+[ERROR] google.com IP mismatch: 209.85.233.100 209.85.233.138
+vagrant@vagrant:~$ ./ping.py 
+drive.google.com - 142.251.1.194
+mail.google.com - 209.85.233.19
+google.com - 209.85.233.138
+vagrant@vagrant:~$ ^C
+vagrant@vagrant:~$ ./ping.py 
+drive.google.com - 142.251.1.194
+[ERROR] mail.google.com IP mismatch: 209.85.233.19 74.125.131.19
+google.com - 209.85.233.138
 ```
