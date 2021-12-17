@@ -15,3 +15,4 @@
 1. [ Security](./03-sysadmin-09-security)
 1. [ Bash](./04-script-01-bash)
 1. [ Python](./04-script-02-py)
+1. [ JSON/YAML](./04-script-03-yaml)
