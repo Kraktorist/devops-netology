@@ -20,7 +20,7 @@
   Нужно найти и исправить все ошибки, которые допускает наш сервис  
 **Answer**
 
-```
+```json
     {
         "info": "Sample JSON output from our service\t",
         "elements": [
