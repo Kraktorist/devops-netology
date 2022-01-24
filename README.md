@@ -16,3 +16,4 @@
 1. [ Bash](./04-script-01-bash)
 1. [ Python](./04-script-02-py)
 1. [ JSON/YAML](./04-script-03-yaml)
+1. [ Virtualization Basics](./05-virt-01-basics)
