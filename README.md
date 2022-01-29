@@ -18,3 +18,4 @@
 1. [ JSON/YAML](./04-script-03-yaml)
 1. [ Virtualization Basics](./05-virt-01-basics)
 1. [ IaaC Basics](./05-virt-02-iaac)
+1. [ Docker](./05-virt-02-docker)
