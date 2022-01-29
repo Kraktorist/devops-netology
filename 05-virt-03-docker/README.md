@@ -24,7 +24,7 @@ Hey, Netology
 
 **Answer**
 
-[ GitHub Dockerfile ](.Dockerfile-#1)  
+[ GitHub Dockerfile ](.Dockerfile-\#1)  
 [ DockerHub image](https://hub.docker.com/r/accesshasbeendenied/task1)
 
 ## Задача 2
