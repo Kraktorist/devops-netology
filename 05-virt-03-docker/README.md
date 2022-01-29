@@ -69,19 +69,19 @@ Hey, Netology
 
 **Answer**
 
-    3
+    root@hmlab01:/data# hostname>/data/from-host
+    root@hmlab01:/data# docker run -v /data:/data -dt --name centos centos
+    f2e8b6cbb66469b9b7b5cfc6e77e959dc81ab1f9f3432927e54eef09291edf4b
+    root@hmlab01:/data# docker exec centos hostname>/data/from-centos
+    root@hmlab01:/data# docker run -v /data:/data -dt --name debian debian
+    510b5f64cc21b8a6509d3dce393b88d9b7cd7a6d0898af3d65cb4540b643cde3
+    root@hmlab01:/data# docker exec debian cat /data/*
+    f2e8b6cbb664
+    hmlab01
+
 
 ## Задача 4 (*)
 
 Воспроизвести практическую часть лекции самостоятельно.
 
 Соберите Docker образ с Ansible, загрузите на Docker Hub и пришлите ссылку вместе с остальными ответами к задачам.
-
-
----
-
-### Как cдавать задание
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
