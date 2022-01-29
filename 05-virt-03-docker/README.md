@@ -25,7 +25,7 @@ Hey, Netology
 **Answer**
 
 [ GitHub Dockerfile ](.Dockerfile-#1)  
-[ DockerHub image](https://hub.docker.com/r/accesshasbeendenied/kraktorist_repo/tags)
+[ DockerHub image](https://hub.docker.com/r/accesshasbeendenied/task1)
 
 ## Задача 2
 
@@ -50,7 +50,7 @@ Hey, Netology
 **Answer**
 
 
-    - Высоконагруженное монолитное java веб-приложение;
+    - Высоконагруженное монолитное java веб-приложение - 
     - Nodejs веб-приложение;
     - Мобильное приложение c версиями для Android и iOS;
     - Шина данных на базе Apache Kafka;
