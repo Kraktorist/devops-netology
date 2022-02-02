@@ -27,9 +27,18 @@
 Для получения зачета, вам необходимо предоставить:
 - Скриншот страницы свойств созданной ВМ, как на примере ниже:
 
-<p align="center">
-  <img width="1200" height="600" src="./assets/yc_01.png">
-</p>
+...
+
+**Answer**
+
+(base) kraktorist@hmlab01:~/repos/devops-netology/05-virt-04-docker-compose/src/terraform$ yc compute instance list
++----------------------+--------+---------------+---------+-------------+----------------+
+|          ID          |  NAME  |    ZONE ID    | STATUS  | EXTERNAL IP |  INTERNAL IP   |
++----------------------+--------+---------------+---------+-------------+----------------+
+| fhml1j0k6bq3dk7bd4oo | node01 | ru-central1-a | RUNNING | 51.250.2.9  | 192.168.101.27 |
++----------------------+--------+---------------+---------+-------------+----------------+
+
+  ![Packer image](assets/terraform_instance.png)
 
 ## Задача 3
 
