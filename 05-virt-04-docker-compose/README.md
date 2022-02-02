@@ -31,12 +31,12 @@
 
 **Answer**
 
-(base) kraktorist@hmlab01:~/repos/devops-netology/05-virt-04-docker-compose/src/terraform$ yc compute instance list
-+----------------------+--------+---------------+---------+-------------+----------------+
-|          ID          |  NAME  |    ZONE ID    | STATUS  | EXTERNAL IP |  INTERNAL IP   |
-+----------------------+--------+---------------+---------+-------------+----------------+
-| fhml1j0k6bq3dk7bd4oo | node01 | ru-central1-a | RUNNING | 51.250.2.9  | 192.168.101.27 |
-+----------------------+--------+---------------+---------+-------------+----------------+
+    root@hmlab01:~/# yc compute instance list
+    +----------------------+--------+---------------+---------+-------------+----------------+
+    |          ID          |  NAME  |    ZONE ID    | STATUS  | EXTERNAL IP |  INTERNAL IP   |
+    +----------------------+--------+---------------+---------+-------------+----------------+
+    | fhml1j0k6bq3dk7bd4oo | node01 | ru-central1-a | RUNNING | 51.250.2.9  | 192.168.101.27 |
+    +----------------------+--------+---------------+---------+-------------+----------------+
 
   ![Packer image](assets/terraform_instance.png)
 
