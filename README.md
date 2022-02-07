@@ -20,6 +20,7 @@
 1. [ IaaC Basics](./05-virt-02-iaac)
 1. [ Docker](./05-virt-03-docker)
 1. [ docker-compose](./05-virt-04-docker-compose)
+1. [ Docker Swarm](./05-virt-04-docker-swarm)
 
 
 
