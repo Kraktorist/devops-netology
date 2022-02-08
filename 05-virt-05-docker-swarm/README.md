@@ -11,7 +11,6 @@
 
 **Answer**
 
-
 - **В чём отличие режимов работы сервисов в Docker Swarm кластере: replication и global?**  
 replication type обеспечивает запуск заданного количества реплик, размещая их на доступных нодах кластера, а global type обеспечивает запуск по одной реплике на каждой доступной ноде кластера. Работает это примерно также, как ReplicaSet и DaemonSet в Kubernetes.
 - **Какой алгоритм выбора лидера используется в Docker Swarm кластере?**  
@@ -31,7 +30,15 @@ docker node ls
 
 **Answer**
 
-    2
+    [centos@node01 ~]$ sudo docker node ls
+    ID                            HOSTNAME             STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+    00sndgw2qxrw3q13wqkf63mx4 *   node01.netology.yc   Ready     Active         Leader           20.10.12
+    ohslcduwsm8iwiwqe1e8er98a     node02.netology.yc   Ready     Active         Reachable        20.10.12
+    dkfgtfqmjjcnmdfvxtmuwl8by     node03.netology.yc   Ready     Active         Reachable        20.10.12
+    8b9b37mi476oz21o473u63ben     node04.netology.yc   Ready     Active                          20.10.12
+    xdxld59f6e7u6q6u30tgp2yy3     node05.netology.yc   Ready     Active                          20.10.12
+    x641f3fcbxa7v108xqa7nxqc0     node06.netology.yc   Ready     Active                          20.10.12
+
 
 ## Задача 3
 
