@@ -30,6 +30,8 @@ docker node ls
 
 **Answer**
 
+  ![docker node ls](assets/docker-ls.png)  
+
     [centos@node01 ~]$ sudo docker node ls
     ID                            HOSTNAME             STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
     00sndgw2qxrw3q13wqkf63mx4 *   node01.netology.yc   Ready     Active         Leader           20.10.12
