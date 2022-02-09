@@ -53,16 +53,15 @@ docker service ls
 
 **Answer**
 
-    3
+  ![docker node ls](assets/docker-ls.png)  
 
-## Задача 4 (*)
-
-Выполнить на лидере Docker Swarm кластера команду (указанную ниже) и дать письменное описание её функционала, что она делает и зачем она нужна:
-```
-# см.документацию: https://docs.docker.com/engine/swarm/swarm_manager_locking/
-docker swarm update --autolock=true
-```
-
-**Answer**
-
-    4
+    [root@node01 ansible]# docker service ls
+    ID             NAME                                MODE         REPLICAS   IMAGE                                          PORTS
+    jlhgjojuxtro   swarm_monitoring_alertmanager       replicated   1/1        stefanprodan/swarmprom-alertmanager:v0.14.0    
+    keo3ogk0cygs   swarm_monitoring_caddy              replicated   1/1        stefanprodan/caddy:latest                      *:3000->3000/tcp, *:9090->9090/tcp, *:9093-9094->9093-9094/tcp
+    pcjvk4y2q7jx   swarm_monitoring_cadvisor           global       6/6        google/cadvisor:latest                         
+    l150tqel84t4   swarm_monitoring_dockerd-exporter   global       6/6        stefanprodan/caddy:latest                      
+    nxzoheek2i96   swarm_monitoring_grafana            replicated   1/1        stefanprodan/swarmprom-grafana:5.3.4           
+    3dfc3et0lkcf   swarm_monitoring_node-exporter      global       6/6        stefanprodan/swarmprom-node-exporter:v0.16.0   
+    jdtlhod4gdqf   swarm_monitoring_prometheus         replicated   1/1        stefanprodan/swarmprom-prometheus:v2.5.0       
+    jumqm7tdd57q   swarm_monitoring_unsee              replicated   1/1        cloudflare/unsee:v0.8.0              
