@@ -53,7 +53,7 @@ docker service ls
 
 **Answer**
 
-  ![docker node ls](assets/docker-ls.png)  
+  ![docker node ls](assets/docker-service.png)  
 
     [root@node01 ansible]# docker service ls
     ID             NAME                                MODE         REPLICAS   IMAGE                                          PORTS
