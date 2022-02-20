@@ -40,7 +40,62 @@
 
 **Answer**  
 
-    2
+[SQL file](answer2.sql)
+
+    postgres=# \l
+                                    List of databases
+    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+    -----------+----------+----------+------------+------------+-----------------------
+    postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+    template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+            |          |          |            |            | postgres=CTc/postgres
+    template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+            |          |          |            |            | postgres=CTc/postgres
+    test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+    (4 rows)
+---
+    test_db=# \d orders
+                                Table "public.orders"
+        Column    |  Type   | Collation | Nullable |              Default               
+    --------------+---------+-----------+----------+------------------------------------
+    id           | integer |           | not null | nextval('orders_id_seq'::regclass)
+    наименование | text    |           | not null | 
+    цена         | integer |           | not null | 
+    Indexes:
+        "orders_pkey" PRIMARY KEY, btree (id)
+    Referenced by:
+        TABLE "clients" CONSTRAINT "clients_заказ_fkey" FOREIGN KEY ("заказ") REFERENCES orders(id)
+
+---
+    test_db=# \d clients
+                                    Table "public.clients"
+        Column       |  Type   | Collation | Nullable |               Default               
+    -------------------+---------+-----------+----------+-------------------------------------
+    id                | integer |           | not null | nextval('clients_id_seq'::regclass)
+    фамилия           | text    |           | not null | 
+    страна проживания | text    |           |          | 
+    заказ             | integer |           |          | 
+    Indexes:
+        "clients_pkey" PRIMARY KEY, btree (id)
+        "country" btree ("страна проживания")
+    Foreign-key constraints:
+        "clients_заказ_fkey" FOREIGN KEY ("заказ") REFERENCES orders(id)
+---
+    test_db=# \dp
+                                            Access privileges
+    Schema |      Name      |   Type   |         Access privileges          | Column privileges | Policies 
+    --------+----------------+----------+------------------------------------+-------------------+----------
+    public | clients        | table    | postgres=arwdDxt/postgres         +|                   | 
+            |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
+            |                |          | "test-simple-user"=arwd/postgres   |                   | 
+    public | clients_id_seq | sequence |                                    |                   | 
+    public | orders         | table    | postgres=arwdDxt/postgres         +|                   | 
+            |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
+            |                |          | "test-simple-user"=arwd/postgres   |                   | 
+    public | orders_id_seq  | sequence |                                    |                   | 
+    (4 rows)
+
+
 
 ## Задача 3
 
