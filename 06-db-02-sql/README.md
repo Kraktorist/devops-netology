@@ -174,7 +174,7 @@
 
 **Answer**
 
-    [SQL file](answer3.sql)
+[SQL file](answer3.sql)
 ---
     test_db=# SELECT count(id) FROM orders;
     count 
