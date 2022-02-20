@@ -48,9 +48,9 @@
     -----------+----------+----------+------------+------------+-----------------------
     postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
     template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-            |          |          |            |            | postgres=CTc/postgres
+              |          |          |            |            | postgres=CTc/postgres
     template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-            |          |          |            |            | postgres=CTc/postgres
+              |          |          |            |            | postgres=CTc/postgres
     test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
     (4 rows)
 
@@ -87,12 +87,12 @@
     Schema |      Name      |   Type   |         Access privileges          | Column privileges | Policies 
     --------+----------------+----------+------------------------------------+-------------------+----------
     public | clients        | table    | postgres=arwdDxt/postgres         +|                   | 
-            |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
-            |                |          | "test-simple-user"=arwd/postgres   |                   | 
+           |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
+           |                |          | "test-simple-user"=arwd/postgres   |                   | 
     public | clients_id_seq | sequence |                                    |                   | 
     public | orders         | table    | postgres=arwdDxt/postgres         +|                   | 
-            |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
-            |                |          | "test-simple-user"=arwd/postgres   |                   | 
+           |                |          | "test-admin-user"=arwdDxt/postgres+|                   | 
+           |                |          | "test-simple-user"=arwd/postgres   |                   | 
     public | orders_id_seq  | sequence |                                    |                   | 
     (4 rows)
 
