@@ -257,4 +257,19 @@
 
 **Answer**
 
-    6
+    $ echo 'backuping database'
+    $ sudo docker exec -ti 77792eb99a09 bash
+    $ pg_dump -U postgres test_db>/postgres_backup/test_db.sql
+    $ exit
+    $ echo 'creating new container with Postgres'
+    $ sudo docker run --rm --name postgres -dt \
+    -e POSTGRES_USER=postgres \
+    -e POSTGRES_PASSWORD=postgres  \
+    -v /docker_volumes/postgres_backup:/postgres_backup \
+    postgres:12-alpine
+    $ sudo docker exec -ti postgres bash
+    $ echo 'restoring database'
+    $ createdb -U postgres test_db
+    $ createuser -U postgres "test-admin-user"
+    $ createuser -U postgres "test-simple-user"
+    $ psql -U postgres test_db</postgres_backup/test_db.sql
