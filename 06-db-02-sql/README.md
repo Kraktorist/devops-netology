@@ -40,7 +40,7 @@
 
 **Answer**  
 
-[SQL file](answer2.sql)
+[CREATE Operations](answer2.sql)
 
     test_db=# \l
                                     List of databases
@@ -174,7 +174,7 @@
 
 **Answer**  
 
-[SQL file](answer3.sql)
+[INSERT Operations](answer3.sql)
 
 ---
     test_db=# SELECT count(id) FROM orders;
@@ -210,7 +210,7 @@
 
 **Answer**
 
-[Update SQL file](answer4.sql)
+[UPDATE Operations](answer4.sql)
 
 ---
     test_db=# SELECT * FROM clients where "заказ" IS NOT NULL;
