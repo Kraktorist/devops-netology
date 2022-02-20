@@ -42,17 +42,17 @@
 
 [SQL file](answer2.sql)
 
-    postgres=# \l
-                                    List of databases
-    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
-    -----------+----------+----------+------------+------------+-----------------------
-    postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
-    template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-            |          |          |            |            | postgres=CTc/postgres
-    template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-            |          |          |            |            | postgres=CTc/postgres
-    test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
-    (4 rows)
+        postgres=# \l
+                                        List of databases
+        Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+        -----------+----------+----------+------------+------------+-----------------------
+        postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+        template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+                |          |          |            |            | postgres=CTc/postgres
+        template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+                |          |          |            |            | postgres=CTc/postgres
+        test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+        (4 rows)
 ---
     test_db=# \d orders
                                 Table "public.orders"
