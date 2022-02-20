@@ -241,7 +241,25 @@
 
 **Answer**
 
-    5
+    test_db=# EXPLAIN ANALYZE
+    test_db-# SELECT * FROM clients INNER JOIN orders on clients."заказ"=orders.id;
+                                                    QUERY PLAN                                                  
+    -------------------------------------------------------------------------------------------------------------
+    Hash Join  (cost=1.11..2.19 rows=5 width=112) (actual time=0.080..0.083 rows=3 loops=1)
+    Hash Cond: (clients."заказ" = orders.id)
+    ->  Seq Scan on clients  (cost=0.00..1.05 rows=5 width=72) (actual time=0.005..0.006 rows=5 loops=1)
+    ->  Hash  (cost=1.05..1.05 rows=5 width=40) (actual time=0.021..0.021 rows=5 loops=1)
+            Buckets: 1024  Batches: 1  Memory Usage: 9kB
+            ->  Seq Scan on orders  (cost=0.00..1.05 rows=5 width=40) (actual time=0.005..0.006 rows=5 loops=1)
+    Planning Time: 0.412 ms
+    Execution Time: 0.133 ms
+    (8 rows)
+---
+
+>При запросе будет просканирована таблица orders, по ее строкам будут просчитаны хэши, которые будут последовательно сравнены с хэшами из таблицы clients. В выборку попадут строки с совпадающими хэшами.
+По каждой операции показана ее стоимость, количество задействованных строк.
+
+
 
 ## Задача 6
 
