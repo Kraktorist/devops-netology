@@ -10,7 +10,8 @@
 
 **Answer**  
 
-        1
+    [docker-compose.yml](docker-compose.yml)
+
 ## Задача 2
 
 В БД из задачи 1: 

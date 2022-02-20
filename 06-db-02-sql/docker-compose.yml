@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - ~/docker_volumes/postgres:/var/lib/postgresql/data
+      - ~/docker_volumes/postgres_backup:/postgres_backup
+    env_file:
+      - .env
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
