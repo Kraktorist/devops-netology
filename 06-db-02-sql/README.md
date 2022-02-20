@@ -82,6 +82,50 @@
     Foreign-key constraints:
         "clients_заказ_fkey" FOREIGN KEY ("заказ") REFERENCES orders(id)
 ---
+    test_db=# SELECT grantee, table_name, privilege_type
+    test_db-# FROM information_schema."role_table_grants"
+    test_db-# WHERE "table_name" in ('orders', 'clients');
+        grantee      | table_name | privilege_type 
+    ------------------+------------+----------------
+    postgres         | orders     | INSERT
+    postgres         | orders     | SELECT
+    postgres         | orders     | UPDATE
+    postgres         | orders     | DELETE
+    postgres         | orders     | TRUNCATE
+    postgres         | orders     | REFERENCES
+    postgres         | orders     | TRIGGER
+    test-admin-user  | orders     | INSERT
+    test-admin-user  | orders     | SELECT
+    test-admin-user  | orders     | UPDATE
+    test-admin-user  | orders     | DELETE
+    test-admin-user  | orders     | TRUNCATE
+    test-admin-user  | orders     | REFERENCES
+    test-admin-user  | orders     | TRIGGER
+    test-simple-user | orders     | INSERT
+    test-simple-user | orders     | SELECT
+    test-simple-user | orders     | UPDATE
+    test-simple-user | orders     | DELETE
+    postgres         | clients    | INSERT
+    postgres         | clients    | SELECT
+    postgres         | clients    | UPDATE
+    postgres         | clients    | DELETE
+    postgres         | clients    | TRUNCATE
+    postgres         | clients    | REFERENCES
+    postgres         | clients    | TRIGGER
+    test-admin-user  | clients    | INSERT
+    test-admin-user  | clients    | SELECT
+    test-admin-user  | clients    | UPDATE
+    test-admin-user  | clients    | DELETE
+    test-admin-user  | clients    | TRUNCATE
+    test-admin-user  | clients    | REFERENCES
+    test-admin-user  | clients    | TRIGGER
+    test-simple-user | clients    | INSERT
+    test-simple-user | clients    | SELECT
+    test-simple-user | clients    | UPDATE
+    test-simple-user | clients    | DELETE
+    (36 rows)
+
+---
     test_db=# \dp
                                             Access privileges
     Schema |      Name      |   Type   |         Access privileges          | Column privileges | Policies 
@@ -130,7 +174,20 @@
 
 **Answer**
 
-    3
+    [SQL file](answer3.sql)
+---
+    test_db=# SELECT count(id) FROM orders;
+    count 
+    -------
+        5
+    (1 row)
+
+    test_db=# SELECT count(id) FROM clients;
+    count 
+    -------
+        5
+    (1 row)
+
 
 ## Задача 4
 
