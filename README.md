@@ -22,7 +22,7 @@
 1. [ docker-compose](./05-virt-04-docker-compose)
 1. [ Docker Swarm](./05-virt-04-docker-swarm)
 1. [ Database basics](./06-db-01-basics)
-1. [ SQL](./06-db-01-sql)
+1. [ SQL](./06-db-02-sql)
 
 
 
