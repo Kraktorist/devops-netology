@@ -206,6 +206,7 @@
 Приведите в ответе измененный файл `my.cnf`.
 
 **Answer**
+
     [mysqld]
     pid-file        = /var/run/mysqld/mysqld.pid
     socket          = /var/run/mysqld/mysqld.sock
