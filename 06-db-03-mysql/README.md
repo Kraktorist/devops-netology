@@ -206,5 +206,17 @@
 Приведите в ответе измененный файл `my.cnf`.
 
 **Answer**
+    [mysqld]
+    pid-file        = /var/run/mysqld/mysqld.pid
+    socket          = /var/run/mysqld/mysqld.sock
+    datadir         = /var/lib/mysql
+    secure-file-priv= NULL
 
-    4
+    innodb_flush_log_at_trx_commit = 2      # Скорость IO важнее сохранности данных
+    innodb_flush_log_at_trx_commit = 0      # if ACID is not required
+    query_cache_size = 0
+    innodb_flush_method = O_DSYNC
+    innodb_file_per_table = 1               # Нужна компрессия таблиц для экономии места на диске
+    innodb_log_buffer_size = 1M             # Размер буфера с незакомиченными транзакциями 1 Мб
+    innodb_buffer_pool_size = 1G            # Буфер кеширования 30% от ОЗУ
+    innodb_log_file_size = 100M             # Размер файла логов операций 100 Мб
