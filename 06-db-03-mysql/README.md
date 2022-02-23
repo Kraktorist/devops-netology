@@ -26,7 +26,44 @@
 
 **Answer**
 
-    1
+    root@1173904d6d5d:/# mysql --user=root --password mysql
+
+---
+
+    mysql> \s
+    --------------
+    mysql  Ver 8.0.28 for Linux on x86_64 (MySQL Community Server - GPL)
+
+    Connection id:		14
+    Current database:	mysql
+    Current user:		root@localhost
+    SSL:			Not in use
+    Current pager:		stdout
+    Using outfile:		''
+    Using delimiter:	;
+    Server version:		8.0.28 MySQL Community Server - GPL
+
+---
+
+    root@1173904d6d5d:/# mysql --user=root --password test_db</backup/test_dump.sql
+    root@1173904d6d5d:/# mysql --user=root --password test_db 
+
+---
+    mysql> show tables;
+    +-------------------+
+    | Tables_in_test_db |
+    +-------------------+
+    | orders            |
+    +-------------------+
+    1 row in set (0.00 sec)
+
+    mysql> select count(*) from orders where price>300;
+    +----------+
+    | count(*) |
+    +----------+
+    |        1 |
+    +----------+
+    1 row in set (0.01 sec)
 
 
 ## Задача 2
@@ -40,14 +77,23 @@
     - Фамилия "Pretty"
     - Имя "James"
 
-Предоставьте привелегии пользователю `test` на операции SELECT базы `test_db`.
+Предоставьте привилегии пользователю `test` на операции SELECT базы `test_db`.
     
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES получите данные по пользователю `test` и 
 **приведите в ответе к задаче**.
 
 **Answer**
 
-    2
+[CREATING USER SQL](./assets/answer2.sql)
+
+    mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES WHERE USER='test';
+    +------+------+---------------------------------------+
+    | USER | HOST | ATTRIBUTE                             |
+    +------+------+---------------------------------------+
+    | test | %    | {"fname": "James", "lname": "Pretty"} |
+    +------+------+---------------------------------------+
+    1 row in set (0.00 sec)
+
 
 
 ## Задача 3
@@ -64,7 +110,7 @@
 **Answer**
 
     3
-
+    
 
 ## Задача 4 
 
