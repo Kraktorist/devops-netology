@@ -117,6 +117,79 @@
     +--------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+---------------------+------------+--------------------+----------+----------------+---------+
     1 row in set (0.01 sec)
 
+---
+
+    mysql> SHOW PROFILES;
+    +----------+------------+------------------------------------------------------------------+
+    | Query_ID | Duration   | Query                                                            |
+    +----------+------------+------------------------------------------------------------------+
+    |       58 | 0.00005425 | /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */                 |
+    |       59 | 0.00007100 | /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */   |
+    |       60 | 0.00008900 | /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */ |
+    |       61 | 0.00007275 | /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */   |
+    |       62 | 0.00008425 | /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */                         |
+    |       63 | 0.00095225 | SHOW ENGINE INNODB STATUS                                        |
+    |       64 | 0.00014825 | SHOW PROFILE 52                                                  |
+    |       65 | 0.00105100 | SELECT * FROM orders                                             |
+    |       66 | 0.00216225 | show tables                                                      |
+    |       67 | 0.00015425 | show tables orders                                               |
+    |       68 | 0.00017325 | show table orders                                                |
+    |       69 | 0.01060850 | SHOW TABLE STATUS                                                |
+    |       70 | 0.00053800 | select * from orders                                             |
+    |       71 | 0.05980525 | alter table orders ENGINE=MyISAM                                 |
+    |       72 | 0.00076175 | select * from orders                                             |
+    +----------+------------+------------------------------------------------------------------+
+    15 rows in set, 1 warning (0.00 sec)
+
+---
+
+    mysql> SHOW PROFILE FOR QUERY 70;
+    +--------------------------------+----------+
+    | Status                         | Duration |
+    +--------------------------------+----------+
+    | starting                       | 0.000125 |
+    | Executing hook on transaction  | 0.000015 |
+    | starting                       | 0.000016 |
+    | checking permissions           | 0.000015 |
+    | Opening tables                 | 0.000060 |
+    | init                           | 0.000016 |
+    | System lock                    | 0.000019 |
+    | optimizing                     | 0.000013 |
+    | statistics                     | 0.000028 |
+    | preparing                      | 0.000033 |
+    | executing                      | 0.000083 |
+    | end                            | 0.000012 |
+    | query end                      | 0.000009 |
+    | waiting for handler commit     | 0.000018 |
+    | closing tables                 | 0.000019 |
+    | freeing items                  | 0.000035 |
+    | cleaning up                    | 0.000023 |
+    +--------------------------------+----------+
+    17 rows in set, 1 warning (0.00 sec)
+
+    mysql> SHOW PROFILE FOR QUERY 72;
+    +--------------------------------+----------+
+    | Status                         | Duration |
+    +--------------------------------+----------+
+    | starting                       | 0.000162 |
+    | Executing hook on transaction  | 0.000018 |
+    | starting                       | 0.000023 |
+    | checking permissions           | 0.000022 |
+    | Opening tables                 | 0.000130 |
+    | init                           | 0.000018 |
+    | System lock                    | 0.000029 |
+    | optimizing                     | 0.000015 |
+    | statistics                     | 0.000032 |
+    | preparing                      | 0.000042 |
+    | executing                      | 0.000149 |
+    | end                            | 0.000015 |
+    | query end                      | 0.000018 |
+    | closing tables                 | 0.000022 |
+    | freeing items                  | 0.000042 |
+    | cleaning up                    | 0.000027 |
+    +--------------------------------+----------+
+    16 rows in set, 1 warning (0.00 sec)
+
 
 
 ## Задача 4 
