@@ -23,6 +23,7 @@
 1. [ Docker Swarm](./05-virt-04-docker-swarm)
 1. [ Database basics](./06-db-01-basics)
 1. [ SQL](./06-db-02-sql)
+1. [ MySQL](./06-db-03-mysql)
 
 
 
