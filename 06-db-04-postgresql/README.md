@@ -64,6 +64,7 @@
 
 **Answer**
 
+    ```sql
     BEGIN;
 
         CREATE TABLE public.orders_2 (
@@ -97,7 +98,7 @@
         ALTER TABLE public.orders_1 OWNER TO postgres;
         ALTER TABLE public.orders_2 OWNER TO postgres;
     END;
-
+    ```
 ---
 
     Да, можно было изначально заложить шардинг теми же запросами.
@@ -111,8 +112,10 @@
 
 **Answer**
 
+    ```sql
     CREATE TABLE public.orders (
         id integer NOT NULL,
         title character varying(80) NOT NULL UNIQUE,
         price integer DEFAULT 0
     );
+    ```
