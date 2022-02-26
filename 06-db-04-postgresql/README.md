@@ -64,41 +64,35 @@
 
 **Answer**
 
-    ```sql
-    BEGIN;
+```sql
+BEGIN;
+    CREATE TABLE public.orders_2 (
+        CHECK(price<=499)
+    ) INHERITS(orders);
+    CREATE TABLE public.orders_1 (
+        CHECK(price>499)
+    ) INHERITS(orders);
+    INSERT INTO public.orders_2 
+    SELECT * FROM public.orders 
+    WHERE price<=499;
+    DELETE FROM ONLY public.orders
+    WHERE price<=499;
+    INSERT INTO public.orders_1 
+    SELECT * FROM public.orders 
+    WHERE price>499;
+    DELETE FROM ONLY public.orders
+    WHERE price>499;
+    CREATE RULE orders_insert_less_or_equal_499 AS ON INSERT TO public.orders
+    WHERE (price<=499)
+    DO INSTEAD INSERT INTO public.orders_2 VALUES (NEW.*);
+    CREATE RULE orders_insert_bigger_499 AS ON INSERT TO public.orders
+    WHERE (price>499)
+    DO INSTEAD INSERT INTO public.orders_1 VALUES (NEW.*);
+    ALTER TABLE public.orders_1 OWNER TO postgres;
+    ALTER TABLE public.orders_2 OWNER TO postgres;
+END;
+```
 
-        CREATE TABLE public.orders_2 (
-            CHECK(price<=499)
-        ) INHERITS(orders);
-
-        CREATE TABLE public.orders_1 (
-            CHECK(price>499)
-        ) INHERITS(orders);
-
-        INSERT INTO public.orders_2 
-        SELECT * FROM public.orders 
-        WHERE price<=499;
-        DELETE FROM ONLY public.orders
-        WHERE price<=499;
-
-        INSERT INTO public.orders_1 
-        SELECT * FROM public.orders 
-        WHERE price>499;
-        DELETE FROM ONLY public.orders
-        WHERE price>499;
-
-        CREATE RULE orders_insert_less_or_equal_499 AS ON INSERT TO public.orders
-        WHERE (price<=499)
-        DO INSTEAD INSERT INTO public.orders_2 VALUES (NEW.*);
-
-        CREATE RULE orders_insert_bigger_499 AS ON INSERT TO public.orders
-        WHERE (price>499)
-        DO INSTEAD INSERT INTO public.orders_1 VALUES (NEW.*);
-
-        ALTER TABLE public.orders_1 OWNER TO postgres;
-        ALTER TABLE public.orders_2 OWNER TO postgres;
-    END;
-    ```
 ---
 
     Да, можно было изначально заложить шардинг теми же запросами.
@@ -112,10 +106,10 @@
 
 **Answer**
 
-    ```sql
-    CREATE TABLE public.orders (
-        id integer NOT NULL,
-        title character varying(80) NOT NULL UNIQUE,
-        price integer DEFAULT 0
-    );
-    ```
+```sql
+CREATE TABLE public.orders (
+    id integer NOT NULL,
+    title character varying(80) NOT NULL UNIQUE,
+    price integer DEFAULT 0
+);
+```
