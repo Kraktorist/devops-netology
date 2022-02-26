@@ -24,6 +24,6 @@
 1. [ Database basics](./06-db-01-basics)
 1. [ SQL](./06-db-02-sql)
 1. [ MySQL](./06-db-03-mysql)
-1. [ Postgres SQL](./06-db-04-postgresql)
-
+1. [ Postgres SQL ](./06-db-04-postgresql)
+1. [ ElasticSearch ](./06-db-05-elasticsearch)
 
