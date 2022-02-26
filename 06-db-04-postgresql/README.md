@@ -42,7 +42,15 @@
 
 **Answer**
 
-    2
+    test_database=# SELECT attname from pg_catalog.pg_stats
+    test_database-# WHERE tablename = 'orders' 
+    test_database-# ORDER BY avg_width desc 
+    test_database-# LIMIT 1;
+    attname 
+    ---------
+    title
+    (1 row)
+
 
 ## Задача 3
 
