@@ -92,7 +92,34 @@
 
 **Answer**
 
-    2
+    health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   ind-1 aI0yNucZQ62tgtFjCpUJbQ   1   0          0            0       225b           225b
+    yellow open   ind-3 4Hmm8y9NTcK8PffMT-Kfrw   4   2          0            0       900b           900b
+    yellow open   ind-2 Psgr7Ac2SRaWVqItoPQx9g   2   1          0            0       450b           450b
+---
+```json
+    {
+    "cluster_name" : "elasticsearch",
+    "status" : "yellow",
+    "timed_out" : false,
+    "number_of_nodes" : 1,
+    "number_of_data_nodes" : 1,
+    "active_primary_shards" : 9,
+    "active_shards" : 9,
+    "relocating_shards" : 0,
+    "initializing_shards" : 0,
+    "unassigned_shards" : 10,
+    "delayed_unassigned_shards" : 0,
+    "number_of_pending_tasks" : 0,
+    "number_of_in_flight_fetch" : 0,
+    "task_max_waiting_in_queue_millis" : 0,
+    "active_shards_percent_as_number" : 47.368421052631575
+    }
+```
+---
+    The cluster is in yellow state because it's not fault tolerant due to the only one node is added.
+    Some indices are in yellow state because there are no available nodes to allocate all required shards for them.
+
 
 ## Задача 3
 
