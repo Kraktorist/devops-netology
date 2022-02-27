@@ -171,7 +171,7 @@
     {
     "acknowledged" : true
     }
-
+---
     sh-4.2$ ls -la /var/lib/elasticsearch/snapshots/
     total 32
     drwxr-xr-x 3 elasticsearch elasticsearch   134 Feb 27 10:44 .
@@ -181,7 +181,7 @@
     drwxr-xr-x 5 elasticsearch elasticsearch    96 Feb 27 10:44 indices
     -rw-r--r-- 1 elasticsearch elasticsearch 17605 Feb 27 10:44 meta-S6r-rDm_RlOKTIaQFx_AuQ.dat
     -rw-r--r-- 1 elasticsearch elasticsearch   384 Feb 27 10:44 snap-S6r-rDm_RlOKTIaQFx_AuQ.dat
-
+---
     =========List Indices===============
     health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
     green  open   test  ccMI4NauRZiPd_7vu9ex5g   1   0          0            0       225b           225b
