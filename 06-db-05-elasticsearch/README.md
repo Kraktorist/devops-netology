@@ -158,6 +158,7 @@
 
 [ Queries ](./assets/repo.sh)
 
+    =========Create Repository==========
     curl -k -u ${ES_USERNAME}:${ES_PASSWORD} -X PUT "https://localhost:9200/_snapshot/netology_backup?pretty" \
         -H "Content-Type: application/json" -d'
         {
@@ -167,8 +168,7 @@
         }
         }
         '
-        
-    =========Create Repository==========
+
     {
     "acknowledged" : true
     }
