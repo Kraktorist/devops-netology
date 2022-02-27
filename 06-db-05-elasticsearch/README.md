@@ -158,6 +158,21 @@
 
 [ Queries ](./assets/repo.sh)
 
+    curl -k -u ${ES_USERNAME}:${ES_PASSWORD} -X PUT "https://localhost:9200/_snapshot/netology_backup?pretty" \
+        -H "Content-Type: application/json" -d'
+        {
+        "type": "fs",
+        "settings": {
+            "location": "/var/lib/elasticsearch/snapshots"
+        }
+        }
+        '
+        
+    =========Create Repository==========
+    {
+    "acknowledged" : true
+    }
+
     sh-4.2$ ls -la /var/lib/elasticsearch/snapshots/
     total 32
     drwxr-xr-x 3 elasticsearch elasticsearch   134 Feb 27 10:44 .

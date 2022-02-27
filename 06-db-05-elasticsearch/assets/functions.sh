@@ -11,7 +11,7 @@ function create_repository {
     echo ""
     echo "=========Create Repository=========="
     curl -k -u ${ES_USERNAME}:${ES_PASSWORD} -X PUT "${ES_URL}/_snapshot/$1?pretty" \
-        -H 'Content-Type: application/json' -d'
+        -H "Content-Type: application/json" -d'
         {
         "type": "fs",
         "settings": {
