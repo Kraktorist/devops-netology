@@ -7,6 +7,7 @@ RUN export ES_HOME="/var/lib/elasticsearch" && \
     mv /elasticsearch-8.0.0 ${ES_HOME} && \
     echo -e "-Xms4g\n-Xmx4g">${ES_HOME}/config/jvm.options.d/default.options && \ 
     echo "node.name: netology_test">>${ES_HOME}/config/elasticsearch.yml && \
+    echo "path.repo: ${ES_HOME}">>${ES_HOME}/config/elasticsearch.yml && \
     adduser --system --shell=/bin/false --no-create-home elasticsearch && \
     chown -R elasticsearch:elasticsearch ${ES_HOME}
 

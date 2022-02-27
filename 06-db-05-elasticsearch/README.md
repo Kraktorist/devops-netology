@@ -92,12 +92,15 @@
 
 **Answer**
 
+[ Queries ](./assets/queries.sh)
+
+    =========List Indices===============
     health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
-    green  open   ind-1 aI0yNucZQ62tgtFjCpUJbQ   1   0          0            0       225b           225b
-    yellow open   ind-3 4Hmm8y9NTcK8PffMT-Kfrw   4   2          0            0       900b           900b
-    yellow open   ind-2 Psgr7Ac2SRaWVqItoPQx9g   2   1          0            0       450b           450b
----
-```json
+    green  open   ind-1 r_Ri9TXUQ1a017QdiJvEDg   1   0          0            0       225b           225b
+    yellow open   ind-3 9okSNiZySjCYyaAYKQD4SA   4   2          0            0       225b           225b
+    yellow open   ind-2 83tH6vUhRF2yNzHgHoATUQ   2   1          0            0       225b           225b
+
+    =======Getting Cluster Health=======
     {
     "cluster_name" : "elasticsearch",
     "status" : "yellow",
@@ -115,7 +118,7 @@
     "task_max_waiting_in_queue_millis" : 0,
     "active_shards_percent_as_number" : 47.368421052631575
     }
-```
+
 ---
     The cluster is in yellow state because it's not fault tolerant due to the only one node is added.
     Some indices are in yellow state because there are no available nodes to allocate all required shards for them.
@@ -153,4 +156,39 @@
 
 **Answer**
 
-    3
+[ Queries ](./assets/repo.sh)
+
+    sh-4.2$ ls -la /var/lib/elasticsearch/snapshots/
+    total 32
+    drwxr-xr-x 3 elasticsearch elasticsearch   134 Feb 27 10:44 .
+    drwxr-xr-x 1 elasticsearch elasticsearch    61 Feb 27 10:44 ..
+    -rw-r--r-- 1 elasticsearch elasticsearch  1094 Feb 27 10:44 index-0
+    -rw-r--r-- 1 elasticsearch elasticsearch     8 Feb 27 10:44 index.latest
+    drwxr-xr-x 5 elasticsearch elasticsearch    96 Feb 27 10:44 indices
+    -rw-r--r-- 1 elasticsearch elasticsearch 17605 Feb 27 10:44 meta-S6r-rDm_RlOKTIaQFx_AuQ.dat
+    -rw-r--r-- 1 elasticsearch elasticsearch   384 Feb 27 10:44 snap-S6r-rDm_RlOKTIaQFx_AuQ.dat
+
+    =========List Indices===============
+    health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   test  ccMI4NauRZiPd_7vu9ex5g   1   0          0            0       225b           225b
+
+    =========Restore Snapshot============
+    curl -k -u ${ES_USERNAME}:${ES_PASSWORD} -X POST "https://localhost:9200/_snapshot/netology_backup/snapshot1/_restore?wait_for_completion=true&pretty"
+    {
+    "snapshot" : {
+        "snapshot" : "snapshot1",
+        "indices" : [
+        "test"
+        ],
+        "shards" : {
+        "total" : 1,
+        "failed" : 0,
+        "successful" : 1
+        }
+    }
+    }
+
+    =========List Indices===============
+    health status index  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+    green  open   test-2 F1XHTH-JSXKwaHju0tckAg   1   0          0            0       225b           225b
+    green  open   test   dBq9DCmdTdykWwdCZkbPmA   1   0          0            0       225b           225b

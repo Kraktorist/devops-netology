@@ -1,23 +1,16 @@
 #!/usr/bin/env bash
-USERNAME=elastic
-PASSWORD=7iKtG_85jBHYfpL9yd37
+
+. functions.sh
+
+ES_USERNAME=elastic
 ES_URL="https://localhost:9200"
-INDEX="ind-3"
-REPLICAS=2
-SHARDS=4
+ES_REPO_NAME="netology_backup"
+ES_REPO_PATH="/var/lib/elasticsearch/snapshots"
 
-curl -k -u ${USERNAME}:${PASSWORD} -X PUT "${ES_URL}/${INDEX}?pretty" \
-    -H 'Content-Type: application/json' -d'
-    {
-    "settings": {
-        "index": {
-        "number_of_shards": '${SHARDS}',  
-        "number_of_replicas": '${REPLICAS}' 
-        }
-    }
-    }
-    '
 
-curl -k -u ${USERNAME}:${PASSWORD} -X GET "${ES_URL}/_cat/indices?pretty"
+create_index "ind-1" 0 1
+create_index "ind-2" 1 2
+create_index "ind-3" 2 4
 
-curl -k -u ${USERNAME}:${PASSWORD} -X GET "${ES_URL}/_cluster/health"
+list_indices
+get_cluster_health
