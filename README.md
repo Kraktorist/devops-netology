@@ -26,4 +26,5 @@
 1. [ MySQL](./06-db-03-mysql)
 1. [ Postgres SQL ](./06-db-04-postgresql)
 1. [ ElasticSearch ](./06-db-05-elasticsearch)
+1. [ DB Troubleshooting ](./06-db-06-troobleshooting)
 
