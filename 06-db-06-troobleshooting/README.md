@@ -49,9 +49,6 @@ db.collection.reIndex()
 `mongotop` and `mongostat` - server performance utilities
 
 
-
-
-
 ## Задача 2
 
 Перед выполнением задания познакомьтесь с документацией по [Redis latency troobleshooting](https://redis.io/topics/latency).
@@ -68,8 +65,8 @@ db.collection.reIndex()
  
  **Answer**
 
-    2
-
+>The issue is described [here](https://redis.io/topics/latency#:~:text=Latency%20generated%20by%20expires): if the database has many many keys expiring in the same second, and these make up at least 25% of the current population of keys with an expire set, Redis can block in order to get the percentage of keys already expired below 25%.
+    
 ## Задача 3
 
 Перед выполнением задания познакомьтесь с документацией по [Common Mysql errors](https://dev.mysql.com/doc/refman/8.0/en/common-errors.html).
