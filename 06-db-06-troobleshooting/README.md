@@ -98,8 +98,7 @@ There are three typical cases related to our issue:
 > - fix the network;
 > - increase `net_read_timeout`;
 > - increase `max_allowed_packet`;
-> - optimize sql queries;
-> - refactor the application;
+> - optimize sql queries and refactor the application;
 
 
 ## Задача 4
