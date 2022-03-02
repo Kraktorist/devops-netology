@@ -83,7 +83,23 @@ InterfaceError: (InterfaceError) 2013: Lost connection to MySQL server during qu
 
 **Answer**
 
-    3
+>Common errors related to losing connection to MySQL server are described [in this article](https://dev.mysql.com/doc/refman/8.0/en/error-lost-connection.html).
+There are three typical cases related to our issue:
+>1. Poor network connection.
+>2. The queries slower than `net_read_timeout`.
+>3. The results are bigger than `max_allowed_packet`.  
+>     
+>To investigate the issue:
+> 1. make sure that the network connection is stable and doesn't have any bottlenecks.
+> 2. identify slow queries with `show processlist;` and by logging them to the further analyzing;
+> 3. determine response size by replaying real queries;
+>
+> Depending on the results we could do one of the following:
+> - fix the network;
+> - increase `net_read_timeout`;
+> - increase `max_allowed_packet`;
+> - optimize sql queries;
+> - refactor the application;
 
 
 ## Задача 4
