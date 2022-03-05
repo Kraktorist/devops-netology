@@ -15,7 +15,7 @@
 
 [killOp command example](https://docs.mongodb.com/manual/reference/method/db.killOp/#sharded-cluster)
 1. Open mongosh console
-2. Run the script which finds and stops slow operations
+2. Run the script which finds and stops operations which take longer than 180s
 ```javascript
 use admin
 db.currentOp().inprog.forEach(
@@ -119,4 +119,4 @@ There are three typical cases related to our issue:
 **Answer**
 
 >The Linux kernel found not enough memory on the machine and invoked `Out-of-Memory Killer` to stop the the process based on the `oom_score` value, therefore oom-killer stopped `postmaster`.  
-The easiest way to fix this is adding more memory to the server. Another approach is optimization of resource consumption by working with PostgreSQL configuration such as `temp_buffers` and `work_mem`. In this case we need to keep balance between performance and resource consumption.
+The easiest way to fix this is adding more memory to the server. Another approach is optimization of resource consumption by working with PostgreSQL configuration parameters such as `temp_buffers` and `work_mem`. In this case we need to keep balance between performance and resource consumption.
