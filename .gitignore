@@ -33,5 +33,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# terraform lock files
+.terraform.lock.hcl
+
 # Vagrant dirs
 **/.vagrant/*
