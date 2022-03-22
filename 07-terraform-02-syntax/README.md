@@ -92,5 +92,5 @@ AWS предоставляет достаточно много бесплатн�
 
 **Answer**
 
-> 1. Packer
+> 1. [ packer ](https://www.packer.io/)
 > 1. [ terraform ](./assets/)
