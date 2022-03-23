@@ -50,7 +50,7 @@ AWS предоставляет достаточно много бесплатн�
 
 **Answer**
 
-    vagrant@vagrnat:/$ yc config list
+    vagrant@vagrant:/$ yc config list
     token: AQAAAAA******************JLX9Q
     cloud-id: b1gtpc72rn52t584s3n1
     folder-id: b1grpcal04shmrlkfin8
