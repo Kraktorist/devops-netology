@@ -29,4 +29,6 @@
 1. [ DB Troubleshooting ](./06-db-06-troobleshooting)
 1. [ IaaC ](./07-terraform-01-intro)
 1. [ Terraform Syntax ](./07-terraform-02-syntax)
+1. [ Terraform Basics ](./07-terraform-03-basic)
 
+ 
