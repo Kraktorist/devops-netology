@@ -10,6 +10,7 @@
 [здесь](https://www.terraform.io/docs/backends/types/s3.html).
 1. Зарегистрируйте бэкэнд в терраформ проекте как описано по ссылке выше. 
 
+---
 **Answer**
 
 [backend.tf](assets/backend.tf)
@@ -34,6 +35,7 @@ dynamodb.
 * Вывод команды `terraform workspace list`.
 * Вывод команды `terraform plan` для воркспейса `prod`.  
 
+---
 **Answer**
 
 ```console
