@@ -5,10 +5,3 @@ spec:
       privileged: false
     stdin: false
     tty: false
-    command: 
-      - atlantis
-    ports: 
-      - 80:4141
-    args:
-      - server
-      - --gh-user=${GH_USER} --gh-token=${GH_TOKEN} --gh-webhook-secret="${GH_WH_SECRET}" --repo-allowlist="${REPOS}"

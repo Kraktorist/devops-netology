@@ -1,14 +1,8 @@
 spec:
   containers:
-  - image: cr.yandex/crpvmmhvo5sltt2hg77r/atlantis
+  - image: cr.yandex/crpqb60so0if5tet3o17/atlantis
     securityContext:
       privileged: false
     stdin: false
     tty: false
-    command: 
-      - atlantis
-    ports: 
-      - 80:4141
-    args:
-      - server
-      - --gh-user= --gh-token= --gh-webhook-secret="" --repo-allowlist=""
+
