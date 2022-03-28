@@ -2,16 +2,3 @@ version: 3
 projects:
 - name: answer1
   dir: 07-terraform-04-teamwork/assets/answer1/
-  workflow: custom
-workflows:
-  custom:
-    plan:
-      steps:
-      - run: echo PLAN
-      - init
-      - plan:
-          extra_args: ["-lock", "false"]
-    apply:
-      steps:
-      - run: echo APPLY
-      - apply
