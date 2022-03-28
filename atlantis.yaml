@@ -1,4 +1,3 @@
 version: 3
 projects:
 - dir: 07-terraform-04-teamwork/assets/answer1/
-workflow: custom
