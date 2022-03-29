@@ -6,15 +6,12 @@ services:
       - "4141:4141"
     command:
     - server
-    - --gh-user="$${ATL_GH_USER}"
-    - --gh-token="$${ATL_GH_TOKEN}"
-    - --gh-webhook-secret="$${ATL_GH_WEBHOOK_SECRET}"
-    - --repo-allowlist="$${ATL_REPO_LIST}"
     env_file:
       - .atlantis.env
+      - .terraform.env
     volumes:
       - "/home/kraktorist/repos/devops-netology/07-terraform-03-basic/assets/.terraform:/modules:ro"
-      - "./_terraformrc:/root/.terraformrc:ro"
+      - "./_terraformrc:/home/atlantis/.terraformrc:ro"
 
   ngrok:
     image: ngrok/ngrok:alpine
