@@ -28,6 +28,7 @@ ssh $SSH_USER@$EXTERNAL_IP << EOF
   sudo docker container rm -f atlantis &>>/dev/null
   sudo docker run --name atlantis -dt -p 80:4141 -v /etc/atlantis/server.yaml:/etc/atlantis/server.yaml ghcr.io/runatlantis/atlantis \
       server \
+      --atlantis-url="http://${EXTERNAL_IP}/" \
       --gh-user=$GH_USER \
       --gh-token=$GH_TOKEN \
       --gh-webhook-secret=$GH_WEBHOOK_SECRET \
