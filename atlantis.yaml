@@ -5,11 +5,11 @@ projects:
   workspace: stage
   autoplan:
     enabled: true
-    when_modified: ["*.tf", "terragrunt.hcl"]
+    when_modified: ["*.tf"]
 - name: prod
   dir: 07-terraform-03-basic/assets
   workspace: prod
   autoplan:
     enabled: true
-    when_modified: ["*.tf", "terragrunt.hcl"]
+    when_modified: ["*.tf"]
     
