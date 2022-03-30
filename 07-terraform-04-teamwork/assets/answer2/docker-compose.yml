@@ -10,8 +10,11 @@ services:
       - .atlantis.env
       - .terraform.env
     volumes:
+      # these two volumes are required to install terraform plugins from local folder
+      # if you don't have access to the Internet
       - "/home/kraktorist/repos/devops-netology/07-terraform-03-basic/assets/.terraform:/modules:ro"
       - "./_terraformrc:/home/atlantis/.terraformrc:ro"
+      - "./server.yaml:/etc/atlantis/server.yaml:ro"
 
   ngrok:
     image: ngrok/ngrok:alpine
