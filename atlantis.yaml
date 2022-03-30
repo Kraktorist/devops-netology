@@ -1,14 +1,15 @@
 version: 3
 projects:
 - name: stage
-  dir: 07-terraform-03-basic/assets
+  dir: 07-terraform-03-basic/assets/
   workspace: stage
   autoplan:
     enabled: true
-    when_modified: ["./07-terraform-03-basic/assets/*.tf"]
+    when_modified: ["../modules/**/*.tf", "*.tf*"]
 - name: prod
-  dir: 07-terraform-03-basic/assets
+  dir: 07-terraform-03-basic/assets/
   workspace: prod
   autoplan:
     enabled: true
-    when_modified: ["./07-terraform-03-basic/assets/*.tf"]
+    when_modified: ["../modules/**/*.tf", "*.tf*"]
+    

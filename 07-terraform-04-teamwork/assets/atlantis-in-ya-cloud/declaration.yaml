@@ -1,8 +1,0 @@
-spec:
-  containers:
-  - image: cr.yandex/crpqb60so0if5tet3o17/atlantis
-    securityContext:
-      privileged: false
-    stdin: false
-    tty: false
-
