@@ -38,7 +38,10 @@
 В качестве результата приложите ссылку на файлы `server.yaml` и `atlantis.yaml`.
 
 ---
-**Answer**
+**Answer**  
+[server.yaml](./assets/answer2/server.yaml)  
+[atlantis.yaml](/atlantis.yaml)
+
 
 ## Задача 3. Знакомство с каталогом модулей. 
 
