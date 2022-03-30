@@ -4,4 +4,3 @@ projects:
   workspace: stage
   autoplan:
     enabled: true
-    when_modified: ["07-terraform-03-basic/assets/*.tf"]
