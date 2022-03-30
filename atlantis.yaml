@@ -1,4 +1,7 @@
 version: 3
 projects:
-- name: answer1
-  dir: 07-terraform-04-teamwork/assets/answer1/
+- dir: 07-terraform-03-basic/assets
+  workspace: staging
+  autoplan:
+    enabled: true
+    when_modified: ["07-terraform-03-basic/assets/*.tf"]

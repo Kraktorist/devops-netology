@@ -1,0 +1,9 @@
+repos:
+- id: github.com/kraktorist/devops-netology
+  branch: /.*/
+  apply_requirements: [approved, mergeable]
+  workflow: default
+  allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge]
+  allowed_workflows: [default]
+  allow_custom_workflows: true
+  delete_source_branch_on_merge: false
