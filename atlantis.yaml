@@ -5,7 +5,7 @@ projects:
   workspace: stage
   autoplan:
     enabled: true
-    when_modified: ["07-terraform-03-basic/assets/*.tf*"]
+    when_modified: ["*.tf*"]
 - name: prod
   dir: 07-terraform-03-basic/assets
   workspace: prod
