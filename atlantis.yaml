@@ -1,6 +1,7 @@
 version: 3
 projects:
-- dir: 07-terraform-03-basic/assets
+# - dir: 07-terraform-03-basic/assets
+  dir: .
   workspace: stage
   autoplan:
     enabled: true
