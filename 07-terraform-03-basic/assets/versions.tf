@@ -6,4 +6,3 @@ terraform {
     }
   }
 }
-# echo test
