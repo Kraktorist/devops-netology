@@ -11,3 +11,4 @@ projects:
   workspace: prod
   autoplan:
     enabled: true
+    # when_modified: ["*.tf*"]
