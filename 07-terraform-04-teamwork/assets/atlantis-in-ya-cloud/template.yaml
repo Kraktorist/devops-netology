@@ -1,7 +1,0 @@
-spec:
-  containers:
-  - image: ${IMAGE_URI}
-    securityContext:
-      privileged: false
-    stdin: false
-    tty: false
