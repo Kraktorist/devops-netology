@@ -12,3 +12,4 @@ projects:
   autoplan:
     enabled: true
     # when_modified: ["*.tf*"]
+    
