@@ -40,7 +40,9 @@
 ---
 **Answer**  
 [server.yaml](./assets/answer2/server.yaml)  
-[atlantis.yaml](/atlantis.yaml)
+[atlantis.yaml](/atlantis.yaml)  
+
+~сыроватый продукт, более-менее нормально работающий только с дефолтными настройками.~
 
 
 ## Задача 3. Знакомство с каталогом модулей. 
