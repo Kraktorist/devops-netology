@@ -10,8 +10,6 @@ func main() {
 	fmt.Print("Enter length in meters: ")
 	var input float64
 	fmt.Scanf("%f", &input)
-
 	output := convert_to_feet(input)
-
 	fmt.Println("Length in feet:", output)
 }
