@@ -76,5 +76,5 @@
 
 Создайте тесты для функций из предыдущего задания. 
 
-[MetersToFeet Test](assets/MetersToFeet/main_test.go)
+[MetersToFeet Test](assets/MetersToFeet/main_test.go)  
 [Min Test](assets/Min/main_tes.go)
