@@ -31,4 +31,5 @@
 1. [ Terraform Syntax ](./07-terraform-02-syntax)
 1. [ Terraform Basics ](./07-terraform-03-basic)
 1. [ Terraform Infrastructure Team Work ](07-terraform-04-teamwork/README.md)
+1. [ Terraform and Go Basics ](07-terraform-05-golang/README.md)
  
