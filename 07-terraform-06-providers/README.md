@@ -48,5 +48,6 @@
 ---
 **Answer**
 
-[Cloned repo](https://github.com/Kraktorist/terraform-provider-hashicups)
-![answer2](img/answer2.png)
+1. \---
+2. [Cloned repo](https://github.com/Kraktorist/terraform-provider-hashicups)
+3. ![answer2](img/answer2.png)
