@@ -247,7 +247,8 @@
 
     **Answer**  
 
-    [Repository](https://github.com/Kraktorist/devops-netology-ansible/blob/master/README.md)
+    [Separate Repository](https://github.com/Kraktorist/devops-netology-ansible/blob/master/README.md)  
+    [In this repository](assets/playbook/README.md)
 
     ---
 
