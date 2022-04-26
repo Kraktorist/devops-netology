@@ -33,4 +33,4 @@
 1. [ Terraform Infrastructure Team Work ](07-terraform-04-teamwork/README.md)
 1. [ Terraform and Go Basics ](07-terraform-05-golang/README.md)
 1. [ Terraform Providers](07-terraform-06-providers/README.md)
-
+1. [ Ansible Basics](08-ansible-01-base/README.md)
