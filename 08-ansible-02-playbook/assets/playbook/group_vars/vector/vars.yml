@@ -1,0 +1,26 @@
+vector_version: "0.21.1-1"
+vector_config:
+  sources:
+    dummy_logs:
+      type: demo_logs
+      format: syslog
+      interval: 1
+  transforms:
+    parse_logs:
+      type: remap
+      inputs:
+        - dummy_logs
+      source: |
+        . = parse_syslog!(string!(.message))
+  sinks:
+    to_clickhouse:
+      type: clickhouse
+      inputs:
+        - parse_logs
+      database: logs
+      endpoint: 'http://clickhouse-01:8123'
+      table: log
+      compression: gzip
+  api:
+    enabled: true
+    address: '0.0.0.0:8686'
