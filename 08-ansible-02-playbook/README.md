@@ -26,6 +26,8 @@
 **Answers**
 
 
+**[playbook location](assets/playbook/)**
+
 ## Инфраструктура:
 
 ![Infrastructure](assets/infrastructure.png "Infrastructure")
