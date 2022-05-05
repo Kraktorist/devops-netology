@@ -7,6 +7,10 @@ $ssh_public_key_path = "~/.ssh/id_rsa.pub"
 
 Vagrant.configure("2") do |config|
   config.vm.define $clickhouse_name do |config|
+    config.vm.provider "virtualbox" do |vb|
+      vb.cpus = "2"
+      vb.memory = "4096"
+    end
     config.vm.box = $box
     config.vm.hostname = $clickhouse_name
     config.vm.network "public_network", ip: $clickhouse_ip

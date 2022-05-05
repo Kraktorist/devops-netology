@@ -4,3 +4,18 @@ clickhouse_packages:
   - clickhouse-client
   - clickhouse-server
   - clickhouse-common-static
+clickhouse_database_name: logs2
+clickhouse_create_table: | 
+  CREATE TABLE
+  log (
+      appname String, 
+      facility String, 
+      hostname String,
+      message String, 
+      msgid String, 
+      procid UInt16,
+      severity String, 
+      timestamp DateTime64, 
+      version UInt8
+      )
+  ENGINE = Log;

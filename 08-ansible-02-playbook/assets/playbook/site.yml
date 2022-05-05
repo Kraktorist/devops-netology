@@ -1,5 +1,20 @@
 ---
+- name: Drop database Clickhouse
+  hosts: clickhouse
+  tags: [drop_clickhouse_database_logs, never]
+  tasks:
+    - name: Drop clickhouse database logs
+      ansible.builtin.command:
+        argv:
+          - clickhouse-client
+          - -q 
+          - drop database {{ clickhouse_database_name }};
+      register: drop_table
+      failed_when: drop_table.rc != 0 and drop_table.rc !=81 # db doesn't exist
+      changed_when: drop_table.rc == 0
+      
 - name: Install Clickhouse
+  tags: clickhouse
   hosts: clickhouse
   handlers:
     - name: Start clickhouse service
@@ -36,31 +51,67 @@
     - name: Flush handlers
       meta: flush_handlers
     - name: Create database
-      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      tags: clickhouse_db
+      ansible.builtin.command: "clickhouse-client -q 'create database {{ clickhouse_database_name }};'"
       register: create_db
       failed_when: create_db.rc != 0 and create_db.rc !=82
       changed_when: create_db.rc == 0
     - name: Create log table
+      tags: clickhouse_db
       ansible.builtin.command:
         argv:
           - clickhouse-client
           - --database
-          - logs
+          - "{{ clickhouse_database_name }}"
           - -q 
-          - | 
-            CREATE TABLE
-            log (
-                appname String, 
-                facility String, 
-                hostname String,
-                message String, 
-                msgid String, 
-                procid UInt16,
-                severity String, 
-                timestamp String, 
-                version UInt8
-                )
-            ENGINE = Log;
+          - |
+            {{ clickhouse_create_table }}
       register: create_table
       failed_when: create_table.rc != 0 and create_table.rc !=57 # table already exists
       changed_when: create_table.rc == 0
+
+- name: Install Vector
+  tags: vector
+  hosts: vector
+  handlers:
+    - name: Start Vector service
+      become: true
+      ansible.builtin.service:
+        name: vector
+        state: restarted
+  tasks:
+    - name: Add clickhouse addresses to /etc/hosts
+      become: true
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item].ansible_host }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_host is defined
+      with_items: "{{ groups.clickhouse }}"
+    - block:
+        - name: Get vector distrib
+          ansible.builtin.get_url:
+            url: "https://packages.timber.io/vector/latest/vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+            dest: "./vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+        - name: Install vector package
+          become: true
+          ansible.builtin.yum:
+            name:
+              - "./vector-{{ vector_version }}.{{ ansible_architecture }}.rpm"
+          
+        - name: Redefine vector config name
+          tags: vector_config
+          become: true
+          ansible.builtin.lineinfile:
+            path: /etc/default/vector
+            regexp: 'VECTOR_CONFIG='
+            line: VECTOR_CONFIG=/etc/vector/config.yaml
+        - name: Create vector config
+          tags: vector_config
+          become: true
+          ansible.builtin.copy:
+            dest: /etc/vector/config.yaml
+            content: |
+              {{ vector_config | to_nice_yaml(indent=2) }}
+      notify: Start Vector service
