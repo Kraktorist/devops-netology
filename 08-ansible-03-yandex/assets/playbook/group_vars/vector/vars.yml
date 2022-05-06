@@ -1,0 +1,28 @@
+vector_installer_url: https://packages.timber.io/vector/latest/vector-latest-1.x86_64.rpm
+vector_config:
+  sources:
+    dummy_logs:
+      type: demo_logs
+      format: syslog
+      interval: 1
+  transforms:
+    parse_logs:
+      inputs:
+      - dummy_logs
+      source: |-
+        . = parse_syslog!(string!(.message))
+        .timestamp = to_string(.timestamp)
+        .timestamp = slice!(.timestamp, start:0, end: -1)
+      type: remap
+  sinks:
+    to_clickhouse:
+      type: clickhouse
+      inputs:
+        - parse_logs
+      database: logs2
+      endpoint: 'http://clickhouse-01:8123'
+      table: log
+      compression: gzip
+  api:
+    enabled: true
+    address: '0.0.0.0:8686'

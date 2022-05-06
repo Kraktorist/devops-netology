@@ -35,4 +35,5 @@
 1. [ Terraform Providers](07-terraform-06-providers/README.md)
 1. [ Ansible Basics](08-ansible-01-base/README.md)
 1. [ Ansible Playbooks](08-ansible-02-playbook/README.md)
+1. [ Ansible Yandex](08-ansible-03-yandex/README.md)
 
