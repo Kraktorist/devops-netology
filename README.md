@@ -3,11 +3,6 @@ vector-role
 
 A role for vector.dev installation and configuration
 
-Requirements
-------------
-
----
-
 Role Variables
 --------------
 
@@ -75,7 +70,7 @@ F: You can define vector configuration path
 ```yaml
 vector_path_configdir: "/etc/vector/"
 vector_path_configfilename: "config.yaml"
-``
+```
 
 
 Dependencies
