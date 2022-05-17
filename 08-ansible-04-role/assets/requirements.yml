@@ -1,5 +1,0 @@
----
-  - src: https://github.com/AlexeySetevoi/ansible-clickhouse.git
-    scm: git
-    version: "1.11.1"
-    name: clickhouse 

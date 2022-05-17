@@ -1,40 +1,66 @@
+vector-role
+=========
 
-1. [Intro](./01-intro-01)
-1. [VCS](./02-VCS)
-1. [Base](./02-git-02-base) 
-1. [Branches](./02-git-03-branching)
-1. [Git Tools](./02-git-04-tools)
-1. [ Terminal #1](./03-sysadmin-01-terminal)
-1. [ Terminal #2](./03-sysadmin-02-terminal)
-1. [ OS #1](./03-sysadmin-03-os)
-1. [ OS #2](./03-sysadmin-04-os)
-1. [ FileSystem](./03-sysadmin-05-fs)
-1. [ Network #1](./03-sysadmin-06-net)
-1. [ Network #2](./03-sysadmin-07-net)
-1. [ Network #3](./03-sysadmin-08-net)
-1. [ Security](./03-sysadmin-09-security)
-1. [ Bash](./04-script-01-bash)
-1. [ Python](./04-script-02-py)
-1. [ JSON/YAML](./04-script-03-yaml)
-1. [ Virtualization Basics](./05-virt-01-basics)
-1. [ IaaC Basics](./05-virt-02-iaac)
-1. [ Docker](./05-virt-03-docker)
-1. [ docker-compose](./05-virt-04-docker-compose)
-1. [ Docker Swarm](./05-virt-04-docker-swarm)
-1. [ Database basics](./06-db-01-basics)
-1. [ SQL](./06-db-02-sql)
-1. [ MySQL](./06-db-03-mysql)
-1. [ Postgres SQL ](./06-db-04-postgresql)
-1. [ ElasticSearch ](./06-db-05-elasticsearch)
-1. [ DB Troubleshooting ](./06-db-06-troobleshooting)
-1. [ IaaC ](./07-terraform-01-intro)
-1. [ Terraform Syntax ](./07-terraform-02-syntax)
-1. [ Terraform Basics ](./07-terraform-03-basic)
-1. [ Terraform Infrastructure Team Work ](07-terraform-04-teamwork/README.md)
-1. [ Terraform and Go Basics ](07-terraform-05-golang/README.md)
-1. [ Terraform Providers](07-terraform-06-providers/README.md)
-1. [ Ansible Basics](08-ansible-01-base/README.md)
-1. [ Ansible Playbooks](08-ansible-02-playbook/README.md)
-1. [ Ansible Yandex](08-ansible-03-yandex/README.md)
-1. [ Ansible Roles](08-ansible-04-role/README.md)
-2. 
+A role for vector.dev installation and configuration
+
+Requirements
+------------
+
+---
+
+Role Variables
+--------------
+
+- sources
+- sinks
+- transforms
+- vector_installer_url
+- api_enabled
+- listen_address
+- vector_path_configdir
+- vector_path_configfilename
+
+Dependencies
+------------
+
+---
+
+Example Playbook
+----------------
+
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
+
+    - hosts: servers
+      pre_tasks:
+      roles:
+        - role: vector-role
+          vars:
+            api_enabled: true
+            listen_address: 127.0.0.1:8686
+            sources:
+              - name: dummy_logs
+                config:
+                  type: demo_logs
+                  format: syslog
+                  interval: 1
+            sinks:
+              - name: my_sink_id
+                config:
+                  type: console
+                  inputs:
+                  - dummy_logs
+                  target: stdout
+                  encoding:
+                    codec: json            
+
+License
+-------
+
+BSD
+
+Author Information
+------------------
+
+kraktorist
