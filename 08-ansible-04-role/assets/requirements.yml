@@ -5,5 +5,9 @@
     name: clickhouse 
   - src: https://github.com/Kraktorist/devops-netology
     scm: git
-    version: "vector-role"
+    version: vector-role
     name: vector-role
+  - src: https://github.com/Kraktorist/devops-netology
+    scm: git
+    version: lighthouse-role
+    name: lighthouse-role
