@@ -1,4 +1,0 @@
----
-# vars file for vector-role
-vector_path_configdir: "/etc/vector/"
-vector_path_configfilename: "config.yaml"
