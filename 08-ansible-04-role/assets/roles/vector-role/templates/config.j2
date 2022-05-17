@@ -1,0 +1,23 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+api:
+  enabled: {{ api_enabled | to_json }}
+  address: {{ listen_address }}
+sources:
+{% for dict_item in sources %}
+  {{ dict_item.name }}:
+    {{ dict_item.config | to_yaml | indent(width=4) }}
+{% endfor %}
+
+{% if transforms is defined %}
+transforms:
+{% for dict_item in transforms %}
+  {{ dict_item.name }}:
+    {{ dict_item.config | to_yaml | indent(width=4) }}
+{% endfor %}
+{% endif %}
+
+sinks:
+{% for dict_item in sinks %}
+  {{ dict_item.name }}:
+    {{ dict_item.config | to_yaml | indent(width=4) }}
+{% endfor %}

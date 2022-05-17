@@ -1,0 +1,3 @@
+---
+# defaults file for lighthouse-role
+lighthouse_distrib: https://github.com/VKCOM/lighthouse/archive/refs/heads/master.zip

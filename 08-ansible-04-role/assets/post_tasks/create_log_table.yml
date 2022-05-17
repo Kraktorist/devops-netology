@@ -1,0 +1,27 @@
+- name: Create log table
+  ansible.builtin.command:
+    argv:
+      - clickhouse-client
+      - --database
+      - "{{ database }}"
+      - -q 
+      - |
+        {{ clickhouse_create_table }}
+  register: create_table
+  failed_when: create_table.rc != 0 and create_table.rc !=57 # table already exists
+  changed_when: create_table.rc == 0   
+  vars:
+    clickhouse_create_table: | 
+      CREATE TABLE
+      {{ table }} (
+          appname String, 
+          facility String, 
+          hostname String,
+          message String, 
+          msgid String, 
+          procid UInt16,
+          severity String, 
+          timestamp DateTime64, 
+          version UInt8
+          )
+      ENGINE = Log;

@@ -1,0 +1,28 @@
+sources:
+  - name: dummy_logs
+    config:
+      type: demo_logs
+      format: syslog
+      interval: 1
+transforms:
+  - name: parse_logs
+    config:
+      type: remap
+      inputs: [ dummy_logs ]
+      source: |
+        . = parse_syslog!(string!(.message))
+        .timestamp = to_string(.timestamp)
+        .timestamp = slice!(.timestamp, start:0, end: -1)
+sinks:
+  - name: to_clickhouse
+    config:
+      type: clickhouse
+      inputs: [ parse_logs ]
+      database: "{{ database }}"
+      endpoint: "{{ endpoint }}"
+      auth:
+        user: "{{ username }}"
+        password: "{{ password }}"
+        strategy: basic
+      table: "{{ table }}"
+      compression: gzip

@@ -1,0 +1,27 @@
+---
+# tasks file for vector-role
+- block:
+    - name: Get vector distrib
+      ansible.builtin.get_url:
+        url: "{{ vector_installer_url }}"
+        dest: "./vector.rpm"
+    - name: Install vector package
+      become: true
+      ansible.builtin.yum:
+        name:
+          - "./vector.rpm"
+      
+    - name: Redefine vector config name
+      tags: vector_config
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/default/vector
+        regexp: 'VECTOR_CONFIG='
+        line: VECTOR_CONFIG={{ vector_path_configdir }}{{ vector_path_configfilename }}
+    - name: Create vector config
+      tags: vector_config
+      become: true
+      template:
+        src: config.j2
+        dest: "{{ vector_path_configdir }}{{ vector_path_configfilename }}"
+  notify: Start Vector service
