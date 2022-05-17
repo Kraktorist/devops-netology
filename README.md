@@ -80,7 +80,7 @@ not required
 
 Example Playbook
 ----------------
-
+```yaml
     - hosts: servers
       pre_tasks:
       roles:
@@ -102,7 +102,8 @@ Example Playbook
                   - dummy_logs
                   target: stdout
                   encoding:
-                    codec: json            
+                    codec: json
+```                    
 
 License
 -------
