@@ -15,7 +15,7 @@ lighthouse_distrib: https://github.com/VKCOM/lighthouse/archive/refs/heads/maste
 Dependencies
 ------------
 
-not required
+nginx and [ansible-nginx role](https://github.com/geerlingguy/ansible-role-nginx)
 
 Example Playbook
 ----------------
