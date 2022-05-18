@@ -36,10 +36,13 @@
 **Answers**
 
 [vector-role](https://github.com/Kraktorist/devops-netology/tree/vector-role)
+
 [lighthouse-role](https://github.com/Kraktorist/devops-netology/tree/lighthouse-role)
+
 [playbook](./assets/site.yml)
 
 [vagrant infrastructure](./assets/Vagrantfile)
+
 [yandex.cloud infrastructure](./assets/terraform/)
 
 Инфраструктура состоит из трех хостов:
@@ -47,7 +50,7 @@
 - vector-01
 - lighthouse-01
 
-развернутых либо с помощью vagrant, либо с помощью terraform. В последнем случае terraform манифест создает также файл инвентаризации для ansible.
+развернутых либо с помощью vagrant, либо с помощью terraform. В последнем случае terraform манифест также создает файл инвентаризации для ansible.
 
 Ansible разворачивает на хостах приложения:
 - `clickhouse`
