@@ -31,6 +31,28 @@
 9. Переработайте playbook на использование roles. Не забудьте про зависимости lighthouse и возможности совмещения `roles` с `tasks`.
 10. Выложите playbook в репозиторий.
 11. В ответ приведите ссылки на оба репозитория с roles и одну ссылку на репозиторий с playbook.
-<details>
+</details>
 
 **Answers**
+
+[vector-role](https://github.com/Kraktorist/devops-netology/tree/vector-role)
+[lighthouse-role](https://github.com/Kraktorist/devops-netology/tree/lighthouse-role)
+[playbook](./assets/site.yml)
+
+[vagrant infrastructure](./assets/Vagrantfile)
+[yandex.cloud infrastructure](./assets/terraform/)
+
+Инфраструктура состоит из трех хостов:
+- clickhouse-01
+- vector-01
+- lighthouse-01
+
+развернутых либо с помощью vagrant, либо с помощью terraform. В последнем случае terraform манифест создает также файл инвентаризации для ansible.
+
+Ansible разворачивает на хостах приложения:
+- `clickhouse`
+  Разворачивается с помощью одноименной роли `clickhouse` из публичного репозитория [ansible-clickhouse](https://github.com/AlexeySetevoi/ansible-clickhouse.git) 
+- `vector`
+  разворачивается с помощью роли `vector-role` из ветки vector-role этого же репозитория
+- `lighthouse`
+  разворачивается с помощью роли `lighthouse-role` из ветки lighthouse-role этого же репозитория. В качестве зависимости `lighthouse-role` использует роль `geerlingguy.nginx` для установки nginx и настройки vhost.
