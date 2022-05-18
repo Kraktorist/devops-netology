@@ -46,4 +46,5 @@
 ### Branches
 
 [ansible vector-role](https://github.com/Kraktorist/devops-netology/tree/vector-role)
+
 [ansible lighthouse-role](https://github.com/Kraktorist/devops-netology/tree/lighthouse-role)
