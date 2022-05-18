@@ -4,11 +4,6 @@
   become: true
   ansible.builtin.yum:
     name: "{{ required_packages }}"
-- name: Install nginx
-  become: true
-  ansible.builtin.yum:
-    name:
-      - nginx
 - block:
     - name: Get lighthouse distrib
       ansible.builtin.get_url:
@@ -20,10 +15,3 @@
         src: ./lighthouse.zip
         dest: "{{ nginx_basedir }}"
         remote_src: yes
-    - name: Nginx configuration
-      tags: nginx_config
-      become: true
-      template:
-        src: lighthouse.j2
-        dest: "{{ nginx_path_configdir }}{{ nginx_configname }}"        
-  notify: Start nginx service

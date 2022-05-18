@@ -1,8 +1,5 @@
 ---
 # vars file for lighthouse-role
 required_packages:
-  - epel-release
   - unzip
 nginx_basedir: /usr/share/nginx
-nginx_path_configdir: "/etc/nginx/conf.d/"
-nginx_configname: "lighthouse.conf"
