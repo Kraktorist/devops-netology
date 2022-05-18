@@ -1,0 +1,7 @@
+nginx_remove_default_vhost: true
+nginx_vhosts:
+  - listen: "80"
+    server_name: "_"
+    root: /usr/share/nginx/lighthouse-master/
+    index: index.html
+    filename: lighthouse.conf
