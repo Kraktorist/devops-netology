@@ -26,7 +26,8 @@
   - name: Put Selinux in Permissive mode
     import_tasks: pre_tasks/selinux.yml
   roles:
-    - geerlingguy.nginx
+    - name: geerlingguy.nginx
+      become: yes # required to add new yum repo
     - lighthouse-role
   vars_files:
     - vars/nginx.yml

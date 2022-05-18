@@ -11,4 +11,4 @@
     scm: git
     version: lighthouse-role
     name: lighthouse-role
-  - name: geerlingguy.nginx
+#  - name: geerlingguy.nginx
