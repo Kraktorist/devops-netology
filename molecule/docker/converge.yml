@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install sudo
+      yum:
+        name: 
+          - sudo
+    - name: "Include vector-role"
+      include_role:
+        name: "vector-role"

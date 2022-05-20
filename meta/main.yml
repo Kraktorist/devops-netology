@@ -2,6 +2,7 @@ galaxy_info:
   author: kraktorist
   description: Role for configuring Vector software
   company: acme
+  name: vector-role
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
