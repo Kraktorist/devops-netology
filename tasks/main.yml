@@ -3,13 +3,19 @@
 - block:
     - name: Get vector distrib
       ansible.builtin.get_url:
-        url: "{{ vector_installer_url }}"
-        dest: "./vector.rpm"
+        url: "{{ vector_rpm_installer_url }}"
+        dest: "./vector"
+      when: ansible_facts['distribution'] == 'CentOS'
+    - name: Get vector distrib
+      ansible.builtin.get_url:
+        url: "{{ vector_deb_installer_url }}"
+        dest: "./vector"
+      when: ansible_facts['distribution'] == 'Ubuntu'
     - name: Install vector package
       become: true
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name:
-          - "./vector.rpm"
+          - "./vector"
       
     - name: Redefine vector config name
       tags: vector_config

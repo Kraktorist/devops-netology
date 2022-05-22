@@ -1,0 +1,24 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: ubuntu
+    image: brunneis/python:3.8.6-ubuntu-focal
+    command: -c "import time; time.sleep(3600)"
+    pre_build_image: true
+    privileged: true
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+  playbooks:
+    verify: ../resources/tests/verify.yml

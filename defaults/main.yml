@@ -1,6 +1,7 @@
 ---
 # vars file for vector-role
-vector_installer_url: https://packages.timber.io/vector/latest/vector-latest-1.x86_64.rpm
+vector_rpm_installer_url: https://packages.timber.io/vector/latest/vector-latest-1.x86_64.rpm
+vector_deb_installer_url: https://packages.timber.io/vector/latest/vector_latest-1_amd64.deb
 api_enabled: false
 listen_address: 127.0.0.1:8686
 sources:
