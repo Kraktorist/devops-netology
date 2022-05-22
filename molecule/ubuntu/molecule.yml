@@ -4,10 +4,11 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ubuntu
-    image: brunneis/python:3.8.6-ubuntu-focal
-    command: -c "import time; time.sleep(3600)"
-    pre_build_image: true
+  - name: ubuntu_focal
+    image: ubuntu:focal
+    dockerfile: ../resources/Dockerfile.j2
+    # pre_build_image: true
+    command: /sbin/init
     privileged: true
     capabilities:
       - SYS_ADMIN
@@ -16,6 +17,11 @@ platforms:
       - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup
+    env:
+      ANSIBLE_USER: ansible
+      SUDO_GROUP: sudo
+      DEPLOY_GROUP: deployer
+      container: docker
 provisioner:
   name: ansible
 verifier:
