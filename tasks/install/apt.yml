@@ -1,6 +1,9 @@
 - block:
+    - name: Get vector distrib
+      ansible.builtin.get_url:
+        url: "{{ vector_deb_installer_url }}"
+        dest: "./vector.deb"
     - name: Install vector package
       become: true
       ansible.builtin.apt:
-        deb: 
-          - "{{ vector_deb_installer_url }}"
+        deb: "./vector.deb"
