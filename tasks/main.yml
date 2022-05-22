@@ -1,7 +1,15 @@
 ---
 # tasks file for vector-role
 - block:
-    - include_tasks: "install/{{ ansible_pkg_mgr }}.yml"
+    - include_tasks:
+        file: "{{ lookup('first_found', params) }}"
+        apply:
+          tags: [install]
+      vars:
+        params:
+          files:
+            - "install/{{ ansible_pkg_mgr }}.yml"
+            - 'empty.yml'
       
     - name: Redefine vector config name
       tags: vector_config
