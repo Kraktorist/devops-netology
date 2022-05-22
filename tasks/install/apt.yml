@@ -3,4 +3,4 @@
       become: true
       ansible.builtin.apt:
         deb: 
-          - "{{ vector_deb_installer_url }}"
+          - {{ vector_deb_installer_url }}
