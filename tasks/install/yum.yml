@@ -1,10 +1,5 @@
 - block:
-    - name: Get vector distrib
-      ansible.builtin.get_url:
-        url: "{{ vector_rpm_installer_url }}"
-        dest: "./vector.rpm"
     - name: Install vector package
       become: true
       ansible.builtin.yum:
-        name:
-          - "./vector.rpm"
+        name: "{{ vector_rpm_installer_url }}"

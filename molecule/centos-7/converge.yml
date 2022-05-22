@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Install sudo
-      yum:
+      package:
         name: 
           - sudo
     - name: "Include vector-role"
