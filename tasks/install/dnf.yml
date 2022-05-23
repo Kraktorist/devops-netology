@@ -3,3 +3,4 @@
       become: true
       ansible.builtin.dnf:
         name: "{{ vector_rpm_installer_url }}"
+        disable_gpg_check: true
