@@ -27,10 +27,10 @@
   - name: Assert Vector Systemd Unit Status
     assert:
       that:
-        - 'enabled' == services_state['ansible_facts']['services']['vector.service']['status'] 
+        - "'enabled' == services_state['ansible_facts']['services']['vector.service']['status']"
       fail_msg: "vector.service is not enabled"
   - name: Assert Vector Systemd Unit State
     assert:
       that:
-        - 'running' == services_state['ansible_facts']['services']['vector.service']['state']
+        - "'running' == services_state['ansible_facts']['services']['vector.service']['state']"
       fail_msg: "vector.service is not running"
