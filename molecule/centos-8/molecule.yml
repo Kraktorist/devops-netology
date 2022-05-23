@@ -18,5 +18,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup
 provisioner:
   name: ansible
+  playbooks:
+    verify: ../resources/tests/verify.yml
 verifier:
   name: ansible
