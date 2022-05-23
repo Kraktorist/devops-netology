@@ -5,3 +5,4 @@
   ansible.builtin.service:
     name: vector
     state: restarted
+    enabled: yes
