@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: centos-8
-    image: quay.io/centos/centos:8
+    image: centos:8
     dockerfile: ../resources/Dockerfile.j2
     # pre_build_image: true
     privileged: true
