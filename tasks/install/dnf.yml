@@ -1,0 +1,4 @@
+- name: Install required packages
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ required_packages }}"
