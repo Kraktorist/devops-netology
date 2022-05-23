@@ -1,0 +1,5 @@
+- block:
+    - name: Install vector package
+      become: true
+      ansible.builtin.dnf:
+        name: "{{ vector_rpm_installer_url }}"
