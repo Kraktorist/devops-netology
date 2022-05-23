@@ -24,7 +24,7 @@ platforms:
       container: docker
 provisioner:
   name: ansible
-verifier:
-  name: ansible
   playbooks:
     verify: ../resources/tests/verify.yml
+verifier:
+  name: ansible
