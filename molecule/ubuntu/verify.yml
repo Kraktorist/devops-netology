@@ -5,6 +5,9 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+- name: collect facts about system services
+  ansible.builtin.service_facts:
+  register: services_state
+- name: Debug
+  debug:
+    var: services_state
