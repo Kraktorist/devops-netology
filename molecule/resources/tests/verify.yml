@@ -15,8 +15,11 @@
   - name: collect facts about system services
     ansible.builtin.service_facts:
     register: services_state
+  - name: Verify vector systemd unit status
+    assert:
+      that:
+        - services_state['services']['vector.service']['status'] == 'enabled'
   - name: Verify vector systemd unit state
     assert:
       that:
-        - services_state['services_state']['services']['vector.service']['state'] == 'running'
-        - services_state['services_state']['services']['vector.service']['status'] == 'enabled'
+        - services_state['services']['vector.service']['state'] == 'running'
