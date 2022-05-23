@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: false
   vars:
-    vector_config: /etc/vector/config.yml
+    vector_config: /etc/vector/config.yaml
   tasks:
   - name: Validate vector config
     ansible.builtin.command: vector validate "{{ vector_config }}"
