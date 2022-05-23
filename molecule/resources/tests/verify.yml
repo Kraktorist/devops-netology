@@ -1,7 +1,20 @@
+
 - name: Verify
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
+  - name: Validate vector config
+    ansible.builtin.command: vector validate "{{ vector_path_configdir }}{{ vector_path_configfilename }}""
+    register: validation_status
+  - name: Verify vector validation status
     assert:
-      that: true
+      that:
+        -  validation_status == 0
+  - name: collect facts about system services
+    ansible.builtin.service_facts:
+    register: services_state
+  - name: Verify vector systemd unit state
+    assert:
+      that:
+        - services_state['services_state']['services']['vector.service']['state'] == 'running'
+        - services_state['services_state']['services']['vector.service']['status'] == 'enabled'

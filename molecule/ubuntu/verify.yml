@@ -1,13 +1,3 @@
 ---
 # This is an example playbook to execute Ansible tests.
 
-- name: Verify
-  hosts: all
-  gather_facts: false
-  tasks:
-  - name: collect facts about system services
-    ansible.builtin.service_facts:
-    register: services_state
-  - name: Debug
-    debug:
-      var: services_state
