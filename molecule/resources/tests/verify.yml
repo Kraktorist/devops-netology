@@ -21,8 +21,8 @@
   - name: Verify vector systemd unit status
     assert:
       that:
-        - services_state['services']['vector.service']['status'] == 'enabled'
+        - services_state['ansible_facts']['services']['vector.service']['status'] == 'enabled'
   - name: Verify vector systemd unit state
     assert:
       that:
-        - services_state['services']['vector.service']['state'] == 'running'
+        - services_state['ansible_facts']['services']['vector.service']['state'] == 'running'
