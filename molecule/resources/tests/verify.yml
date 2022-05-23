@@ -15,7 +15,7 @@
   - name: collect facts about system services
     ansible.builtin.service_facts:
     register: services_state
-  -name: dbg
+  - name: dbg
     ansible.builtin.debug:
       msg: 
         - services_state
