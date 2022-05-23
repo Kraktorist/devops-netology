@@ -4,25 +4,33 @@
   gather_facts: false
   vars:
     vector_config: /etc/vector/config.yaml
+    vector_package: vector
   tasks:
-  - name: Validate vector config
+  - name: Gather Installed Packages
+    ansible.builtin.package_facts:
+      manager: auto
+    become: true
+  - name: Assert Vector Packages
+    ansible.builtin.assert:
+      that:
+        - "'{{ vector_package }}' in ansible_facts.packages"
+  - name: Validate Vector Config
     ansible.builtin.command: vector validate "{{ vector_config }}"
     register: validation_status
-  - name: Verify vector validation status
+  - name: Assert Vector Validation Status
     assert:
       that:
-        -  validation_status.rc == 0
-  - name: collect facts about system services
+        - validation_status.rc == 0
+  - name: Collect Facts About System Services
     ansible.builtin.service_facts:
     register: services_state
-  - name: dbg
-    ansible.builtin.debug:
-      var: services_state
-  - name: Verify vector systemd unit status
+  - name: Assert Vector Systemd Unit Status
     assert:
       that:
-        - services_state['ansible_facts']['services']['vector.service']['status'] == 'enabled'
-  - name: Verify vector systemd unit state
+        - 'enabled' == services_state['ansible_facts']['services']['vector.service']['status'] 
+      fail_msg: "vector.service is not enabled"
+  - name: Assert Vector Systemd Unit State
     assert:
       that:
-        - services_state['ansible_facts']['services']['vector.service']['state'] == 'running'
+        - 'running' == services_state['ansible_facts']['services']['vector.service']['state']
+        fail_msg: "vector.service is not running"
