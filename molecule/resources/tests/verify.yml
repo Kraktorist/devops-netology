@@ -14,13 +14,15 @@
     ansible.builtin.assert:
       that:
         - "'{{ vector_package }}' in ansible_facts.packages"
+      fail_msg: "vector package is not installed"
   - name: Validate Vector Config
     ansible.builtin.command: vector validate "{{ vector_config }}"
     register: validation_status
-  - name: Assert Vector Validation Status
+  - name: Assert Vector Config Validation Status
     assert:
       that:
         - validation_status.rc == 0
+      fail_msg: "vector config is not valid"
   - name: Collect Facts About System Services
     ansible.builtin.service_facts:
     register: services_state
