@@ -16,7 +16,8 @@
     ansible.builtin.service_facts:
     register: services_state
   -name: dbg
-    msg: services_state
+    ansible.builtin.debug:
+      msg: services_state
   - name: Verify vector systemd unit status
     assert:
       that:
