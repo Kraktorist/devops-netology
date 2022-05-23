@@ -2,9 +2,11 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  vars:
+    vector_config: /etc/vector/config.yml
   tasks:
   - name: Validate vector config
-    ansible.builtin.command: vector validate "{{ vector_path_configdir }}{{ vector_path_configfilename }}"
+    ansible.builtin.command: vector validate "{{ vector_config }}"
     register: validation_status
   - name: Verify vector validation status
     assert:
