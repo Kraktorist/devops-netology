@@ -33,4 +33,4 @@
     assert:
       that:
         - 'running' == services_state['ansible_facts']['services']['vector.service']['state']
-        fail_msg: "vector.service is not running"
+      fail_msg: "vector.service is not running"
