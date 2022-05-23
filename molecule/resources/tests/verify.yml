@@ -11,7 +11,7 @@
   - name: Verify vector validation status
     assert:
       that:
-        -  validation_status == 0
+        -  validation_status.rc == 0
   - name: collect facts about system services
     ansible.builtin.service_facts:
     register: services_state
