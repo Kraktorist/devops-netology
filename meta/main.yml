@@ -1,7 +1,9 @@
 galaxy_info:
   author: kraktorist
-  description: role for vkcom lighthouse configuration
+  description: Role for configuring vkcom lighthouse software
   company: acme
+  role_name: lighthouse_role
+  namespace: kraktorist
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -16,7 +18,7 @@ galaxy_info:
   # - CC-BY-4.0
   license: license (GPL-2.0-or-later, MIT, etc)
 
-  min_ansible_version: 2.1
+  min_ansible_version: 5.8
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:

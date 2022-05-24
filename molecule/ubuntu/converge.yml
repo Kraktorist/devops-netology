@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Install sudo
+      package:
+        name: 
+          - sudo
+    - name: "Include lighthouse-role"
+      include_role:
+        name: "lighthouse-role"

@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: centos-8
+    image: centos:8
+    dockerfile: ../resources/Dockerfile.j2
+    # pre_build_image: true
+    privileged: true
+    command: /usr/sbin/init
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    env:
+      ANSIBLE_USER: ansible
+      SUDO_GROUP: sudo
+      DEPLOY_GROUP: deployer
+      container: docker
+provisioner:
+  name: ansible
+  playbooks:
+    verify: ../resources/tests/verify.yml
+verifier:
+  name: ansible

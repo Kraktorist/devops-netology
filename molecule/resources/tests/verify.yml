@@ -1,0 +1,39 @@
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    lighthouse_path: /usr/share/nginx/lighthouse-master
+    nginx_package: nginx
+  tasks:
+  - name: Gather Installed Packages
+    ansible.builtin.package_facts:
+      manager: auto
+    become: true
+  - name: Assert Nginx Package
+    ansible.builtin.assert:
+      that:
+        - "'{{ nginx_package }}' in ansible_facts.packages"
+      fail_msg: "nginx package is not installed"
+  - name: Validate lighthouse folder created
+    ansible.builtin.stat:
+      path: "{{ lighthouse_path }}"
+    register: path
+  - name: Assert Lighthouse Directory
+    assert:
+      that:
+        - path.stat.isdir is defined and path.stat.isdir
+      fail_msg: "Lighthouse folder is not created"
+  - name: Collect Facts About System Services
+    ansible.builtin.service_facts:
+    register: services_state
+  - name: Assert Nginx Systemd Unit Status
+    assert:
+      that:
+        - "'enabled' == services_state['ansible_facts']['services']['nginx.service']['status']"
+      fail_msg: "nginx.service is not enabled"
+  - name: Assert Nginx Systemd Unit State
+    assert:
+      that:
+        - "'running' == services_state['ansible_facts']['services']['nginx.service']['state']"
+      fail_msg: "nginx.service is not running"
