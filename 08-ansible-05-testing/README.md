@@ -43,3 +43,7 @@
 </details>
 
 **Answers**
+
+[vector-role with molecule tests and tox configuration](https://github.com/Kraktorist/devops-netology/tree/vector-role)
+
+[lighthouse-role with molecule tests and tox configuration](https://github.com/Kraktorist/devops-netology/tree/lighthouse-role)
