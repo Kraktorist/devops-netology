@@ -1,5 +1,7 @@
+
 - name: Put SELinux in permissive mode, logging actions that would be blocked.
   become: true
   ansible.posix.selinux:
     policy: targeted
     state: permissive
+  when: ansible_selinux is defined and ansible_selinux != False and ansible_selinux.status == 'enabled'

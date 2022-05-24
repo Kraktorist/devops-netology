@@ -28,6 +28,6 @@
   roles:
     - name: geerlingguy.nginx
       become: yes # required to add new yum repo
-    - lighthouse-role
+    - name: lighthouse-role
   vars_files:
     - vars/nginx.yml
