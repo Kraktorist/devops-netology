@@ -38,7 +38,7 @@
 1. [ Ansible Yandex ](08-ansible-03-yandex/README.md)
 1. [ Ansible Roles ](08-ansible-04-role/README.md)
 1. [ Ansible Testing ](08-ansible-05-testing/README.md)
-
+1. [ Ansible Module ](08-ansible-05-module/README.md)
 
 
 
