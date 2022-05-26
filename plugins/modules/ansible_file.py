@@ -84,8 +84,8 @@ def run_module():
     try:
         with open(module.params['path'], 'w') as f:
             f.write(module.params['content'])
-    except Exception as e:
-        module.fail_json(e)
+    except (IOError, OSError) as e:
+        module.fail_json(msg='Failed', exception=repr(e))
 
 
 
