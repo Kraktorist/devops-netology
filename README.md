@@ -1,4 +1,4 @@
-## Ansible Collection - kraktorist.ansible-file
+## Ansible Collection - kraktorist.ansible_file
 
 This is educational project for creating files
 

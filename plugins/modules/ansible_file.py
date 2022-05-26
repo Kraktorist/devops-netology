@@ -8,7 +8,7 @@ __metaclass__ = type
 
 DOCUMENTATION = r'''
 ---
-module: ansible-file
+module: ansible_file
 
 short_description: Module for creating files
 
@@ -36,7 +36,7 @@ author:
 EXAMPLES = r'''
 # Pass in a message
 - name: Test the file
-  kraktorist.kraktorist.ansible-file:
+  kraktorist.kraktorist.ansible_file:
     path: /tmp/ansible-test
     content: hello world
 '''

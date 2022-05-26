@@ -1,4 +1,4 @@
 collections:
-  - name: https://github.com/Kraktorist/ansible-figlet.git
+  - name: https://github.com/Kraktorist/devops-netology.git
     type: git
-    version: master
+    version: ansible_file
