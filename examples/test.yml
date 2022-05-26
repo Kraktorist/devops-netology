@@ -4,7 +4,7 @@
   tasks:
     - name: create file
       kraktorist.ansible_file.ansible_file:
-        path: /tmp2/test
+        path: /tmp/test
         content: |
           333
           444

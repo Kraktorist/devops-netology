@@ -26,7 +26,7 @@ options:
     content:
         description:
             - Content of the file
-        required: false
+        required: true
         type: str
 
 author:
