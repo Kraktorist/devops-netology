@@ -1,0 +1,4 @@
+collections:
+  - name: https://github.com/Kraktorist/ansible-figlet.git
+    type: git
+    version: master
