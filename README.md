@@ -2,62 +2,25 @@
 
 This is educational project for creating files
 
-### Dependencies
-
-```
-pip install pyfiglet
-```
-
-https://github.com/pwaller/pyfiglet
-
 ### Installation
 
-```yaml
-# requirements.yaml
-
-collections:
-  - name: https://github.com/Kraktorist/ansible-figlet.git
-    type: git
-    version: master
-```
-
 ```console
-ansible-galaxy install -r requirements.yml
+ansible-galaxy collection install git+https://github.com/Kraktorist/devops-netology.git,ansible_file
 ```
 
 ### Usage
 
 ```yaml
-- name: transform the text
-  kraktorist.figlet.figlet:
-    name: 'Lorem Ipsum'
-    font: "lean"
-    width: 120
-    direction: 1
-    justify: left
-  register: testout
-- name: dump the text
-  debug:
-    msg: '{{ testout }}'
+---
+- name: create file
+  hosts: localhost
+  tasks:
+    - name: create file
+      kraktorist.ansible_file.ansible_file:
+        path: /tmp/test
+        content: |
+          333
+          444
+          555
+          666
 ```
-
-### Output
-
-```
-ok: [localhost] => 
-  msg:
-    changed: true
-    failed: false
-    message: |2-
-  
-          _/                                                          _/_/_/
-         _/          _/_/    _/  _/_/    _/_/    _/_/_/  _/_/          _/    _/_/_/      _/_/_/  _/    _/  _/_/_/  _/_/
-        _/        _/    _/  _/_/      _/_/_/_/  _/    _/    _/        _/    _/    _/  _/_/      _/    _/  _/    _/    _/
-       _/        _/    _/  _/        _/        _/    _/    _/        _/    _/    _/      _/_/  _/    _/  _/    _/    _/
-      _/_/_/_/    _/_/    _/          _/_/_/  _/    _/    _/      _/_/_/  _/_/_/    _/_/_/      _/_/_/  _/    _/    _/
-
-```
-
-### Examples
-
-See [examples/testmod.yml](examples/testmod.yml) for another example

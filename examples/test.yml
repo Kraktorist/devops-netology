@@ -1,0 +1,12 @@
+---
+- name: create file
+  hosts: localhost
+  tasks:
+    - name: create file
+      kraktorist.ansible_file.ansible_file:
+        path: /tmp2/test
+        content: |
+          333
+          444
+          555
+          666

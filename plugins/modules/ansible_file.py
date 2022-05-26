@@ -42,17 +42,7 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-# These are examples of possible return values, and in general should use other names for return values.
-original_message:
-    description: The original name param that was passed in.
-    type: str
-    returned: always
-    sample: 'hello world'
-message:
-    description: The output message that the test module generates.
-    type: str
-    returned: always
-    sample: 'goodbye'
+
 '''
 
 from ansible.module_utils.basic import AnsibleModule
@@ -91,8 +81,12 @@ def run_module():
 
     # manipulate or modify the state as needed (this is going to be the
     # part where your module will do what it needs to do)
-    with open(module.params['path'], 'w') as f:
-        f.write(module.params['content'])
+    try:
+        with open(module.params['path'], 'w') as f:
+            f.write(module.params['content'])
+    except Exception as e:
+        module.fail_json(e)
+
 
 
     # use whatever logic you need to determine whether or not this module
