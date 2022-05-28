@@ -1,0 +1,25 @@
+- name: create new file with the module
+  hosts: localhost
+  tasks:
+    - name: create file
+      kraktorist.ansible_file.ansible_file:
+        path: /tmp/test_ansible_file
+        content: Entry added by module
+
+- name: create new file with the role
+  hosts: localhost
+  roles:
+    - kraktorist.ansible_file.ansible_file
+
+- name: checking idempotence
+  hosts: localhost
+  roles:
+    - kraktorist.ansible_file.ansible_file
+
+- name: checking nonexisting path
+  hosts: localhost
+  tasks:
+    - name: Failed task
+      kraktorist.ansible_file.ansible_file:
+        path: /tmp222/test_ansible_file
+        content: Failed because of wrong path

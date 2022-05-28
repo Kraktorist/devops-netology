@@ -191,9 +191,20 @@ if __name__ == '__main__':
 
 [ ansible_file collection repository ](https://github.com/Kraktorist/devops-netology/tree/ansible_file)
 
+#### Installation
+
+```console
+ansible-galaxy collection install git+https://github.com/Kraktorist/devops-netology.git,ansible_file
+```
+
 
 #### Examples
 
+[Test example](assets/site.yml) 
+
+```console
+ansible-playbook assets/site.yml
+```
 
 Creating file `/tmp/test_ansible_file` with content `test succeeded!`.
 
