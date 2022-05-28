@@ -1,0 +1,6 @@
+---
+# tasks file for ansible_file
+- name: Creating the File
+  kraktorist.ansible_file.ansible_file:
+    path: "{{ default_path }}"
+    content: "{{ default content }}"
