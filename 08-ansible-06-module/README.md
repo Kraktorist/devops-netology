@@ -188,3 +188,5 @@ if __name__ == '__main__':
 </details>
 
 **Answers**
+
+[ ansible_file module ](https://github.com/Kraktorist/devops-netology/tree/ansible_file)
