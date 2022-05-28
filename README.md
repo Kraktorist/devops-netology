@@ -10,6 +10,8 @@ ansible-galaxy collection install git+https://github.com/Kraktorist/devops-netol
 
 ### Usage
 
+`kraktorist.ansible_file.ansible_file` module
+
 ```yaml
 ---
 - name: create file
@@ -23,4 +25,11 @@ ansible-galaxy collection install git+https://github.com/Kraktorist/devops-netol
           444
           555
           666
+```
+`kraktorist.ansible_file.ansible_file` role
+
+```yaml
+- hosts: localhost
+  roles:
+    - kraktorist.ansible_file.ansible_file
 ```
