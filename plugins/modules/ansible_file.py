@@ -48,6 +48,10 @@ RETURN = r'''
 from ansible.module_utils.basic import AnsibleModule
 from pathlib import Path
 
+def update_content(path, content):
+    with open(path, 'w') as f:
+        f.write(content)
+  
 
 def run_module():
     # define available arguments/parameters a user can pass to the module
@@ -87,11 +91,10 @@ def run_module():
             with open(module.params['path'], 'r') as f:
                 content = f.read()
             if content != module.params['content']:
-                with open(module.params['path'], 'w') as f:
-                    f.write(module.params['content'])
+                update_content(module.params['path'], module.params['content'])
+                result['changed'] = True
         else:
-            with open(module.params['path'], 'w') as f:
-                f.write(module.params['content'])
+            update_content(module.params['path'], module.params['content'])
             result['changed'] = True
     except (IOError, OSError) as e:
         module.fail_json(msg='Failed', exception=repr(e))
