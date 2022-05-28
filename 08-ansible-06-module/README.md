@@ -189,9 +189,11 @@ if __name__ == '__main__':
 
 **Answers**
 
-[ ansible_file module ](https://github.com/Kraktorist/devops-netology/tree/ansible_file)
+[ ansible_file collection repository ](https://github.com/Kraktorist/devops-netology/tree/ansible_file)
 
-### examples
+
+#### Examples
+
 
 Creating file `/tmp/test_ansible_file` with content `test succeeded!`.
 
