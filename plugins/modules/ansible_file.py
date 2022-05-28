@@ -46,6 +46,7 @@ RETURN = r'''
 '''
 
 from ansible.module_utils.basic import AnsibleModule
+from pathlib import Path
 
 
 def run_module():
@@ -82,8 +83,16 @@ def run_module():
     # manipulate or modify the state as needed (this is going to be the
     # part where your module will do what it needs to do)
     try:
-        with open(module.params['path'], 'w') as f:
-            f.write(module.params['content'])
+        if Path(module.params['path']).is_file():
+            with open(module.params['path'], 'r') as f:
+                content = f.read()
+            if content != module.params['content']:
+                with open(module.params['path'], 'w') as f:
+                    f.write(module.params['content'])
+        else:
+            with open(module.params['path'], 'w') as f:
+                f.write(module.params['content'])
+            result['changed'] = True
     except (IOError, OSError) as e:
         module.fail_json(msg='Failed', exception=repr(e))
 
@@ -91,7 +100,7 @@ def run_module():
 
     # use whatever logic you need to determine whether or not this module
     # made any modifications to your target
-    result['changed'] = True
+    
 
     # in the event of a successful module execution, you will want to
     # simple AnsibleModule.exit_json(), passing the key/value results
