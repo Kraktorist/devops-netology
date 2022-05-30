@@ -39,7 +39,7 @@
 1. [ Ansible Roles ](08-ansible-04-role/README.md)
 1. [ Ansible Testing ](08-ansible-05-testing/README.md)
 1. [ Ansible Module ](08-ansible-06-module/README.md)
-
+1. [ Software lifecycle ](09-ci-01-intro/README.md)
 
 
 
