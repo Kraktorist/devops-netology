@@ -21,7 +21,7 @@
 1. [ Docker ](./05-virt-03-docker)
 1. [ docker-compose ](./05-virt-04-docker-compose)
 1. [ Docker Swarm ](./05-virt-04-docker-swarm)
-1. [ Database basics ](./06-db-01-basics)
+1. [ Database Basics ](./06-db-01-basics)
 1. [ SQL ](./06-db-02-sql)
 1. [ MySQL ](./06-db-03-mysql)
 1. [ Postgres SQL ](./06-db-04-postgresql)
@@ -39,7 +39,7 @@
 1. [ Ansible Roles ](08-ansible-04-role/README.md)
 1. [ Ansible Testing ](08-ansible-05-testing/README.md)
 1. [ Ansible Module ](08-ansible-06-module/README.md)
-1. [ Software lifecycle ](09-ci-01-intro/README.md)
+1. [ Software Lifecycle ](09-ci-01-intro/README.md)
 
 
 
