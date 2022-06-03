@@ -40,7 +40,7 @@
 1. [ Ansible Testing ](08-ansible-05-testing/README.md)
 1. [ Ansible Module ](08-ansible-06-module/README.md)
 1. [ Software Lifecycle ](09-ci-01-intro/README.md)
-
+1. [ CI/CD Routines ](09-ci-03-cicd/README.md)
 
 
 ### Branches
