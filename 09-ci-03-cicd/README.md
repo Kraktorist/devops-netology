@@ -18,6 +18,8 @@
 
 **Answer**
 
+[ creating VMs and hosts.yml inventory file with terraform](assets/terraform/main.tf)
+
 
 ---
 
