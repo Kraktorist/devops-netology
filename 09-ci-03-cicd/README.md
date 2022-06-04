@@ -47,6 +47,7 @@ terraform apply -auto-approve && cd ../infrastructure/ && sleep 60 && ansible-pl
 
 **Answer**
 
+[<img src="assets/img/sonarqube_report.png" width="800"/>](assets/img/sonarqube_report.png)
 
 ---
 
