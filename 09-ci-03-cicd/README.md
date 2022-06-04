@@ -18,8 +18,11 @@
 
 **Answer**
 
-[ creating VMs and hosts.yml inventory file with terraform](assets/terraform/main.tf)
+Creating VMs and hosts.yml inventory file with [ terraform](assets/terraform/main.tf)
 
+```console
+terraform apply -auto-approve && cd ../infrastructure/ && sleep 60 && ansible-playbook -i inventory/cicd/hosts.yml site.yml
+```
 
 ---
 
