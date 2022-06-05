@@ -73,6 +73,25 @@ terraform apply -auto-approve && cd ../infrastructure/ && sleep 60 && ansible-pl
 
 **Answer**
 
+[maven-metadata.xml](assets/maven-metadata.xml)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>netology</groupId>
+  <artifactId>java</artifactId>
+  <versioning>
+    <latest>8_282</latest>
+    <release>8_282</release>
+    <versions>
+      <version>8_102</version>
+      <version>8_282</version>
+    </versions>
+    <lastUpdated>20220605125530</lastUpdated>
+  </versioning>
+</metadata>
+
+```
 
 ---
 
