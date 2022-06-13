@@ -2,7 +2,10 @@ pipeline {
     agent { label 'molecule' }
     environment {
         ROLE = "vector-role"
-    } 
+    }
+    parameters {
+        choice(name: 'TEST', choices: ['only default', 'all'], description: 'Test cases')
+    }
     stages {
         stage('Git checkout') {
             steps {
@@ -17,7 +20,12 @@ pipeline {
         }
         stage('Run molecule') {
             steps {
-                sh 'molecule test --all'
+                if ('only default' != ${params.TEST}) {
+                    sh 'molecule test --all'
+                }
+                else {
+                    sh 'molecule test'
+                }
             }
         }
     }
