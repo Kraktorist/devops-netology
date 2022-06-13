@@ -2,7 +2,7 @@ provider "yandex" {
 }
 
 data "yandex_compute_image" "ubuntu" {
-  family = "centos-7"
+  family = "centos-stream-8"
 }
 
 data "yandex_vpc_subnet" "subnet" {
@@ -10,8 +10,8 @@ data "yandex_vpc_subnet" "subnet" {
 }
 
 locals {
-  ssh_user = "centos"
-  inventory_path = "../infrastructure/inventory/hosts.yml"
+  ssh_user = "cloud-user"
+  inventory_path = "../infrastructure/inventory/cicd/hosts.yml"
 }
 
 
@@ -50,10 +50,12 @@ resource "local_file" "hosts" {
       hosts: %{ for instance in yandex_compute_instance.node }
         ${instance.name}:
           ansible_host: ${instance.network_interface.0.nat_ip_address} %{ endfor }
-      children: %{ for instance in yandex_compute_instance.node }
-        ${instance.metadata.type}:
-          hosts:
-            ${instance.name}: %{ endfor }
+      children:
+        jenkins:
+          children: %{ for instance in yandex_compute_instance.node }
+            ${instance.metadata.type}:
+              hosts:
+                ${instance.name}: %{ endfor }
       vars:
         ansible_connection_type: paramiko
         ansible_user: ${local.ssh_user}

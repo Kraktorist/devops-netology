@@ -91,7 +91,7 @@
       yum:
         name:
           - git
-          - python3
+          - python39
           - docker-ce
           - docker-ce-cli
           - containerd.io
@@ -108,15 +108,8 @@
         executable: pip3
         name:
           - selinux
-          - ansible<3.0
+          - ansible
         state: present
-    - name: Reinstall Selinux
-      become_user: root
-      pip:
-        executable: pip3
-        name:
-          - selinux
-        state: forcereinstall
     - name: Add local to PATH
       lineinfile:
         dest: ~/.bashrc
@@ -147,3 +140,11 @@
       retries: 10
       timeout: 10
 
+    - name: Install molecule
+      become_user: root
+      pip:
+        executable: pip3
+        name:
+          - molecule
+          - molecule_docker
+        state: present
