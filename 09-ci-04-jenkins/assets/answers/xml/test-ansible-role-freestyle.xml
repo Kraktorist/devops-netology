@@ -20,7 +20,8 @@
     <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
-  <canRoam>true</canRoam>
+  <assignedNode>molecule</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>

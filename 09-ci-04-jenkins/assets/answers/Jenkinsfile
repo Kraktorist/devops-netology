@@ -1,0 +1,33 @@
+pipeline {
+    agent { label 'molecule' }
+    parameters {
+        choice(name: 'ROLE', choices: ['vector-role', 'lighthouse-role'], description: 'Role to test')
+        choice(name: 'TEST', choices: ['only default', 'all'], description: 'Test cases')
+    }
+        
+    stages {
+        stage('Git checkout') {
+            steps {
+                echo "Testing role ${params.ROLE}"
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: "*/${params.ROLE}"]], 
+                    extensions: [], 
+                    userRemoteConfigs: [[url: 'https://github.com/Kraktorist/devops-netology.git']]
+                ])
+            }
+        }
+        stage('Run molecule') {
+            steps {
+                script {
+                    if ('only default' != params.TEST) {
+                        sh 'molecule test --all'
+                    }
+                    else {
+                        sh 'molecule test'
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+properties(
+    [
+        parameters([
+            booleanParam(defaultValue: false, name: 'prod_run', description: '--check --diff')
+        ])
+    ]
+)
+node("agent"){
+    stage("Git checkout"){
+        git credentialsId: 'ssh-key', url: 'git@github.com:aragastmatb/example-playbook.git'
+    }
+    stage("Install java role"){
+        withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key', keyFileVariable: 'keyfile')]) {
+            sh """cat <<EOF >> ~/.ssh/config
+## start jenkins-block ##
+Host github.com
+    User git
+    Hostname github.com
+    PreferredAuthentications publickey
+    IdentityFile ${keyfile}
+## end jenkins-block ##
+EOF"""
+        }
+        sh "ansible-galaxy install -r requirements.yml"
+        sh "sed -i '/## start jenkins-block ##/,/## end jenkins-block ##/d' ~/.ssh/config"
+    }
+    stage("Run playbook"){
+        if (params.prod_run){
+            sh 'ansible-playbook site.yml -i inventory/prod.yml'
+        }
+        else{
+            sh 'ansible-playbook site.yml --check --diff -i inventory/prod.yml'
+        }
+        
+    }
+}

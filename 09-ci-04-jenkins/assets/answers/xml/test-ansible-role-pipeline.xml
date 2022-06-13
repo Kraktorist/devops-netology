@@ -1,0 +1,78 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1186.v8def1a_5f3944">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2086.v12b_420f036e5"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2086.v12b_420f036e5">
+      <jobProperties/>
+      <triggers/>
+      <parameters>
+        <string>ROLE</string>
+        <string>TEST</string>
+      </parameters>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>ROLE</name>
+          <description>Role to test</description>
+          <choices>
+            <string>vector-role</string>
+            <string>lighthouse-role</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>TEST</name>
+          <description>Test cases</description>
+          <choices>
+            <string>only default</string>
+            <string>all</string>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2725.v7b_c717eb_12ce">
+    <script>pipeline {
+    agent { label &apos;molecule&apos; }
+    parameters {
+        choice(name: &apos;ROLE&apos;, choices: [&apos;vector-role&apos;, &apos;lighthouse-role&apos;], description: &apos;Role to test&apos;)
+        choice(name: &apos;TEST&apos;, choices: [&apos;only default&apos;, &apos;all&apos;], description: &apos;Test cases&apos;)
+    }
+        
+    stages {
+        stage(&apos;Git checkout&apos;) {
+            steps {
+                echo &quot;Testing role ${params.ROLE}&quot;
+                checkout([
+                    $class: &apos;GitSCM&apos;, 
+                    branches: [[name: &quot;*/${params.ROLE}&quot;]], 
+                    extensions: [], 
+                    userRemoteConfigs: [[url: &apos;https://github.com/Kraktorist/devops-netology.git&apos;]]
+                ])
+            }
+        }
+        stage(&apos;Run molecule&apos;) {
+            steps {
+                script {
+                    if (&apos;only default&apos; != params.TEST) {
+                        sh &apos;molecule test --all&apos;
+                    }
+                    else {
+                        sh &apos;molecule test&apos;
+                    }
+                }
+            }
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
