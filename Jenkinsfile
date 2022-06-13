@@ -21,7 +21,7 @@ pipeline {
         stage('Run molecule') {
             steps {
                 script {
-                    if ('only default' != ${params.TEST}) {
+                    if ('only default' != params.TEST) {
                         sh 'molecule test --all'
                     }
                     else {
