@@ -19,11 +19,15 @@ pipeline {
             }
         }
         stage('Run molecule') {
-            if ('only default' != ${params.TEST}) {
-                sh 'molecule test --all'
-            }
-            else {
-                sh 'molecule test'
+            steps {
+                script {
+                    if ('only default' != ${params.TEST}) {
+                        sh 'molecule test --all'
+                    }
+                    else {
+                        sh 'molecule test'
+                    }
+                }
             }
         }
     }
