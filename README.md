@@ -41,7 +41,8 @@
 1. [ Ansible Module ](08-ansible-06-module/README.md)
 1. [ Software Lifecycle ](09-ci-01-intro/README.md)
 1. [ CI/CD Routines ](09-ci-03-cicd/README.md)
-
+1. [ CI/CD Jenkins ](09-ci-04-jenkins/README.md)
+1. [ CI/CD Teamcity ](09-ci-05-teamcity/README.md)
 
 ### Branches
 
