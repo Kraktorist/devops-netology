@@ -1,0 +1,19 @@
+$nexus_name = "nexus-01"
+$nexus_ip = "192.168.0.200"
+$box = "centos/7"
+$ssh_public_key_path = "~/.ssh/id_rsa.pub"
+
+Vagrant.configure("2") do |config|
+  config.vm.define $nexus_name do |config|
+    config.vm.provider "virtualbox" do |vb|
+      vb.cpus = "2"
+      vb.memory = "4096"
+    end
+    config.vm.box = $box
+    config.vm.hostname = $nexus_name
+    config.vm.network "public_network", ip: $nexus_ip
+    config.vm.provision 'file', 
+        source: $ssh_public_key_path, 
+        destination: '~/.ssh/authorized_keys'
+  end
+end
