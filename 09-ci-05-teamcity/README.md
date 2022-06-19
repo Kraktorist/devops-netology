@@ -34,4 +34,7 @@
 **Answers**
 
 [Repository with the Teamcity configuration](https://github.com/Kraktorist/devops-example-teamcity)
+
+[docker-compose for Teamcity installation](assets/docker-compose.yml)
+
 ---
