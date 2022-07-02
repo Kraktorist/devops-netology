@@ -94,6 +94,6 @@ Merge request !1 created by @Developer
 
 **Answers**
 
-[Automated test stage](http://51.250.105.205/gitlab-instance-07e77626/devops-netology/-/blob/main/.gitlab-ci.yml#L37-L43)
+[Automated test stage](.gitlab-ci.yml#L37-L43)
 
 ---
