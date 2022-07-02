@@ -10,7 +10,8 @@
 ## Основная часть
 
 [Terraform Infrastructure](assets/terraform/)
-[Completed tasks README](assets/repository/README.md)
+
+[README](assets/repository/README.md)
 
 
 
