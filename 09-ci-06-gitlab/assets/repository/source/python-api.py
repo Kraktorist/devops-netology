@@ -8,7 +8,7 @@ api = Api(app)
 
 class Info(Resource):
     def get(self):
-        return {'version': 3, 'method': 'GET', 'message': 'Already started'}
+        return {'version': 3, 'method': 'GET', 'message': 'Running'}
 
 api.add_resource(Info, '/get_info')
 

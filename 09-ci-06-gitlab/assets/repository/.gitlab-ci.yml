@@ -1,0 +1,43 @@
+stages:
+  - build
+  - deploy
+  - test
+
+build:
+  stage: build
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://localhost:2375/
+  image: cr.yandex/yc/metadata-token-docker-helper:0.2
+  services:
+    - docker:19.03.1-dind
+  script:
+  #  - docker build . -f Dockerfile-python37 --build-arg DOCKER_REGISTRY_ID="$DOCKER_REGISTRY_ID" -t cr.yandex/"$DOCKER_REGISTRY_ID"/python37:gitlab-$CI_COMMIT_SHORT_SHA -t cr.yandex/"$DOCKER_REGISTRY_ID"/python37:gitlab -t cr.yandex/"$DOCKER_REGISTRY_ID"/python37:latest
+  #  - docker push cr.yandex/"$DOCKER_REGISTRY_ID"/python37:gitlab-$CI_COMMIT_SHORT_SHA
+  #  - docker push cr.yandex/"$DOCKER_REGISTRY_ID"/python37:gitlab
+  #  - docker push cr.yandex/"$DOCKER_REGISTRY_ID"/python37:latest
+    - docker build . --build-arg DOCKER_REGISTRY_ID="$DOCKER_REGISTRY_ID" -t cr.yandex/"$DOCKER_REGISTRY_ID"/python-api:gitlab-$CI_COMMIT_SHORT_SHA -t cr.yandex/"$DOCKER_REGISTRY_ID"/python-api:latest
+    - docker push cr.yandex/"$DOCKER_REGISTRY_ID"/python-api:gitlab-$CI_COMMIT_SHORT_SHA
+    - docker push cr.yandex/"$DOCKER_REGISTRY_ID"/python-api:latest
+
+deploy:
+  image: gcr.io/cloud-builders/kubectl:latest
+  stage: deploy
+  script:
+    - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
+    - kubectl config set-credentials admin --token="$KUBE_TOKEN"
+    - kubectl config set-context default --cluster=k8s --user=admin
+    - kubectl config use-context default
+    - sed -i "s/__VERSION__/gitlab-$CI_COMMIT_SHORT_SHA/;s/__REGISTRY__/$DOCKER_REGISTRY_ID/" k8s.yaml
+    - kubectl apply -f k8s.yaml
+  only:
+    - main
+
+test: 
+  image: "gcr.io/cloud-builders/kubectl:latest"
+  script: 
+    - "curl -s http://python-api.python-api.svc.cluster.local:5290/get_info | grep '\"message\": \"Running\"'"
+  stage: test
+  only: 
+    - main
