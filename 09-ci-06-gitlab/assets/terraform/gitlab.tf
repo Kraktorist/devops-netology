@@ -1,23 +1,3 @@
-provider "yandex" {
-}
-
-data "yandex_compute_image" "image" {
-  family = "gitlab"
-}
-
-data "yandex_vpc_subnet" "subnet" {
-  name = "dn-subnet"
-}
-
-locals {
-  ssh_user = "ubuntu"
-  ssh_pub_key = "~/.ssh/id_rsa.pub"
-  ssh_private_key = "~/.ssh/id_rsa"
-  inventory_path = "hosts.yml"
-  git_password_file = "/etc/gitlab/initial_root_password"
-}
-
-
 resource "yandex_compute_instance" "node" {
 
   name = "ci-tutorial-gitlab"
@@ -47,12 +27,15 @@ resource "null_resource" "gitlab_registry_configure" {
     yandex_compute_instance.node
   ]
   provisioner "local-exec" {
-    command = "sleep 120 && ssh -ti ${local.ssh_private_key} ${local.ssh_user}@${yandex_compute_instance.node.network_interface[0].nat_ip_address} \"sudo sed -i '/registry_external_url/s/^#//g' /etc/gitlab/gitlab.rb && sudo gitlab-ctl reconfigure\""
+    command = "sleep 120 && ssh -o StrictHostKeyChecking=no -ti ${local.ssh_private_key} ${local.ssh_user}@${yandex_compute_instance.node.network_interface[0].nat_ip_address} \"sudo sed -i '/registry_external_url/s/^#//g' /etc/gitlab/gitlab.rb && sudo gitlab-ctl reconfigure\""
 
   }
 }
 
 data "external" "password" {
+  depends_on = [
+    yandex_compute_instance.node
+  ]
   program = ["bash", "password.sh"]
 
   query = {
