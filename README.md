@@ -44,7 +44,7 @@
 1. [ CI/CD Jenkins ](09-ci-04-jenkins/README.md)
 1. [ CI/CD Teamcity ](09-ci-05-teamcity/README.md)
 1. [ CI/CD Gitlab ](09-ci-06-gitlab/README.md)
-   
+1. [ Monitoring Basics ](10-monitoring-01-base/README.md)   
 
 
 ### Branches
