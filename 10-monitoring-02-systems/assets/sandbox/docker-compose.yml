@@ -28,7 +28,6 @@ services:
       args:
         TELEGRAF_TAG: ${TELEGRAF_TAG}
     image: "telegraf"
-    privileged: true
     entrypoint: ["telegraf"]
     environment:
       HOSTNAME: "telegraf-getting-started"
