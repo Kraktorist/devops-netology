@@ -20,7 +20,7 @@ pipeline {
         stage('Install Role') {
             steps {
                 script {
-                    sh 'cat <<EOF > requirements.yml
+                    sh """cat <<EOF > requirements.yml
 ---
   - src: https://github.com/Kraktorist/devops-netology
     scm: git
@@ -28,7 +28,7 @@ pipeline {
     name: ${params.ROLE}
 EOF
 ansible-galaxy role install --force-with-deps -r requirements.yml
-'
+"""
                 }
             }
         }
