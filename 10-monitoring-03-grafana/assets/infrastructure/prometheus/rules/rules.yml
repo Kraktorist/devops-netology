@@ -1,0 +1,28 @@
+groups:
+- name: Node Alerts
+  rules:
+  - alert: Load5_too_high
+    expr: node_load5>8
+    labels:
+      severity: 3
+    annotations:
+      description: Load Average is high
+      summary: Load Average is high
+
+  - alert: FreeMemory
+    expr: node_memory_MemFree_bytes/node_memory_MemTotal_bytes>0.95
+    for: 5m
+    labels:
+      severity: 2
+    annotations:
+      description: No free memory on the machine
+      summary: No free memory on the machine
+
+  - alert: Root_Free_Space
+    expr: node_filesystem_avail_bytes{mountpoint="/"}<5368709120 # 5Gb
+    for: 5m
+    labels:
+      severity: 2
+    annotations:
+      description: Root mountpoint is full
+      summary: Root mountpoint is full

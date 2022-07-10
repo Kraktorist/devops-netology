@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports: 
+      - "9090:9090"
+    volumes:
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./prometheus/rules:/etc/prometheus/rules"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.0.2
+    volumes:
+      - "./grafana/datasources:/etc/grafana/provisioning/datasources"
+      - "./grafana/dashboards:/etc/grafana/provisioning/dashboards"
+      - "./grafana/dashboards_files:/var/lib/grafana/dashboards"
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - prometheus
+      - alertmanager
+
+  nodeexporter:
+    image: prom/node-exporter
+    container_name: nodeexporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
