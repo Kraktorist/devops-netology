@@ -16,6 +16,7 @@ services:
     volumes:
       - "./grafana/datasources:/etc/grafana/provisioning/datasources"
       - "./grafana/dashboards:/etc/grafana/provisioning/dashboards"
+      - "./grafana/notifiers:/etc/grafana/provisioning/notifiers"
       - "./grafana/dashboards_files:/var/lib/grafana/dashboards"
     ports:
       - "3000:3000"
