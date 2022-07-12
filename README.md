@@ -47,6 +47,8 @@
 1. [ Monitoring Basics ](10-monitoring-01-base/README.md)   
 1. [ Monitoring Systems ](10-monitoring-02-systems/README.md)   
 1. [ Grafana ](10-monitoring-03-grafana/README.md)
+1. [ ELK ](10-monitoring-04-elk/README.md)
+
 
 
 ### Branches
