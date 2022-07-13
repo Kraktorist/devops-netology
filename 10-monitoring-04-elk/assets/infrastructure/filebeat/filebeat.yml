@@ -2,6 +2,7 @@ filebeat.inputs:
   - type: container
     paths:
       - '/var/lib/docker/containers/*/*.log'
+    # stream: stdout
 
 processors:
   - add_docker_metadata:
@@ -13,10 +14,12 @@ processors:
       overwrite_keys: true
 
 output.logstash:
-  hosts: ["logstash:5044"]
+  enabled: true
+  hosts: ["logstash:5046"]
 
-#output.console:
-#  enabled: true
+output.console:
+  enabled: false
+  pretty: false
 
 logging.json: true
 logging.metrics.enabled: false

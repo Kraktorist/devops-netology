@@ -174,24 +174,25 @@ services:
 
   logstash:
     container_name: logstash
-    image: logstash:${STACK_VERSION}
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
     depends_on:
       es01:
         condition: service_healthy
       es02:
         condition: service_healthy
+    # command: logstash --config.test_and_exit -f /usr/share/logstash/pipeline/logstash.conf
     volumes:
       - "./logstash/pipeline:/usr/share/logstash/pipeline"
       - "./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml"
       - certs:/usr/share/logstash/certs
     environment:
-      - SERVERNAME=kibana
       - ELASTICSEARCH_HOSTS=https://es01:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
 
   filebeat:
-    image: elastic/filebeat:${STACK_VERSION}
+    container_name: filebeat
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
     depends_on:
       - logstash
     privileged: true
@@ -201,6 +202,12 @@ services:
       - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:z"
       - "/var/run/docker.sock:/var/run/docker.sock:z"
       - "/var/lib/docker/containers:/var/lib/docker/containers:z"
+
+  monapp:
+    container_name: monapp
+    build: ./monapp
+    ports:
+      - "5000:5000"
 
 volumes:
   certs:
