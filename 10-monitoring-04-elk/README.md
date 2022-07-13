@@ -27,9 +27,10 @@
 
 </details>
 
+[Infrastructure](assets/infrastructure/docker-compose.yml)
+
 ## Задание 1
 
-[Infrastructure](assets/infrastructure/docker-compose.yml)
 
 Вам необходимо поднять в докере:
 - elasticsearch(hot и warm ноды)
@@ -60,7 +61,7 @@ Filebeat следует сконфигурировать для отправки
 
 [docker-compose.yml](assets/infrastructure/docker-compose.yml)
 
-[filebeat configuration](assets/infrastructure/filebeat/)
+[filebeat configuration](assets/infrastructure/filebeat/filebeat.yml)
 
 [logstash configuration](assets/infrastructure/logstash/)
 
@@ -80,7 +81,7 @@ Filebeat следует сконфигурировать для отправки
  
 **Answer**
 
-![kibana](assets/img/kibana.png)
+![kibana](assets/img/indices_search.png)
 
 ---
 
