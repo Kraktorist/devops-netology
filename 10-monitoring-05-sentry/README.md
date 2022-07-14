@@ -19,7 +19,9 @@ Free cloud account имеет следующие ограничения:
 
 **Answer**
 
+[Self Hosted version](https://github.com/getsentry/self-hosted)
 
+![projects](assets/img/projects.png)
 
 ---
 
@@ -36,7 +38,9 @@ Free cloud account имеет следующие ограничения:
 
 **Answer**
 
+![Issues](assets/img/issues.png)
 
+![StackTrace](assets/img/stacktrace.png)
 
 ---
 
@@ -62,7 +66,7 @@ Free cloud account имеет следующие ограничения:
 
 **Answer**
 
-
+![Alert](assets/img/alert.png)
 
 ---
 
