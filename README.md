@@ -48,7 +48,7 @@
 1. [ Monitoring Systems ](10-monitoring-02-systems/README.md)   
 1. [ Grafana ](10-monitoring-03-grafana/README.md)
 1. [ ELK ](10-monitoring-04-elk/README.md)
-
+1. [ Sentry ](10-monitoring-05-sentry/README.md)
 
 
 ### Branches
