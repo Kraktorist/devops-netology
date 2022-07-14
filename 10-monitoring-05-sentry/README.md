@@ -80,6 +80,8 @@ Free cloud account имеет следующие ограничения:
 
 **Answer**
 
+[Python Application](assets/crashapp/crashapp.py)
 
+![Crashapp Issues](assets/img/crashapp.png)
 
 ---
