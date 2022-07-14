@@ -19,7 +19,7 @@ Free cloud account имеет следующие ограничения:
 
 **Answer**
 
-[Self Hosted version](https://github.com/getsentry/self-hosted)
+Задание выполнялось на [Self Hosted ](https://github.com/getsentry/self-hosted) версии
 
 ![projects](assets/img/projects.png)
 
