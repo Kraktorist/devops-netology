@@ -21,6 +21,7 @@ __Пострадавшие сервисы и функции:__
   - notification services (webhooks)
   - issues
   - building github pages
+  - прочие функции
 
 __Регион:__ глобальная проблема
 
