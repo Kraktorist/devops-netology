@@ -155,20 +155,30 @@ ___
 [autotest](assets/tests/entrypoint.sh) запускается в контейнере testresult
 
 ```console
-user@host:~/repos/$ docker-compose up --build
-...
-assets-security-1       | 172.28.0.4 - - [07/Aug/2022 17:18:03] "POST /v1/token HTTP/1.0" 200 -
-assets-testresult-1     | Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IifQ.hiMVLmssoTsy1MqbmIoviDeFPvo-nCd92d4UFiN2O2I
-assets-security-1       | 172.28.0.4 - - [07/Aug/2022 17:18:03] "GET /v1/token/validation HTTP/1.0" 200 -
-assets-security-1       | 172.28.0.4 - - [07/Aug/2022 17:18:03] "GET /v1/user HTTP/1.0" 200 -
-assets-testresult-1     | User status: {"user":"Authorized"}
-assets-testresult-1     | Uploading picture
-assets-security-1       | 172.28.0.4 - - [07/Aug/2022 17:18:04] "GET /v1/token/validation HTTP/1.0" 200 -
-assets-uploader-1       | Detected file type: image/jpeg
-assets-uploader-1       | Saved file: 5d6b48b0-aef0-48c6-bc7b-1fb4bd39b432.jpg
-assets-testresult-1     | Picture path: 5d6b48b0-aef0-48c6-bc7b-1fb4bd39b432.jpg
-assets-testresult-1     | Downloading and checking picture: 
-assets-security-1       | 172.28.0.4 - - [07/Aug/2022 17:18:04] "GET /v1/token/validation HTTP/1.0" 200 -
-assets-testresult-1     | picture.jpg: OK
-assets-testresult-1 exited with code 0
+user@host:~/repos/$ docker logs assets-testresult-1
+## Checking main scenario
+Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2IifQ.hiMVLmssoTsy1MqbmIoviDeFPvo-nCd92d4UFiN2O2I
+User status: {"user":"Authorized"}
+Uploading picture
+Uploaded picture: http://gateway:8080/v1/images/53097626-d324-48aa-ac0b-c3194b796be9.jpg
+Downloading picture: 
+Checksum validation: picture.jpg: OK
+
+## Checking invalid credentials: {"error":"Unknown login or password"}
+HTTP Code: 401
+
+## Checking invalid file format: <!DOCTYPE html><h2>Forbidden Content</h2>
+HTTP Code: 403
+
+## Checking upload without authentication: <html>
+<head><title>401 Authorization Required</title></head>
+<body>
+<center><h1>401 Authorization Required</h1></center>
+<hr><center>nginx/1.23.1</center>
+</body>
+</html>
+HTTP Code: 401
+
+## Checking Downloading withouth authentication: 
+HTTP Code: 401
 ```

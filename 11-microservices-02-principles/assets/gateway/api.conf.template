@@ -27,7 +27,14 @@ server {
     location /v1/upload {
         auth_request /auth;
         proxy_pass http://uploader:3000/v1/upload;
-    }    
+        error_page 502 =403 /error403;
+
+    }
+
+    location /error403 {
+        default_type text/html;
+        return 403 "<!DOCTYPE html><h2>Forbidden Content</h2>\n";
+    }
 
     location ~* /v1/images/(.*) {
         resolver 127.0.0.11;
