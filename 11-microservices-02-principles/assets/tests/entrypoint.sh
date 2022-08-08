@@ -26,8 +26,12 @@ echo ''
 echo -n "## Checking invalid credentials: "
 curl -w "HTTP Code: %{http_code}\n" -s -X POST -H 'Content-Type: application/json' -d '{"login":"bob", "password":"wrong password"}' http://${gateway}/v1/token
 echo ''
-echo -n "## Checking invalid file format: "
+echo -n "## Checking invalid file format (binary): "
 curl -w "HTTP Code: %{http_code}\n"  -s -X POST -H 'Authorization: Bearer ${token}' -H 'Content-Type: octet/stream' --data-binary @/bin/bash http://${gateway}/v1/upload
+echo ''
+echo -n "## Checking invalid file format (txt): "
+echo "text">file.txt
+curl -w "HTTP Code: %{http_code}\n"  -s -X POST -H 'Authorization: Bearer ${token}' -H 'Content-Type: octet/stream' --data-binary @file.txt http://${gateway}/v1/upload
 echo ''
 echo -n "## Checking upload without authentication: "
 curl -w "HTTP Code: %{http_code}\n"  -s -X POST -H 'Content-Type: octet/stream' --data-binary @/bin/bash http://${gateway}/v1/upload
