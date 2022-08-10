@@ -52,6 +52,8 @@
 1. [ Incident Management ](10-monitoring-06-incident-management/README.md)
 1. [ Microservices Introduction ](11-microservices-01-intro/README.md)
 1. [ Microservices Principles ](11-microservices-02-principles/README.md)
+1. [ Microservices Approaches ](11-microservices-03-approaches/README.md)
+1. [ Microservices Scaling ](11-microservices-04-scaling/README.md)
 
 
 
