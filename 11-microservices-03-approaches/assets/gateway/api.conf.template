@@ -1,0 +1,45 @@
+server {
+
+    listen       8080;
+    server_name localhost gateway;
+    access_log   /var/log/nginx/api.access.log  main;
+    error_log   /var/log/nginx/api.error.log;
+    client_max_body_size 20m;
+
+    location /v1/register {
+        proxy_pass http://security:3000/v1/user;
+    }
+
+    location /v1/token {
+        proxy_pass http://security:3000/v1/token;
+
+    }
+
+    location = /auth {
+        proxy_pass http://security:3000/v1/token/validation;
+    }
+
+    location /v1/user {
+        auth_request /auth;
+        proxy_pass http://security:3000/v1/user;
+    }
+
+    location /v1/upload {
+        auth_request /auth;
+        proxy_pass http://uploader:3000/v1/upload;
+        error_page 502 =403 /error403;
+
+    }
+
+    location /error403 {
+        default_type text/html;
+        return 403 "<!DOCTYPE html><h2>Forbidden Content</h2>\n";
+    }
+
+    location ~* /v1/images/(.*) {
+        resolver 127.0.0.11;
+        auth_request /auth;
+        proxy_pass http://storage:9000/${S3_BUCKET}/$1;
+    }    
+
+}

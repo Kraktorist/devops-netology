@@ -1,0 +1,50 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+
+scrape_configs:
+- job_name: prometheus
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - localhost:9090
+
+
+- job_name: minio
+  honor_timestamps: true
+  scrape_interval: 3s
+  scrape_timeout: 3s
+  metrics_path: /minio/v2/metrics/cluster
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - storage:9000
+
+- job_name: uploader
+  honor_timestamps: true
+  scrape_interval: 3s
+  scrape_timeout: 3s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - uploader:3000
+
+- job_name: security
+  honor_timestamps: true
+  scrape_interval: 3s
+  scrape_timeout: 3s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - security:3000

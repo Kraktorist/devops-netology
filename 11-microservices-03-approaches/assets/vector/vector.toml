@@ -1,0 +1,31 @@
+[sources.docker]
+type = "docker_logs"
+
+[transforms.docker_transformer]
+type = "remove_fields"
+inputs = [ "docker" ]
+fields = [ "label" ]
+
+[sinks.console]
+type = "console"
+inputs = [ "docker_transformer" ]
+
+  [sinks.console.encoding]
+  codec = "json"
+
+[sinks.elasticsearch]
+type = "elasticsearch"
+suppress_type_name = true
+inputs = [ "docker_transformer" ]
+endpoint = "${ELASTICSEARCH_HOSTS}"
+mode = "bulk"
+compression = "none"
+
+  [sinks.elasticsearch.auth]
+  strategy = "basic"
+  user = "${ELASTICSEARCH_USERNAME}"
+  password = "${ELASTICSEARCH_PASSWORD}"
+
+  [sinks.elasticsearch.tls]
+  verify_certificate = false
+  verify_hostname = false
