@@ -1,0 +1,14 @@
+all:
+  hosts:
+
+    redis01:
+      ansible_host: 192.168.0.199
+
+    redis02:
+      ansible_host: 192.168.0.26
+
+    redis03:
+      ansible_host: 192.168.0.197
+
+  vars:
+    ansible_user: vagrant

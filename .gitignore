@@ -41,3 +41,6 @@ terraform.rc
 
 # remove all .env files
 *.env
+
+# virtualbox images downloaded by terra-farm provider
+*.box
