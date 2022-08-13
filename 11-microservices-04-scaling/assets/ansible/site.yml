@@ -28,3 +28,4 @@
       msg: "Replication: {{ inventory_hostname }} ({{ hostvars[inventory_hostname].ansible_host }}) -> {{ replica.stdout }}"
     tags:
     - test  
+    - never

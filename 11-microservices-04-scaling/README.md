@@ -60,7 +60,7 @@ __<summary>Условие задачи</summary>__
 
 **Answers**
 
-To build redish hosts using Virtualbox as a platform
+Создаем инстансы в `Virtualbox`, используя `terraform`
 
 ```shell
 cd assets/terraform
@@ -68,22 +68,22 @@ terraform init
 terraform apply -var 'host_interface=enp5s1'
 ```
 
-As an output of the terraform we get ansible inventory with the list of redis hosts ../ansible/hosts.yaml
-Now we are ready to provision the hosts using ansible
+На выходе получаем машины и сгенерированный ansible inventory файл.  
+Производим установку `redis` на машины с помощью `ansible`
 
 ```shell
 cd assets/ansible
+ansible-galaxy install davidwittman.redis
 ansible-playbook -i hosts.yaml site.yml --become
 ```
 
-and now we can check the replication
+Проверяем статус репликации:
 
 ```shell
-ansible-galaxy install davidwittman.redis
 ansible-playbook -i hosts.yaml site.yml --become --tags test
 ```
 
-Test ouptup
+Команда покажет реплики для каждого мастер-инстанса.
 
 ```console
 PLAY [Redis Shards Configuration] *****************************************************************************************************
