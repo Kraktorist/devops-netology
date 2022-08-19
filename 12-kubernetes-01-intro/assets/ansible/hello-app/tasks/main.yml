@@ -1,0 +1,63 @@
+---
+# tasks file for hello-app
+- name: hello-app | installing pip3
+  become: true
+  ansible.builtin.package:
+    name: python3-pip
+    state: latest
+- name: hello-app | Prerequisites
+  ansible.builtin.pip:
+    name: kubernetes
+- name: hello-app | Create a deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: hello-node
+        labels:
+          app: hello-node
+        namespace: "{{ namespace }}"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: hello-node
+        template:
+          metadata:
+            labels:
+              app: hello-node
+          spec:
+            containers:
+            - image: k8s.gcr.io/echoserver:1.4
+              imagePullPolicy: IfNotPresent
+              name: echoserver
+- name: hello-app | Create a service
+  kubernetes.core.k8s:
+    state: present
+    wait: yes
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        labels:
+          app: hello-node
+        name: hello-node
+        namespace: "{{ namespace }}"
+      spec:
+        ports:
+        - port: "{{ service_port }}"
+          protocol: TCP
+          targetPort: 8080
+        selector:
+          app: hello-node
+        type: LoadBalancer
+
+- name: hello-app | Test
+  ansible.builtin.shell:
+    cmd: sleep 15 && url=$(minikube service hello-node | grep -oE "http://[0-9.:]{1,}$") && curl -s $url
+  register: test
+- name: hello-app | Test Show
+  ansible.builtin.debug:
+    msg: "{{ test.stdout }}"

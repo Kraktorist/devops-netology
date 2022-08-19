@@ -1,0 +1,5 @@
+- name: Installing minikube
+  hosts: all
+  roles:
+  - minikube-role
+  - hello-app

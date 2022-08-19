@@ -1,0 +1,26 @@
+$name = "minikube"
+$ip = "192.168.0.200"
+$box = "ubuntu/jammy64"
+$ssh_public_key_path = "~/.ssh/id_rsa.pub"
+
+Vagrant.configure("2") do |config|
+  config.vm.define $name do |config|
+    config.vm.provider "virtualbox" do |vb|
+      vb.cpus = "2"
+      vb.memory = "4096"
+    end
+    config.vm.box = $box
+    config.vm.hostname = $name
+    config.vm.network "public_network", ip: $ip
+    config.vm.provision "Prerequisites", type: "shell", path: "provisioners/minikube_prerequisites.sh", privileged: false, reboot: true
+    config.vm.provision "Minikube", type: "shell", path: "provisioners/minikube_installation.sh", privileged: false
+    config.vm.provision "Apps", type: "shell", path: "provisioners/apps_installation.sh", privileged: false
+    config.vm.provision "Test", type: "shell", path: "provisioners/apps_test.sh", privileged: false
+    # config.vm.provision "ansible" do |ansible|
+    #   ansible.playbook = "ansible/site.yml"
+    # end
+    config.vm.provision 'file', 
+        source: $ssh_public_key_path, 
+        destination: '~/.ssh/authorized_keys'
+  end
+end

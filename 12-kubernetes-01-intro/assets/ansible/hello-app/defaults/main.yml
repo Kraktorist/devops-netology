@@ -1,0 +1,4 @@
+---
+# defaults file for hello-app
+namespace: default
+service_port: 8080

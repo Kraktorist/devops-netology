@@ -1,0 +1,52 @@
+---
+- name: Prerequisites | update all packages to their latest version
+  become: true
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- name: Prerequisites | installing packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ dependencies }}"
+    state: latest
+- name: Prerequisites | adding existing user '{{ ansible_user }}' to group docker
+  become: true
+  user:
+    name: '{{ ansible_user }}'
+    groups: docker
+    append: yes
+  register: user
+- name: Prerequisites | Reboot
+  become: true
+  ansible.builtin.reboot:
+  when: user.changed
+- name: Prerequisites | Install minikube utility
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ minikube_url }}"
+    dest: /usr/local/bin/minikube
+    mode: '0755'
+- name: Prerequisites | Install kubectl utility
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ kubectl_releases_url }}/{{ lookup('ansible.builtin.url', kubectl_detect_version_url) }}/bin/linux/amd64/kubectl"
+    dest: /usr/local/bin/kubectl
+    mode: '0755'
+- name: minikube | Installation
+  ansible.builtin.command:
+    argv:
+      - minikube
+      - start
+      - --vm-driver=docker
+- name: minikube | Addons
+  ansible.builtin.command:
+    argv:
+      - minikube
+      - addons
+      - enable
+      - "{{ item }}" 
+  loop: "{{ addons }}"
+
+
