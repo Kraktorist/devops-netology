@@ -1,17 +1,17 @@
 #~/usr/local/bin/env bash
 # Generate a key
-openssl genrsa -out developer.key 2048
+openssl genrsa -out ~/developer.key 2048
 # Generate CSR 
-openssl req -new -key developer.key \
-  -out developer.csr \
+openssl req -new -key ~/developer.key \
+  -out ~/developer.csr \
   -subj "/CN=developer"
 # Request a certificate signed by kubernetes certificate
 # for minikube
-openssl x509 -req -in developer.csr \
+openssl x509 -req -in ~/developer.csr \
   -CA ~/.minikube/ca.crt \
   -CAkey ~/.minikube/ca.key \
   -CAcreateserial \
-  -out developer.crt -days 500
+  -out ~/developer.crt -days 500
 # for real kubernetes 
 # openssl x509 -req -in developer.csr \
 #   -CA /etc/kubernetes/pki/ca.crt \
@@ -24,10 +24,10 @@ kubectl config set-credentials developer \
   --client-certificate=/home/vagrant/developer.crt \
   --client-key=/home/vagrant/developer.key
 
-kubectl config set-context developer-context \
+kubectl config set-context developer \
   --cluster=minikube --user=developer
 
-# kubectl config set-context developer-context \
+# kubectl config set-context developer \
 #   --cluster=minikube --user=developer
 
 # kubectl config set-cluster minikube \
@@ -40,4 +40,5 @@ curl -LO https://github.com/corneliusweig/rakkess/releases/download/v0.5.0/rakke
   && sudo mv -i rakkess-amd64-linux $GOPATH/bin/rakkess
 
 kubectl apply -f manifest.yml
-kubectl -n app-namespace run  busybox --image=busybox -- /bin/sh -c "while true; do echo $(date) New log entry; sleep 1; done;"
+
+rakkess --namespace app-namespace --as developer
