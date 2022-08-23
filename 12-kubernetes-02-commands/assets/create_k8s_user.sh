@@ -41,4 +41,4 @@ curl -LO https://github.com/corneliusweig/rakkess/releases/download/v0.5.0/rakke
 
 kubectl apply -f manifest.yml
 
-rakkess --namespace app-namespace --as developer
+rakkess --namespace app-namespace --as developer --verbs all | { head -1; grep ✔; }
