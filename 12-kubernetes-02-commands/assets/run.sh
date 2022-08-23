@@ -40,5 +40,6 @@ curl -LO https://github.com/corneliusweig/rakkess/releases/download/v0.5.0/rakke
   && sudo mv -i rakkess-amd64-linux $GOPATH/bin/rakkess
 
 kubectl apply -f manifest.yml
+kubectl apply -f permissions.yml
 
 rakkess --namespace app-namespace --as developer --verbs all | { head -1; grep ✔; }
