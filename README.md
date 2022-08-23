@@ -55,7 +55,7 @@
 1. [ Microservices Approaches ](11-microservices-03-approaches/README.md)
 1. [ Microservices Scaling ](11-microservices-04-scaling/README.md)
 1. [ Kubernetes Intro ](12-kubernetes-01-intro/README.md)
-
+1. [ Kubernetes Commands ](12-kubernetes-02-commands/README.md)
 
 
 ### Branches
