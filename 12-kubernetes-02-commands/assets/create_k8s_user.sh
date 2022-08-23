@@ -34,9 +34,10 @@ kubectl config set-context developer-context \
 #     --server=https://192.168.0.200:6443/ \
 # 	--insecure-skip-tls-verify=true
 
-kubectl -n app-namespace run  busybox --image=busybox -- /bin/sh -c "while true; do echo $(date) New log entry; sleep 1; done;"
-
 curl -LO https://github.com/corneliusweig/rakkess/releases/download/v0.5.0/rakkess-amd64-linux.tar.gz \
   && tar xf rakkess-amd64-linux.tar.gz rakkess-amd64-linux \
   && chmod +x rakkess-amd64-linux \
   && sudo mv -i rakkess-amd64-linux $GOPATH/bin/rakkess
+
+kubectl apply -f manifest.yml
+kubectl -n app-namespace run  busybox --image=busybox -- /bin/sh -c "while true; do echo $(date) New log entry; sleep 1; done;"
