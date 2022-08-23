@@ -41,6 +41,33 @@ hello-node-7567d9fdc9-xlgjk   1/1     Running   0          77s
  * пользователь прописан в локальный конфиг (~/.kube/config, блок users)
  * пользователь может просматривать логи подов и их конфигурацию (kubectl logs pod <pod_id>, kubectl describe pod <pod_id>)
 
+**Answer**
+
+[Permissions manifest](assets/permissions.yml)  
+[Creating developer user](assets/run.sh)
+
+```console
+vagrant@minikube:~$ cd assets/
+vagrant@minikube:.$ chmod +x run.sh 
+vagrant@minikube:.$ ./run.sh 
+Certificate request self-signature ok
+subject=CN = developer
+User "developer" set.
+Context "developer" created.
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 8745k  100 8745k    0     0  4530k      0  0:00:01  0:00:01 --:--:-- 8748k
+namespace/app-namespace created
+pod/busybox created
+role.rbac.authorization.k8s.io/app-log-reader created
+rolebinding.rbac.authorization.k8s.io/app-log-reader-rolebinding created
+NAME                                            CREATE  GET  LIST  WATCH  UPDATE  PATCH  DELETE  DELETECOLLECTION
+pods                                            ✖       ✔    ✔     ✖      ✖       ✖      ✖       ✖
+```
+
+---
+
 
 ## Задание 3: Изменение количества реплик 
 Поработав с приложением, вы получили запрос на увеличение количества реплик приложения для нагрузки. Необходимо изменить запущенный deployment, увеличив количество реплик до 5. Посмотрите статус запущенных подов после увеличения реплик. 
