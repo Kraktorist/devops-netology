@@ -56,8 +56,8 @@
 1. [ Microservices Scaling ](11-microservices-04-scaling/README.md)
 1. [ Kubernetes Intro ](12-kubernetes-01-intro/README.md)
 1. [ Kubernetes Commands ](12-kubernetes-02-commands/README.md)
-1. [ Kubernetes Installation part one ](12-kubernetes-03-install-part-1/README.md)
-
+1. [ Kubernetes Installation Part One ](12-kubernetes-03-install-part-1/README.md)
+1. [ Kubernetes Installation Part Two ](12-kubernetes-04-install-part-2/README.md)
 
 
 ### Branches
