@@ -9,7 +9,7 @@
 
 **Answer**
 
-На основе [config](12-kubernetes-04-install-part-2/assets/hosts.yml) terraform создает набор хостов в virtualbox и генерирует [ansible inventory](assets/ansible/inventory.yml) Переменные [group_vars](assets/ansible/group_vars/) находятся в той же папке. После создания хостов клонируем во временную папку репозиторий kubespray и запускаем ansible-playbook. 
+[terraform state](assets/terraform/) читает [config](assets/hosts.yml), на его основе создает набор хостов в virtualbox и генерирует [ansible inventory](assets/ansible/inventory.yml). Переменные [group_vars](assets/ansible/group_vars/) помещены в ту же папку. После создания хостов клонируем во временную папку репозиторий kubespray и запускаем ansible-playbook. 
 
 ```
 ssh-add ~/vagrant_key # ключ из репозитория vagrant
@@ -30,8 +30,6 @@ nodes_ips = {
   "worker03" = "192.168.0.145"
   "worker04" = "192.168.0.79"
 }
-(base) user@hmlab01:~assets/terraform$ ssh vagrant@192.168.0.83
-...
 (base) user@hmlab01:~assets/terraform$ ssh vagrant@192.168.0.83 sudo cat /root/.kube/config>~/.kube/config
 (base) user@hmlab01:~assets/terraform$ kubectl config set-cluster cluster.local --server=https://192.168.0.83:6443/ --insecure-skip-tls-verify=true
 (base) user@hmlab01:~assets/terraform$ kubectl get nodes -o wide
@@ -53,6 +51,27 @@ worker04    Ready    <none>          51m   v1.24.2   192.168.0.79    <none>     
 
 **Answer**
 
+Развертывание производится в yandex cloud. Для развертывания используется тот же terraform state, но в конфиге hosts.yml указывается другой провадер `provider: ychosted`.
 
+
+```console
+(base) user@hmlab01:~assets/terraform$ terraform output
+nodes_ips = {
+  "control01" = "51.250.105.255"
+  "worker01" = "84.201.141.76"
+  "worker02" = "84.201.143.242"
+  "worker03" = "84.201.154.254"
+  "worker04" = "84.252.136.12"
+}
+(base) user@hmlab01:~assets/terraform$ ssh ubuntu@51.250.105.255 sudo cat /root/.kube/config>~/.kube/config
+(base) user@hmlab01:~assets/terraform$ kubectl config set-cluster cluster.local --server=https://51.250.105.255:6443/ --insecure-skip-tls-verify=true
+(base) user@hmlab01:~assets/terraform$ kubectl get nodes -o wide
+NAME        STATUS   ROLES           AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+control01   Ready    control-plane   8m21s   v1.24.2   192.168.0.7    <none>        Ubuntu 20.04.4 LTS   5.4.0-124-generic   containerd://1.6.8
+worker01    Ready    <none>          6m59s   v1.24.2   192.168.0.27   <none>        Ubuntu 20.04.4 LTS   5.4.0-124-generic   containerd://1.6.8
+worker02    Ready    <none>          6m58s   v1.24.2   192.168.0.26   <none>        Ubuntu 20.04.4 LTS   5.4.0-124-generic   containerd://1.6.8
+worker03    Ready    <none>          6m59s   v1.24.2   192.168.0.20   <none>        Ubuntu 20.04.4 LTS   5.4.0-124-generic   containerd://1.6.8
+worker04    Ready    <none>          6m59s   v1.24.2   192.168.0.30   <none>        Ubuntu 20.04.4 LTS   5.4.0-124-generic   containerd://1.6.8
+```
 
 ---
