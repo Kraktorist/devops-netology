@@ -1,0 +1,25 @@
+"all":
+  "children":
+    "k8s_cluster":
+      "children":
+        "etcd":
+          "hosts":
+            "control01":
+              "ansible_host": "192.168.0.26"
+        "kube_control_plane":
+          "hosts":
+            "control01":
+              "ansible_host": "192.168.0.26"
+        "kube_node":
+          "hosts":
+            "worker01":
+              "ansible_host": "192.168.0.131"
+            "worker02":
+              "ansible_host": "192.168.0.40"
+            "worker03":
+              "ansible_host": "192.168.0.130"
+            "worker04":
+              "ansible_host": "192.168.0.69"
+  "hosts": {}
+  "vars":
+    "ansible_user": "vagrant"

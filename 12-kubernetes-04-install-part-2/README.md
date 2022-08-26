@@ -9,7 +9,7 @@
 
 **Answer**
 
-[terraform state](assets/terraform/) читает [config](assets/hosts.yml), на его основе создает набор хостов в virtualbox и генерирует [ansible inventory](assets/ansible/inventory.yml). Переменные [group_vars](assets/ansible/group_vars/) помещены в ту же папку. После создания хостов клонируем во временную папку репозиторий kubespray и запускаем ansible-playbook. 
+[terraform state](assets/terraform/) читает [config](assets/hosts.yml), на его основе создает набор хостов в virtualbox и генерирует ansible inventory ([для примера])(assets/ansible/inventory.yml). Переменные [group_vars](assets/ansible/group_vars/) помещены в ту же папку. После создания хостов клонируем во временную папку репозиторий kubespray и запускаем ansible-playbook. 
 
 ```
 ssh-add ~/vagrant_key # ключ из репозитория vagrant
@@ -19,7 +19,7 @@ git clone https://github.com/kubernetes-sigs/kubespray.git ${tmp}
 ansible-playbook -i ../ansible/inventory.yml --become ${tmp}/cluster.yml
 ```
 
-Результат
+Результат:
 
 ```console
 (base) user@hmlab01:~assets/terraform$ terraform output
