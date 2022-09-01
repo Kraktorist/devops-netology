@@ -58,6 +58,7 @@
 - [ 12-02 Kubernetes Commands ](12-kubernetes-02-commands/README.md)
 - [ 12-03 Kubernetes Installation Part One ](12-kubernetes-03-install-part-1/README.md)
 - [ 12-04 Kubernetes Installation Part Two ](12-kubernetes-04-install-part-2/README.md)
+- [ 12-05 Kubernetes CNIs](12-kubernetes-05-cni/README.md)
 
 
 ### Branches
