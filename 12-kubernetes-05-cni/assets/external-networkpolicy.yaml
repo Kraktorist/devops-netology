@@ -1,0 +1,18 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: external-networkpolicy
+  namespace: hello-world
+spec:
+  podSelector:
+    matchLabels:
+      app: hello-world
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 192.168.0.0/16
+    ports:
+    - protocol: TCP
+      port: 8080
+  egress: []
