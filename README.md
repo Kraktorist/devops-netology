@@ -59,7 +59,6 @@
 - [ 12-03 Kubernetes Installation Part One ](12-kubernetes-03-install-part-1/README.md)
 - [ 12-04 Kubernetes Installation Part Two ](12-kubernetes-04-install-part-2/README.md)
 - [ 12-05 Kubernetes CNIs](12-kubernetes-05-cni/README.md)
-
 - [ 13-01 Kubernetes Objects ](13-kubernetes-config-01-objects/README.md)
 
 [comment]: # (END_OF_TOC)
