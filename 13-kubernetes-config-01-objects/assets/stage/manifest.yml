@@ -64,7 +64,7 @@ spec:
         name: news-backend
         env:
           - name: DATABASE_URL
-            value: postgres://postgres:postgres@postgres.default.svc.cluster.local:5432/news
+            value: postgres://postgres:postgres@postgres:5432/news
         ports:
           - containerPort: 9000
       - image: kraktorist/news-frontend:1.1
