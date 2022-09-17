@@ -1,0 +1,216 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13-alpine
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_DB
+            value: news
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - exec pg_isready -U ${POSTGRES_USER} -h 127.0.0.1 -p 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: kraktorist/news-backend:1.0
+        name: news-backend
+        env:
+          - name: DATABASE_URL
+            value: postgres://postgres:postgres@postgres:5432/news
+        ports:
+          - containerPort: 9000
+        volumeMounts:
+        - mountPath: /static
+          name: static
+      volumes:
+        - name: static
+          persistentVolumeClaim:
+            claimName: static
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 9000
+      name: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: kraktorist/news-frontend:1.4
+        name: news-frontend
+        ports:
+          - containerPort: 80
+        env:
+          - name: BASE_URL
+            value: http://news-frontend:9000
+        volumeMounts:
+        - mountPath: /static
+          name: static
+      volumes:
+        - name: static
+          persistentVolumeClaim:
+            claimName: static
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      name: frontend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: newspaper-frontend
+spec:
+  defaultBackend:
+    service:
+      name: news-frontend
+      port:
+        number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: newspaper-backend
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: news-backend
+            port:
+              number: 9000
+  - http:
+      paths:
+      - path: /api/news
+        pathType: Prefix
+        backend:
+          service:
+            name: news-backend
+            port:
+              number: 9000
+  - http:
+      paths:
+      - path: /ext
+        pathType: Exact
+        backend:
+          service:
+            name: ext
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ext
+spec:
+  ports:
+  - name: app
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  clusterIP: None
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ext
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /ext
+        pathType: Exact
+        backend:
+          service:
+            name: ext
+            port:
+              number: 8080
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: ext
+subsets:
+- addresses:
+  - ip: 92.53.113.218
+  ports:
+  - name: app
+    port: 80
+    protocol: TCP

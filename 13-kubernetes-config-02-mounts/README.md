@@ -46,4 +46,16 @@
 
 **Answer**
 
+- [pvc.yml](assets/prod/pvc.yml) PersistentVolumeClaim
+- [manifest.yml](assets/prod/manifest.yml) Deployments with VolumeMounts
+
+```console
+vagrant@vagrant>kubectl get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+pvc-05846b0e-dcb7-462d-9a3a-22d94fcc1ec3   100Mi      RWX            Delete           Bound    newspaper/static   nfs                     14s
+vagrant@vagrant>kubectl -n newspaper get pvc
+NAME     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+static   Bound    pvc-05846b0e-dcb7-462d-9a3a-22d94fcc1ec3   100Mi      RWX            nfs            23s
+```
+
 ---
