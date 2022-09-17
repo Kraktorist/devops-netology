@@ -9,6 +9,22 @@
 
 **Answer**
 
+```yaml
+    ---
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: test-dynamic-volume-claim
+    spec:
+      storageClassName: "nfs"
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
+
+```
+
 ---
 
 ## Задание 1: подключить для тестового конфига общую папку
@@ -17,6 +33,8 @@
 * после записи чего-либо в контейнере с беком файлы можно получить из контейнера с фронтом.
 
 **Answer**
+
+Добавлен `emptyDir` и `mountPoints` в [manifest.yml](assets/stage/manifest.yml)
 
 ---
 
