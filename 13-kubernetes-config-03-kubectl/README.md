@@ -99,7 +99,7 @@ root@backend-7db7844b7c-g9r9f:/app# curl http://localhost:9000
 root@backend-7db7844b7c-g9r9f:/app#
 ```
 
-```
+```console
 vagrant@vagrant> kubectl exec -t postgres-0 -- psql -U postgres -c '\l'
                                  List of databases
    Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
