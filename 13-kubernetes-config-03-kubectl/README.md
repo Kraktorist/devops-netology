@@ -51,7 +51,8 @@ Handling connection for 8080
 ```console
 vagrant@vagrant> kubectl exec -ti frontend-b84fb7fbf-h5fqz -- bash
 root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
-{"detail":"Not Found"}root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-frontend
+{"detail":"Not Found"}
+root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-frontend
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -67,7 +68,8 @@ root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
     </main>
     <script src="/build/main.js"></script>
 </body>
-</html>root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend
+</html>
+root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -83,8 +85,9 @@ root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
     </main>
     <script src="/build/main.js"></script>
 </body>
-</html>root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
-{"detail":"Not Found"}root@frontend-b84fb7fbf-h5fqz:/app# 
+</html>
+root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
+{"detail":"Not Found"}
 ```
 
 **exec backend**
@@ -92,7 +95,8 @@ root@frontend-b84fb7fbf-h5fqz:/app# curl http://news-backend:9000
 ```console
 vagrant@vagrant> kubectl exec -ti backend-7db7844b7c-g9r9f -- bash
 root@backend-7db7844b7c-g9r9f:/app# curl http://localhost:9000
-{"detail":"Not Found"}root@backend-7db7844b7c-g9r9f:/app#
+{"detail":"Not Found"}
+root@backend-7db7844b7c-g9r9f:/app#
 ```
 
 ```
