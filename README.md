@@ -61,6 +61,7 @@
 - [ 12-05 Kubernetes CNIs](12-kubernetes-05-cni/README.md)
 - [ 13-01 Kubernetes Objects ](13-kubernetes-config-01-objects/README.md)
 - [ 13-02 Kubernetes Mounts ](13-kubernetes-config-02-mounts/README.md)
+- [ 13-03 Kubernetes kubectl](13-kubernetes-config-03-kubectl/README.md)
 
 [comment]: # (END_OF_TOC)
 
