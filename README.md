@@ -62,6 +62,7 @@
 - [ 13-01 Kubernetes Objects ](13-kubernetes-config-01-objects/README.md)
 - [ 13-02 Kubernetes Mounts ](13-kubernetes-config-02-mounts/README.md)
 - [ 13-03 Kubernetes kubectl](13-kubernetes-config-03-kubectl/README.md)
+- [ 13-04 Kubernetes Helm ](13-kubernetes-config-04-helm/README.md)
 
 [comment]: # (END_OF_TOC)
 
