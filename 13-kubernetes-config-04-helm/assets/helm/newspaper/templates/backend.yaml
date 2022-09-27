@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backend
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+    spec:
+      containers:
+      - image: {{ .Values.backend.image }}
+        name: news-backend
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secrets
+                key: dbpassword
+          - name: DATABASE_URL
+            value: postgres://{{ .Values.postgres.dbuser }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-postgres:{{ .Values.postgres.port }}/{{ .Values.postgres.dbname }}
+        ports:
+          - containerPort: 9000
+        volumeMounts:
+        - mountPath: /static
+          name: static
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - echo >/dev/tcp/{{ .Release.Name }}-postgres/{{ .Values.postgres.port }}
+      volumes:
+        - name: static
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.pvc.claimNameSuffix }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-news-backend
+spec:
+  selector:
+    app: {{ .Release.Name }}-backend
+  ports:
+    - port: 9000
+      name: backend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-newspaper-backend
+spec:
+  rules:
+  - host: {{ .Values.hostname }}
+    http:
+      paths:
+      - path: /api  #prefix needs to be defined
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-news-backend
+            port:
+              number: 9000

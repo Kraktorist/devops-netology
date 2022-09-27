@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }}-frontend
+  name: {{ .Release.Name }}-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-frontend
+    spec:
+      containers:
+      - image: {{ .Values.frontend.image }}
+        name: news-frontend
+        ports:
+          - containerPort: 80
+        volumeMounts:
+        - mountPath: /static
+          name: static
+      volumes:
+        - name: static
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.pvc.claimNameSuffix }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-news-frontend
+spec:
+  selector:
+    app: {{ .Release.Name }}-frontend
+  ports:
+    - port: 80
+      name: frontend
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: {{ .Release.Name }}-newspaper-frontend
+# spec:
+#   defaultBackend:
+#     service:
+#       name: {{ .Release.Name }}-news-frontend
+#       port:
+#         number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-newspaper-frontend
+spec:
+  rules:
+  - host: {{ .Values.hostname }}
+    http:
+      paths:
+      - path: /  #prefix needs to be defined
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-news-frontend
+            port:
+              number: 80

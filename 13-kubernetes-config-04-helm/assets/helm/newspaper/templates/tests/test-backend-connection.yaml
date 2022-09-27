@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-test-backend-connection
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  containers:
+    - name: curl
+      image: alpine/curl:3.14
+      command: ['curl']
+      args: ['-H "Host:{{ .Values.hostname }}"', '{{ .Release.Name }}-news-backend:9000/api/news/']
+  restartPolicy: Never
