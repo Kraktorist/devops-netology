@@ -7,6 +7,7 @@ postgres:
   port: 5432
   dbname: news
   dbuser: postgres
+  # dbpassword is generated and placed to the Secret {{ .Release.Name }}-secrets
 
 backend:
   image: kraktorist/news-backend:1.0
