@@ -26,13 +26,13 @@
 ```console
 vagrant@vagrant:/$ qbec apply stage
 [warn] force context lab
-cluster metadata load took 17ms
-6 components evaluated in 9ms
+cluster metadata load took 21ms
+6 components evaluated in 10ms
 
 will synchronize 8 object(s)
 
 Do you want to continue [y/n]: y
-6 components evaluated in 12ms
+6 components evaluated in 10ms
 create secrets stage-secrets -n app1 (source secret)
 create persistentvolumeclaims stage-static -n app1 (source pvc)
 create deployments stage-backend -n app1 (source backend)
@@ -41,7 +41,7 @@ create statefulsets stage-postgres -n app1 (source postgres)
 create services stage-news-backend -n app1 (source backend)
 create services stage-news-frontend -n app1 (source frontend)
 create services stage-postgres -n app1 (source postgres)
-server objects load took 1.003s
+server objects load took 1.004s
 ---
 stats:
   created:
@@ -59,18 +59,18 @@ waiting for readiness of 3 objects
   - deployments stage-frontend -n app1
   - statefulsets stage-postgres -n app1
 
-  0s    : deployments stage-frontend -n app1 :: 0 of 1 updated replicas are available
   0s    : deployments stage-backend -n app1 :: 0 of 1 updated replicas are available
 ✓ 0s    : statefulsets stage-postgres -n app1 :: 1 new pods updated (2 remaining)
+  0s    : deployments stage-frontend -n app1 :: 0 of 1 updated replicas are available
 ✓ 2s    : deployments stage-frontend -n app1 :: successfully rolled out (1 remaining)
-✓ 16s   : deployments stage-backend -n app1 :: successfully rolled out (0 remaining)
+✓ 11s   : deployments stage-backend -n app1 :: successfully rolled out (0 remaining)
 
-✓ 16s: rollout complete
-command took 21.81s
+✓ 11s: rollout complete
+command took 15.12s
 vagrant@vagrant:/$ qbec apply production
 [warn] force context lab
-cluster metadata load took 26ms
-6 components evaluated in 9ms
+cluster metadata load took 25ms
+6 components evaluated in 10ms
 
 will synchronize 13 object(s)
 
@@ -89,7 +89,7 @@ create services production-news-backend -n app1 (source backend)
 create services production-ext -n app1 (source external)
 create services production-news-frontend -n app1 (source frontend)
 create services production-postgres -n app1 (source postgres)
-server objects load took 1.208s
+server objects load took 1.206s
 ---
 stats:
   created:
@@ -114,16 +114,34 @@ waiting for readiness of 3 objects
 
   0s    : deployments production-backend -n app1 :: 0 of 3 updated replicas are available
 ✓ 0s    : statefulsets production-postgres -n app1 :: 1 new pods updated (2 remaining)
-  0s    : deployments production-frontend -n app1 :: 0 of 1 updated replicas are available
-✓ 3s    : deployments production-frontend -n app1 :: successfully rolled out (1 remaining)
+  0s    : deployments production-frontend -n app1 :: 0 of 3 updated replicas are available
+  9s    : deployments production-frontend -n app1 :: 1 of 3 updated replicas are available
+  10s   : deployments production-frontend -n app1 :: 2 of 3 updated replicas are available
+✓ 11s   : deployments production-frontend -n app1 :: successfully rolled out (1 remaining)
   12s   : deployments production-backend -n app1 :: 1 of 3 updated replicas are available
-  14s   : deployments production-backend -n app1 :: 2 of 3 updated replicas are available
-✓ 20s   : deployments production-backend -n app1 :: successfully rolled out (0 remaining)
+  12s   : deployments production-backend -n app1 :: 2 of 3 updated replicas are available
+✓ 18s   : deployments production-backend -n app1 :: successfully rolled out (0 remaining)
 
-✓ 20s: rollout complete
-command took 24.46s
+✓ 18s: rollout complete
+command took 22.89s
 ```
 
-По сравнению с `helm` в `qbec` отсутствуют встроенные возможности тестирования деплоев.
+По сравнению с `helm` в `qbec` отсутствуют встроенные возможности тестирования.
 
+Развернутые поды:
+
+```console
+vagrant@vagrant:/$ kubectl -n app1 get pods
+NAME                                   READY   STATUS    RESTARTS   AGE
+production-backend-857d98bb6-ml2b5     1/1     Running   0          77s
+production-backend-857d98bb6-nlk6s     1/1     Running   0          77s
+production-backend-857d98bb6-wb5mk     1/1     Running   0          77s
+production-frontend-6c695bdfd4-5rcjw   1/1     Running   0          77s
+production-frontend-6c695bdfd4-lv28f   1/1     Running   0          77s
+production-frontend-6c695bdfd4-qlrh7   1/1     Running   0          77s
+production-postgres-0                  1/1     Running   0          77s
+stage-backend-5b977d64f-2gfhn          1/1     Running   0          106s
+stage-frontend-69b5b68d46-xwz5r        1/1     Running   0          106s
+stage-postgres-0                       1/1     Running   0          106s
+```
 ---

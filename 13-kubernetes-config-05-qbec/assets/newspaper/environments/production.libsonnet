@@ -11,6 +11,9 @@ base {
     },
     backend +: {
       replicas: 3
+    },
+    frontend +: {
+      replicas: 3
     }
   }
 }
