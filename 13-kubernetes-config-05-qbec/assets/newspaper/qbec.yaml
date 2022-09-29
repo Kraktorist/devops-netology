@@ -1,0 +1,16 @@
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: newspaper
+spec:
+  environments:
+    stage:
+      defaultNamespace: app1
+      context: lab
+    production:
+      defaultNamespace: app1
+      context: lab
+    gamma:
+      defaultNamespace: app2
+      context: lab
+  vars: {}
