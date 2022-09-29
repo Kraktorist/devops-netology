@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: backend
+    app: {{ .Release.Name }}-backend
   name: {{ .Release.Name }}-backend
 spec:
   replicas: 1
