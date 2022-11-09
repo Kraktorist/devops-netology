@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: secret-test
+  name: secret-test
+spec:
+  containers:
+  - image: bash
+    name: secret-test
+    command:
+    - bash
+    - -c 
+    - "echo $CRT_FROM_SECRET && cat /tmp/domain-cert/tls.crt"
+    env:
+      - name: CRT_FROM_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: domain-cert
+            key: tls.crt    
+    volumeMounts:
+      - name: domain-cert
+        mountPath: /tmp/domain-cert
+  volumes:
+  - name: domain-cert
+    secret:
+      secretName: domain-cert
