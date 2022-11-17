@@ -65,6 +65,7 @@
 - [ 13-04 Kubernetes Helm ](13-kubernetes-config-04-helm/README.md)
 - [ 13-05 Kubernetes Qbec ](13-kubernetes-config-05-qbec/README.md)
 - [ 14-01 Secrets ](14.1-secrets/README.md)
+- [ 14-02 Vault ](14.2-vault/README.md)
 
 [comment]: # (END_OF_TOC)
 

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: fedora
+  name: fedora
+spec:
+  containers:
+  - image: fedora
+    name: fedora
+    command:
+    - bash
+    - -c
+    args: 
+    - |
+      dnf -y install pip
+      pip install hvac
+      python3 /python/code
+      sleep infinity # for debugging
+    volumeMounts:
+    - name: code
+      mountPath: /python
+  volumes:
+  - name: code
+    configMap: 
+      name: code
