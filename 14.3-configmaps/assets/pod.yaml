@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: configmap-test
+  name: configmap-test
+spec:
+  containers:
+  - image: bash
+    name: configmap-test
+    command:
+    - bash
+    - -c 
+    - "echo $CRT_FROM_CONFIGMAP && cat /tmp/domain-cert/tls.crt"
+    env:
+      - name: CRT_FROM_CONFIGMAP
+        valueFrom:
+          configMapKeyRef:
+            name: domain-cert
+            key: tls.crt    
+    volumeMounts:
+      - name: domain-cert
+        mountPath: /tmp/domain-cert
+  volumes:
+  - name: domain-cert
+    configMap:
+      name: domain-cert
