@@ -1,7 +1,8 @@
 import hvac
+from os import environ
 client = hvac.Client(
-    url='http://vault:8200',
-    token='aiphohTaa0eeHei'
+    url=environ['VAULT_URI'],
+    token=environ['VAULT_KEY']
 )
 client.is_authenticated()
 

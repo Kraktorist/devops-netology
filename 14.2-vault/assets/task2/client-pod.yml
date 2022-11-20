@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: client
+  name: client
+spec:
+  containers:
+  - image: kraktorist/vault-client:1.0
+    name: client
+    env:
+      - name: VAULT_KEY
+        valueFrom:
+          secretKeyRef:
+            name: vault-secret
+            key: VAULT_KEY
+  restartPolicy: Never
