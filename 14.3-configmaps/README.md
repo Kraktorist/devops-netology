@@ -65,7 +65,7 @@ kubectl apply -f nginx-config.yml
 
 **Answer**
 
-[pod.yaml](assets/pod.yaml)
+[pod.yaml](assets/pod.yaml) - под, запускающий bash скрипт, выводящий содержимое переменной среды и файлы, в которые примонтированы данные из configmap.
 
 ```console
 % kubectl apply -f assets/pod.yaml
