@@ -54,6 +54,8 @@ client.secrets.kv.v2.read_secret_version(
 
 **Answer**
 
+[Manifests](assets/task1/)
+
 ```bash
 kubectl create namespace vault
 kubectl apply -f task1
