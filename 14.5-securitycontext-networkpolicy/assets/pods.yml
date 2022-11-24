@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: module1
+  name: module1
+spec:
+  containers:
+  - image: centos:7
+    name: module1
+    command:
+    - bash
+    - -c
+    args: 
+    - |
+      sleep infinity
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: module2
+  name: module2
+spec:
+  containers:
+  - image: centos:7
+    name: module2
+    command:
+    - bash
+    - -c
+    args: 
+    - |
+      sleep infinity
