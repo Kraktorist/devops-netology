@@ -55,6 +55,8 @@ Checking:
 
 ---
 
+<details>
+<summary>Задание 2*. AWS (необязательное к выполнению)</summary>
 ## Задание 2*. AWS (необязательное к выполнению)
 
 1. Создать VPC.
@@ -78,3 +80,5 @@ Resource terraform
 - [VPC](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 - [Subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet)
 - [Internet Gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway)
+
+</details>
