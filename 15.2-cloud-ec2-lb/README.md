@@ -27,6 +27,35 @@
 
 **Answer**
 
+- [bucket.tf](assets/bucket.tf)
+- [instance group](assets/nlb-instance-group.tf)
+- [network load balancer](assets/nlb.tf)
+- [application load balancer](assets/alb.tf)
+
+```console
+% terraform graph -type=apply
+digraph {
+        compound = "true"
+        newrank = "true"
+        subgraph "root" {
+                "[root] var.hosting_bucket" [label = "var.hosting_bucket", shape = "note"]
+                "[root] var.lamp" [label = "var.lamp", shape = "note"]
+                "[root] var.network_name" [label = "var.network_name", shape = "note"]
+                "[root] var.picture_path" [label = "var.picture_path", shape = "note"]
+                "[root] var.public_network" [label = "var.public_network", shape = "note"]
+                "[root] var.service_account_id" [label = "var.service_account_id", shape = "note"]
+                "[root] var.user_data" [label = "var.user_data", shape = "note"]
+                "[root] root" -> "[root] var.hosting_bucket"
+                "[root] root" -> "[root] var.lamp"
+                "[root] root" -> "[root] var.network_name"
+                "[root] root" -> "[root] var.picture_path"
+                "[root] root" -> "[root] var.public_network"
+                "[root] root" -> "[root] var.service_account_id"
+                "[root] root" -> "[root] var.user_data"
+        }
+}
+```
+
 ---
 
 <details>
