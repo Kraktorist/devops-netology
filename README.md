@@ -72,6 +72,7 @@
 - [ 15-01 Cloud Network ](15.1-cloud-network/README.md)
 - [ 15-02 Cloud Computing and Load Balancers ](15.2-cloud-ec2-lb/README.md)
 - [ 15-03 Cloud Security ](15.3-cloud-security/README.md)
+- [ 15-04 Cloud Clustering ](15.4-cloud-clustering/README.md)
 
 [comment]: # (END_OF_TOC)
 
