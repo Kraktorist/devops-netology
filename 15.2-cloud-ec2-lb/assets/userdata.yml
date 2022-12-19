@@ -7,6 +7,6 @@ users:
     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCVMhpEZUtr2JLA3S6S+xCm9i3aZbs6fAzRsByw8liKriO0E7wG3XYvmAni+h7szVQHDOmMiQIgo2oAq6/h4mg5ljtatoGL747eZKFseUo7yCOlDGSWN9w5okNX1/ydgb1AmOv1QwSDxULnDF7t4dybunPvjmlTtpkIL6wm5FA0XemXqIZR5wImLqOFsAVq3y/sf9/L0S3dbbLY09U93r3DP7j4Rv+2Vu32ck0spEhSjDsal53urbkR7ZaQO1ZiJ2lIgJ/HKVs/1PV5Im6zYXUyIXZqyp1I5vpu/P9yBYfCbbeyObhpcWCpcXcVjOEYYwu+9+UCRJT4YwHjrlwGK1UsQl3br6Ug00m7qWOgtKhYPedD3Y0symL0puGRZGUXvylkQVsVAUgVlR2d3nV8vgneJLRz5qS3wEG9FRm7Hlqcm3p699hRGRHVVJM1mJMRLH5WVXGASG9/J8vy7IcZYvVGtahVIt9/e8yXwEDhth4SYtPu0w6u5Vp8GjNZxU2WYr8= ubuntu
 write_files:
 - content: |
-    <html><body><img src="https://hosting-bucket.website.yandexcloud.net/"></body></html>
+    <html><body><img src="http://dn.qamo.ru.website.yandexcloud.net/"></body></html>
   path: /var/www/html/index.html
   permissions: '0644'

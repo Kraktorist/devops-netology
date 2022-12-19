@@ -1,12 +1,12 @@
 resource "yandex_alb_load_balancer" "lamp-balancer" {
   name        = "lamp-balancer"
 
-  network_id  = yandex_vpc_network.network.id
+  network_id  = var.network_id
 
   allocation_policy {
     location {
       zone_id   = "ru-central1-b"
-      subnet_id = yandex_vpc_subnet.public.id 
+      subnet_id = var.subnet_id
     }
   }
 
@@ -38,7 +38,7 @@ resource "yandex_alb_backend_group" "lamp-group" {
     name = "lamp-backend"
     weight = 1
     port = 80
-    target_group_ids = [yandex_compute_instance_group.alb_lamp_group.application_load_balancer[0].target_group_id]
+    target_group_ids = [var.target_group_id]
     load_balancing_config {
       panic_threshold = 33
     }    

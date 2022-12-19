@@ -27,69 +27,43 @@
 
 **Answer**
 
-- [bucket.tf](assets/bucket.tf)
-- [instance group](assets/nlb-instance-group.tf)
-- [network load balancer](assets/nlb.tf)
-- [application load balancer](assets/alb.tf)
+Для удобства дальнейшей работы создание ресурсов разбито на terraform модули.
+
+- [alb](assets/modules/alb/) для настройки Application LoadBalancer
+- [nlb](assets/modules/nlb/) для настройки Network LoadBalancer
+- [buckets](assets/modules/buckets/) для создания бакета и статического сайта
+- [instance-groups](assets/modules/instance-groups/) для создания и настройки Instance Groups
+- [networks](assets/modules/networks/) для создания сетей и подсетей
+
+Вызов модулей производится из файла [main.tf](assets/main.tf). 
 
 ```console
-% terraform graph -draw-cycles -type=plan
-digraph {
-        compound = "true"
-        newrank = "true"
-        subgraph "root" {
-                "[root] data.yandex_iam_service_account.lamp (expand)" [label = "data.yandex_iam_service_account.lamp", shape = "box"]
-                "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"]" [label = "provider[\"registry.terraform.io/yandex-cloud/yandex\"]", shape = "diamond"]
-                "[root] var.hosting_bucket" [label = "var.hosting_bucket", shape = "note"]
-                "[root] var.lamp" [label = "var.lamp", shape = "note"]
-                "[root] var.network_name" [label = "var.network_name", shape = "note"]
-                "[root] var.picture_path" [label = "var.picture_path", shape = "note"]
-                "[root] var.public_network" [label = "var.public_network", shape = "note"]
-                "[root] var.service_account_id" [label = "var.service_account_id", shape = "note"]
-                "[root] var.user_data" [label = "var.user_data", shape = "note"]
-                "[root] yandex_alb_backend_group.lamp-group (expand)" [label = "yandex_alb_backend_group.lamp-group", shape = "box"]
-                "[root] yandex_alb_http_router.router (expand)" [label = "yandex_alb_http_router.router", shape = "box"]
-                "[root] yandex_alb_load_balancer.lamp-balancer (expand)" [label = "yandex_alb_load_balancer.lamp-balancer", shape = "box"]
-                "[root] yandex_alb_virtual_host.lamp-virtual-host (expand)" [label = "yandex_alb_virtual_host.lamp-virtual-host", shape = "box"]
-                "[root] yandex_compute_instance_group.alb_lamp_group (expand)" [label = "yandex_compute_instance_group.alb_lamp_group", shape = "box"]
-                "[root] yandex_compute_instance_group.nlb_lamp_group (expand)" [label = "yandex_compute_instance_group.nlb_lamp_group", shape = "box"]
-                "[root] yandex_lb_network_load_balancer.lamp (expand)" [label = "yandex_lb_network_load_balancer.lamp", shape = "box"]
-                "[root] yandex_storage_bucket.hosting (expand)" [label = "yandex_storage_bucket.hosting", shape = "box"]
-                "[root] yandex_storage_object.picture (expand)" [label = "yandex_storage_object.picture", shape = "box"]
-                "[root] yandex_vpc_network.network (expand)" [label = "yandex_vpc_network.network", shape = "box"]
-                "[root] yandex_vpc_subnet.public (expand)" [label = "yandex_vpc_subnet.public", shape = "box"]
-                "[root] data.yandex_iam_service_account.lamp (expand)" -> "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"]"
-                "[root] data.yandex_iam_service_account.lamp (expand)" -> "[root] var.service_account_id"
-                "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"] (close)" -> "[root] yandex_alb_load_balancer.lamp-balancer (expand)"
-                "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"] (close)" -> "[root] yandex_alb_virtual_host.lamp-virtual-host (expand)"
-                "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"] (close)" -> "[root] yandex_lb_network_load_balancer.lamp (expand)"
-                "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"] (close)" -> "[root] yandex_storage_object.picture (expand)"
-                "[root] root" -> "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"] (close)"
-                "[root] yandex_alb_backend_group.lamp-group (expand)" -> "[root] yandex_compute_instance_group.alb_lamp_group (expand)"
-                "[root] yandex_alb_http_router.router (expand)" -> "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"]"
-                "[root] yandex_alb_load_balancer.lamp-balancer (expand)" -> "[root] yandex_alb_http_router.router (expand)"
-                "[root] yandex_alb_load_balancer.lamp-balancer (expand)" -> "[root] yandex_vpc_subnet.public (expand)"
-                "[root] yandex_alb_virtual_host.lamp-virtual-host (expand)" -> "[root] yandex_alb_backend_group.lamp-group (expand)"
-                "[root] yandex_alb_virtual_host.lamp-virtual-host (expand)" -> "[root] yandex_alb_http_router.router (expand)"
-                "[root] yandex_compute_instance_group.alb_lamp_group (expand)" -> "[root] data.yandex_iam_service_account.lamp (expand)"
-                "[root] yandex_compute_instance_group.alb_lamp_group (expand)" -> "[root] var.lamp"
-                "[root] yandex_compute_instance_group.alb_lamp_group (expand)" -> "[root] var.user_data"
-                "[root] yandex_compute_instance_group.alb_lamp_group (expand)" -> "[root] yandex_vpc_subnet.public (expand)"
-                "[root] yandex_compute_instance_group.nlb_lamp_group (expand)" -> "[root] data.yandex_iam_service_account.lamp (expand)"
-                "[root] yandex_compute_instance_group.nlb_lamp_group (expand)" -> "[root] var.lamp"
-                "[root] yandex_compute_instance_group.nlb_lamp_group (expand)" -> "[root] var.user_data"
-                "[root] yandex_compute_instance_group.nlb_lamp_group (expand)" -> "[root] yandex_vpc_subnet.public (expand)"
-                "[root] yandex_lb_network_load_balancer.lamp (expand)" -> "[root] yandex_compute_instance_group.nlb_lamp_group (expand)"
-                "[root] yandex_storage_bucket.hosting (expand)" -> "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"]"
-                "[root] yandex_storage_bucket.hosting (expand)" -> "[root] var.hosting_bucket"
-                "[root] yandex_storage_object.picture (expand)" -> "[root] var.picture_path"
-                "[root] yandex_storage_object.picture (expand)" -> "[root] yandex_storage_bucket.hosting (expand)"
-                "[root] yandex_vpc_network.network (expand)" -> "[root] provider[\"registry.terraform.io/yandex-cloud/yandex\"]"
-                "[root] yandex_vpc_network.network (expand)" -> "[root] var.network_name"
-                "[root] yandex_vpc_subnet.public (expand)" -> "[root] var.public_network"
-                "[root] yandex_vpc_subnet.public (expand)" -> "[root] yandex_vpc_network.network (expand)"
-        }
-}
+% terraform state list
+data.yandex_iam_service_account.lamp
+module.alb[0].yandex_alb_backend_group.lamp-group
+module.alb[0].yandex_alb_http_router.router
+module.alb[0].yandex_alb_load_balancer.lamp-balancer
+module.alb[0].yandex_alb_virtual_host.lamp-virtual-host
+module.buckets.yandex_storage_bucket.hosting
+module.buckets.yandex_storage_object.picture
+module.instance-groups.yandex_compute_instance_group.lamp_group
+module.networks.yandex_vpc_network.network
+module.networks.yandex_vpc_subnet.public
+```
+
+Выбор типа балансера (`alb` или `nlb`) производится с помощью переменной `balancer` из файла [variables.tf](assets/variables.tf).
+
+```console
+% export TF_VAR_balancer=nlb
+% terraform apply
+% terraform state list
+data.yandex_iam_service_account.lamp
+module.buckets.yandex_storage_bucket.hosting
+module.buckets.yandex_storage_object.picture
+module.instance-groups.yandex_compute_instance_group.lamp_group
+module.networks.yandex_vpc_network.network
+module.networks.yandex_vpc_subnet.public
+module.nlb[0].yandex_lb_network_load_balancer.lamp
 ```
 
 ---

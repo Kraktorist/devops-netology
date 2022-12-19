@@ -1,6 +1,6 @@
 variable hosting_bucket {
   type        = string
-  default     = "hosting-bucket"
+  default     = "dn.qamo.ru"
   description = "bucket name for static website"
 }
 
@@ -51,4 +51,10 @@ variable user_data {
   type        = string
   default     = "userdata.yml"
   description = "cloud-init user-data file path"
+}
+
+variable balancer {
+  type        = string
+  default     = "alb"
+  description = "Balancer type (alb or nlb)"
 }

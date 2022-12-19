@@ -1,10 +1,6 @@
-data "yandex_iam_service_account" "lamp" {
+resource "yandex_compute_instance_group" "lamp_group" {
+  name                = "lamp-ig"
   service_account_id = var.service_account_id
-}
-
-resource "yandex_compute_instance_group" "nlb_lamp_group" {
-  name                = "nlb-lamp-ig"
-  service_account_id = data.yandex_iam_service_account.lamp.id
   deletion_protection = false
   instance_template {
     platform_id = "standard-v1"
@@ -19,7 +15,7 @@ resource "yandex_compute_instance_group" "nlb_lamp_group" {
       }
     }
     network_interface {
-      subnet_ids = [yandex_vpc_subnet.public.id]
+      subnet_ids = [var.subnet_id]
       nat = true
     }
 
@@ -45,7 +41,18 @@ resource "yandex_compute_instance_group" "nlb_lamp_group" {
     max_deleting    = 2
   }
 
-  load_balancer {
-    target_group_name = "lamp-balancer"
+  dynamic "application_load_balancer" {
+    for_each = var.balancer == "alb" ? toset([1]) : toset([]) 
+    content {
+      target_group_name = "lamp-balancer"
+    }
   }
+
+  dynamic "load_balancer" {
+    for_each = var.balancer == "nlb" ? toset([1]) : toset([]) 
+    content {
+      target_group_name = "lamp-balancer"
+    }
+  }
+
 }
