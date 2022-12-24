@@ -15,6 +15,20 @@
 - Включить защиту кластера от непреднамеренного удаления
 - Создать БД с именем `netology_db` c логином и паролем
 
+**Answer**
+
+Задача разбита на отдельные шаги, реализуемые следующими модулями:
+
+- [networks](assets/modules/networks/) для создания сетей и подсетей
+- [mysql_cluster](assets/modules/mysql_cluster/) для создания управляемого MySQL кластера
+- [mysql_db](assets/modules/mysql_db/) для создания БД в кластере
+- [mysql_user](assets/modules/mysql_user/) для создания пользователя
+
+Вызов модулей осуществляется из файла [mysql.tf](assets/mysql.tf). Там же прописаны значения всех переменных.
+Пароль для доступа к MySQL генерируется рандомно. Его можно найти в `terraform.tfstate` файле после деплоя.
+
+---
+
 2. Настроить с помощью Terraform кластер Kubernetes
 - Используя настройки VPC с предыдущих ДЗ, добавить дополнительно 2 подсети public в разных зонах, чтобы обеспечить отказоустойчивость
 - Создать отдельный сервис-аккаунт с необходимыми правами 
@@ -25,18 +39,19 @@
 - *Запустить микросервис phpmyadmin и подключиться к БД, созданной ранее
 - *Создать сервис типы Load Balancer и подключиться к phpmyadmin. Предоставить скриншот с публичным адресом и подключением к БД
 
-Документация
-- [MySQL cluster](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_mysql_cluster)
-- [Создание кластера kubernetes](https://cloud.yandex.ru/docs/managed-kubernetes/operations/kubernetes-cluster/kubernetes-cluster-create)
-- [K8S Cluster](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_cluster)
-- [K8S node group](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_node_group)
---- 
-
 **Answer**
 
 
 
 ---
+
+Документация
+- [MySQL cluster](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/mdb_mysql_cluster)
+- [Создание кластера kubernetes](https://cloud.yandex.ru/docs/managed-kubernetes/operations/kubernetes-cluster/kubernetes-cluster-create)
+- [K8S Cluster](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_cluster)
+- [K8S node group](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/kubernetes_node_group)
+
+--- 
 
 <details>
 <summary>Задание 2. Вариант с AWS (необязательное к выполнению)</summary>
