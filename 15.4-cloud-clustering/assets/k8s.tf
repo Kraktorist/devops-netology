@@ -8,7 +8,8 @@ module service_account {
 
 module k8s_networks {
   source = "./modules/networks"
-  network_name = "default"
+  network_name = "default" # must be precreated
+  route_table_name = "rt"  # must be precreated
   subnets      = [
     {
     "name" = "k8s-subnet-a"

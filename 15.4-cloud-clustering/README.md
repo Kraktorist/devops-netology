@@ -24,6 +24,7 @@
 - [mysql_db](assets/modules/mysql_db/) для создания БД в кластере
 - [mysql_user](assets/modules/mysql_user/) для создания пользователя
 
+Сеть для размещения подсетей должна быть создана до запуска терраформ.
 Вызов модулей осуществляется из файла [mysql.tf](assets/mysql.tf). Там же прописаны значения всех переменных.
 Учетные данные для доступа к MySQL генерируется рандомно. Их можно найти в `terraform.tfstate` файле после деплоя, либо же получить командой:
 
@@ -34,7 +35,7 @@ terraform output password
 
 ---
 
-2. Настроить с помощью Terraform кластер Kubernetes
+1. Настроить с помощью Terraform кластер Kubernetes
 - Используя настройки VPC с предыдущих ДЗ, добавить дополнительно 2 подсети public в разных зонах, чтобы обеспечить отказоустойчивость
 - Создать отдельный сервис-аккаунт с необходимыми правами 
 - Создать региональный мастер kubernetes с размещением нод в разных 3 подсетях
@@ -53,7 +54,62 @@ terraform output password
 - [k8s_nodes](assets/modules/k8s_nodes/) для создания Kubernetes Node Group
 - [service_account](assets/modules/service_account/) для создания Service Accounts для работы Kubernetes кластера
 
+Сеть, routing table и internet gateway должны быть созданы до запуска terraform.
 Вызов модулей осуществляется из файла [k8s.tf](assets/k8s.tf). Там же прописаны значения всех переменных.
+Из-за ограничений работы с заранее неизвестным динамическим количеством ресурсов требуется сначала создать подсети командой
+
+```
+terraform apply -target=module.k8s_networks
+```
+
+а потом произвести деплой остальных ресурсов 
+
+```
+terrafrom apply
+```
+
+После установки копируем kubeconfig
+
+```
+yc managed-kubernetes cluster \
+   --cloud-id ${YC_CLOUD_ID} \
+   --folder-id ${YC_FOLDER_ID} \
+  get-credentials k8s-cluster \
+  --external \
+  --force
+```
+Производим деплой helm чарта [bitnami/phpmyadmin](https://artifacthub.io/packages/helm/bitnami/phpmyadmin)
+
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install phpmyadmin bitnami/phpmyadmin --set db.host=rc1a-46p8m659cdezi6tr.mdb.yandexcloud.net
+```
+
+Деплоим Service типа LoadBalancer 
+
+```
+kubectl apply -f assets/load-balancer.yml
+```
+
+Смотрим endpoint сервиса
+
+```
+% kubectl get service/phpmyadmin
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
+phpmyadmin   LoadBalancer   10.96.223.198   84.252.128.48   80:32526/TCP,443:31151/TCP   24m
+```
+
+Смотрим логин и сгенерированный пароль к БД
+
+```
+% terraform output username
+"netology_db"
+% terraform output password
+">sxt4(14s7iwE9?7"
+```
+
+![phpmyadmin](assets/img/phpmyadmin.png)
+
 
 ---
 

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin
+spec:
+  ports:
+  - port: 80
+    name: plaintext
+    targetPort: 8080
+  - port: 443
+    name: tls
+    targetPort: 8443
+  selector:
+    app.kubernetes.io/instance: phpmyadmin
+    app.kubernetes.io/name: phpmyadmin
+  type: LoadBalancer
