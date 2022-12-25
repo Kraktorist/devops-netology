@@ -33,7 +33,7 @@ terraform output username
 terraform output password
 ```
 
-Полный список стейтов (включая и стейты для установки kubernetes кластера)
+Полный список стейтов
 
 ```
 % terraform state list
