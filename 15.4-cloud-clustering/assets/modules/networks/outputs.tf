@@ -4,6 +4,6 @@ output subnets {
 }
 
 output network_id {
-  value       = yandex_vpc_network.network.id
+  value       = data.yandex_vpc_network.network.id
   description = "Network ID"
 }

@@ -17,7 +17,7 @@
 
 **Answer**
 
-Задача разбита на отдельные шаги, реализуемые следующими модулями:
+Решение разбито на отдельные шаги, реализуемые следующими модулями:
 
 - [networks](assets/modules/networks/) для создания сетей и подсетей
 - [mysql_cluster](assets/modules/mysql_cluster/) для создания управляемого MySQL кластера
@@ -25,7 +25,12 @@
 - [mysql_user](assets/modules/mysql_user/) для создания пользователя
 
 Вызов модулей осуществляется из файла [mysql.tf](assets/mysql.tf). Там же прописаны значения всех переменных.
-Пароль для доступа к MySQL генерируется рандомно. Его можно найти в `terraform.tfstate` файле после деплоя.
+Учетные данные для доступа к MySQL генерируется рандомно. Их можно найти в `terraform.tfstate` файле после деплоя, либо же получить командой:
+
+```
+terraform output username
+terraform output password
+```
 
 ---
 
@@ -41,7 +46,14 @@
 
 **Answer**
 
+Решение разбито на отдельные шаги, реализуемые следующими модулями:
 
+- [networks](assets/modules/networks/) для создания сетей и подсетей
+- [k8s_cluster](assets/modules/k8s_cluster/) для создания Kubernetes кластера
+- [k8s_nodes](assets/modules/k8s_nodes/) для создания Kubernetes Node Group
+- [service_account](assets/modules/service_account/) для создания Service Accounts для работы Kubernetes кластера
+
+Вызов модулей осуществляется из файла [k8s.tf](assets/k8s.tf). Там же прописаны значения всех переменных.
 
 ---
 

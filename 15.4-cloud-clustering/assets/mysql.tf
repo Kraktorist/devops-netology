@@ -1,15 +1,15 @@
-module networks {
+module mysql_networks {
   source = "./modules/networks"
-  network_name = var.network_name
+  network_name = "default"
   subnets      = [
     {
-    "name" = "subnet-a"
+    "name" = "mysql-subnet-a"
     "cidr_blocks" = ["192.168.0.0/24"]
     "zone"        = "ru-central1-a"
     "description" = "mysql subnet"
     },
     {
-    "name" = "subnet-b"
+    "name" = "mysql-subnet-b"
     "cidr_blocks" = ["192.168.1.0/24"]
     "zone"        = "ru-central1-b"
     "description" = "mysql subnet"
@@ -19,8 +19,8 @@ module networks {
 
 module mysql_cluster {
   source = "./modules/mysql_cluster"
-  cluster_network_id = module.networks.network_id
-  subnets = module.networks.subnets
+  cluster_network_id = module.mysql_networks.network_id
+  subnets = module.mysql_networks.subnets
   cluster_resources = {
     "resource_preset_id" = "b1.medium"
     "disk_type_id"       = "network-ssd"
@@ -35,7 +35,7 @@ module mysql_cluster {
     "day"   = null
     "hour"  = null
   }
-  deletion_protection = true
+  deletion_protection = false
 }
 
 module mysql_db {
@@ -54,4 +54,21 @@ module mysql_user {
       roles = ["ALL"]
     }
   ]
+}
+
+output fqdn {
+  value       = module.mysql_cluster.fqdn
+  description = "MySQL Cluster FQDN"
+}
+
+output username {
+  value       = module.mysql_user.username
+  sensitive = true
+  description = "MySQL Username"
+}
+
+output password {
+  value       = module.mysql_user.password
+  sensitive = true
+  description = "MySQL Password"
 }
