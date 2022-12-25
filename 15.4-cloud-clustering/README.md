@@ -33,6 +33,23 @@ terraform output username
 terraform output password
 ```
 
+Полный список стейтов (включая и стейты для установки kubernetes кластера)
+
+```
+% terraform state list
+module.mysql_cluster.yandex_mdb_mysql_cluster.cluster
+module.mysql_db.yandex_mdb_mysql_database.db
+module.mysql_networks.data.yandex_vpc_network.network
+module.mysql_networks.yandex_vpc_subnet.subnet["mysql-subnet-a"]
+module.mysql_networks.yandex_vpc_subnet.subnet["mysql-subnet-b"]
+module.mysql_user.random_password.password
+module.mysql_user.yandex_mdb_mysql_user.user
+module.service_account.data.yandex_resourcemanager_folder.current
+module.service_account.yandex_iam_service_account.sa
+module.service_account.yandex_resourcemanager_folder_iam_binding.binding
+```
+
+
 ---
 
 2. Настроить с помощью Terraform кластер Kubernetes
@@ -66,6 +83,22 @@ terraform apply -target=module.k8s_networks
 
 ```
 terrafrom apply
+```
+
+Список стейтов
+
+```
+% terraform state list
+module.k8s_cluster.yandex_kms_symmetric_key.key
+module.k8s_cluster.yandex_kubernetes_cluster.cluster
+module.k8s_networks.data.yandex_vpc_network.network
+module.k8s_networks.data.yandex_vpc_route_table.this[0]
+module.k8s_networks.yandex_vpc_subnet.subnet["k8s-subnet-a"]
+module.k8s_networks.yandex_vpc_subnet.subnet["k8s-subnet-b"]
+module.k8s_networks.yandex_vpc_subnet.subnet["k8s-subnet-c"]
+module.k8s_nodes["b0cu5t10d41qd0c76s04"].yandex_kubernetes_node_group.ng
+module.k8s_nodes["e2l65nlfkrnneljkjhra"].yandex_kubernetes_node_group.ng
+module.k8s_nodes["e9bj1katgqib3h7cbh86"].yandex_kubernetes_node_group.ng
 ```
 
 После установки копируем kubeconfig
